@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winter AI Engineering Internship – Meegrow Labs</title>
+    <meta name="description" content="8-12 week AI engineering internship working on Prompt-to-BIM research. For serious 3rd-year B.Tech CSE students ready for real R&D work.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-bg: #0a0a0a;
+            --color-surface: #1a1a1a;
+            --color-border: #2a2a2a;
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #a0a0a0;
+            --color-text-muted: #666666;
+            --color-accent: #3b82f6;
+            --color-accent-dark: #2563eb;
+            --color-success: #10b981;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--color-bg);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Grid pattern background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--color-border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            text-decoration: none;
+        }
+
+        .logo::before {
+            content: '>';
+            color: var(--color-accent);
+            margin-right: 0.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-accent);
+            color: white;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cta-button:hover {
+            background: var(--color-accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+        }
+
+        .cta-button-secondary:hover {
+            background: var(--color-surface);
+            border-color: var(--color-accent);
+            box-shadow: none;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0 4rem;
+            position: relative;
+        }
+
+        .deadline-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .deadline-badge::before {
+            content: '⏰';
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            max-width: 800px;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .tag {
+            padding: 0.5rem 1rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+        }
+
+        .tag::before {
+            content: '#';
+            color: var(--color-accent);
+            margin-right: 0.25rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* Section */
+        section {
+            padding: 5rem 0;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-label::before {
+            content: '// ';
+        }
+
+        .section-title {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--color-text-secondary);
+            max-width: 900px;
+        }
+
+        /* Content blocks */
+        .content-block {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-block h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--color-accent);
+        }
+
+        .content-block p {
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .content-block ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content-block li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--color-text-secondary);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .content-block li:last-child {
+            border-bottom: none;
+        }
+
+        .content-block li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-family: var(--font-mono);
+        }
+
+        /* Grid layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 2rem;
+            padding: 1.5rem;
+            background: var(--color-surface);
+            border-left: 3px solid var(--color-accent);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: var(--color-text-secondary);
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .faq-question:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 1.5rem;
+            color: var(--color-text-secondary);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .final-cta p {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--color-border);
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .hero {
+                padding: 4rem 0 2rem;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Code block aesthetic */
+        .code-style {
+            font-family: var(--font-mono);
+            background: rgba(59, 130, 246, 0.05);
+            padding: 0.25rem 0.5rem;
+            border-radius: 2px;
+            color: var(--color-accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">Meegrow Labs</a>
+            <a href="https://tally.so/r/q44pQd" target="_blank" rel="noopener noreferrer" class="cta-button">
+                Apply Now
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container fade-in-up">
+                <div class="deadline-badge">Applications close on 30 November</div>
+
+                <h1>Meegrow Labs – AI Engineering Internship (Prompt-to-BIM)</h1>
+
+                <p class="hero-subtitle">
+                    8–12 week, high-intensity AI engineering internship working on a real <span class="code-style">Prompt-to-BIM</span> research project:
+                    turning natural language building descriptions into zoning-compliant 3D massings.
+                </p>
+
+                <div class="hero-tags">
+                    <span class="tag">Remote or Gurgaon</span>
+                    <span class="tag">3rd-year B.Tech CSE</span>
+                    <span class="tag">Python · PyTorch · NVIDIA GPUs</span>
+                    <span class="tag">8-12 weeks</span>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="https://tally.so/r/q44pQd" target="_blank" rel="noopener noreferrer" class="cta-button">
+                        Apply Now
+                    </a>
+                    <a href="#role-overview" class="cta-button cta-button-secondary">
+                        View Role Details
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About the Project -->
+        <section id="about-project">
+            <div class="container">
+                <div class="section-header fade-in-up">
+                    <div class="section-label">00 / Context</div>
+                    <h2 class="section-title">About the Project</h2>
+                    <p class="section-description">
+                        An international R&D effort to build production-grade AI systems for architectural design automation.
+                    </p>
+                </div>
+
+                <div class="content-block fade-in-up">
+                    <h3>What We're Building</h3>
+                    <p>
+                        The <span class="code-style">Prompt-to-BIM</span> system is an end-to-end AI pipeline (LOD 100) that converts natural-language
+                        architectural prompts into fully structured 3D building massings.
+                    </p>
+                    <p>The system converts:</p>
+                    <ul>
+                        <li>Natural language prompts → Structured architectural briefs</li>
+                        <li>Briefs → Zoning-compliant building boundary boxes</li>
+                        <li>Boundaries → LOD-100 architectural massings (3D envelopes with floor divisions)</li>
+                    </ul>
+                </div>
+
+                <div class="content-block fade-in-up">
+                    <h3>Project Deliverables</h3>
+                    <ul>
+                        <li>A 2,000-sample dataset with prompts, briefs, zoning envelopes, and 3D massings</li>
+                        <li>Three AI models: NLP compiler, generative 3D model, and QA critic</li>
+                        <li>Automation scripts, evaluation frameworks, and reproducible environments</li>
+                        <li>Research-grade documentation and experiment tracking</li>
+                    </ul>
+                </div>
+
+                <div class="content-block fade-in-up">
+                    <h3>Team & Collaboration</h3>
+                    <p>
+                        Interns work directly with a postdoctoral researcher and a senior AI architect based in Germany.
+                        This is real R&D work with international collaboration standards.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Role Overview -->
+        <section id="role-overview">
+            <div class="container">
+                <div class="section-header fade-in-up">
+                    <div class="section-label">01 / Role</div>
+                    <h2 class="section-title">Role Overview</h2>
+                </div>
+
+                <div class="grid-2">
+                    <div class="content-block fade-in-up">
+                        <h3>Position Details</h3>
+                        <ul>
+                            <li><strong>Title:</strong> AI Engineering Intern (Prompt-to-BIM)</li>
+                            <li><strong>Positions:</strong> 4 interns</li>
+                            <li><strong>Target:</strong> Strong 3rd-year B.Tech CSE students</li>
+                            <li><strong>Location:</strong> Remote or Gurgaon (hybrid)</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-block fade-in-up">
+                        <h3>Technical Environment</h3>
+                        <ul>
+                            <li>NVIDIA GPU servers (A100/H100)</li>
+                            <li>Python, PyTorch, NumPy, pandas</li>
+                            <li>Git/GitHub workflows with CI</li>
+                            <li>Ubuntu 24.04 LTS</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-block fade-in-up" style="margin-top: 1.5rem;">
+                    <h3>Duration & Timeline</h3>
+                    <p>
+                        <strong>8–12 weeks</strong> | Approximately 14 December 2025 – 15 March 2026
+                    </p>
+                    <p style="margin-top: 1rem; color: var(--color-text-muted); font-size: 0.875rem;">
+                        Flexible start date depending on team setup. Expect 30-40 hours per week of focused work.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What You'll Work On -->
+        <section id="work">
+            <div class="container">
+                <div class="section-header fade-in-up">
+                    <div class="section-label">02 / Responsibilities</div>
+                    <h2 class="section-title">What You'll Work On</h2>
+                </div>
+
+                <div class="content-block fade-in-up">
+                    <h3>01 / Dataset Engineering & Automation</h3>
+                    <ul>
+                        <li>Build Python scripts to assemble and validate a 2,000-sample dataset</li>
+                        <li>Implement schema validation, cleaning pipelines, and QA checks</li>
+                        <li>Work with geometric attributes and site metadata from external sources</li>
+                        <li>Create reproducible data preprocessing workflows</li>
+                    </ul>
+                </div>
+
+                <div class="content-block fade-in-up">
+                    <h3>02 / Model Pipelines</h3>
+                    <ul>
+                        <li>Preprocessing for the Prompt → Brief → Boundaries model (normalization, tokenization, structured JSON)</li>
+                        <li>Assist with training and evaluating NLP models using PyTorch</li>
+                        <li>Prepare and process 3D data formats (voxel / SDF / point clouds) under guidance</li>
+                        <li>Run GPU training jobs, monitor logs, and manage checkpoints</li>
+                    </ul>
+                </div>
+
+                <div class="content-block fade-in-up">
+                    <h3>03 / QA & Evaluation</h3>
+                    <ul>
+                        <li>Implement rule-based geometric checks (envelope violations, area mismatches)</li>
+                        <li>Build critic/evaluator components for comparing 3D massing quality</li>
+                        <li>Create automated testing frameworks for model outputs</li>
+                    </ul>
+                </div>
+
+                <div class="content-block fade-in-up">
+                    <h3>04 / Engineering Infrastructure</h3>
+                    <ul>
+                        <li>Write modular, tested Python code with proper documentation</li>
+                        <li>Work with GitHub branches, PRs, and CI workflows</li>
+                        <li>Package environments (conda / Docker) and support experiment tracking</li>
+                        <li>Maintain reproducibility standards for research code</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Requirements -->
+        <section id="requirements">
+            <div class="container">
+                <div class="section-header fade-in-up">
+                    <div class="section-label">03 / Requirements</div>
+                    <h2 class="section-title">You'll Be a Good Fit If...</h2>
+                </div>
+
+                <div class="grid-2">
+                    <div class="content-block fade-in-up">
+                        <h3>Core Requirements</h3>
+                        <ul>
+                            <li>Strong Python skills (modular code, data handling)</li>
+                            <li>Comfortable on Linux and the command line</li>
+                            <li>Familiarity with deep learning fundamentals and training loops</li>
+                            <li>Experience with PyTorch or similar frameworks</li>
+                            <li>Basic Git/GitHub experience</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-block fade-in-up">
+                        <h3>Nice to Have (Bonus)</h3>
+                        <ul>
+                            <li>Experience with 3D data (OBJ, GLB, voxels, point clouds)</li>
+                            <li>Exposure to computational geometry or BIM concepts</li>
+                            <li>Experience with diffusion models or transformers</li>
+                            <li>Blender scripting or 3D programming</li>
+                            <li>Docker, FastAPI, or experiment-tracking tools</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What You'll Learn -->
+        <section id="learning">
+            <div class="container">
+                <div class="section-header fade-in-up">
+                    <div class="section-label">04 / Learning</div>
+                    <h2 class="section-title">What You'll Learn</h2>
+                </div>
+
+                <div class="content-block fade-in-up">
+                    <ul>
+                        <li>End-to-end AI system design: dataset → model → evaluation → deployment</li>
+                        <li>Working with large NVIDIA GPU servers and optimizing training workflows</li>
+                        <li>3D generative AI and geometric deep learning techniques</li>
+                        <li>How real AEC (Architecture, Engineering, Construction) workflows influence model design</li>
+                        <li>Research-grade code quality: CI/CD, reproducibility, and proper documentation</li>
+                        <li>International collaboration and R&D best practices</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="timeline">
+            <div class="container">
+                <div class="section-header fade-in-up">
+                    <div class="section-label">05 / Timeline</div>
+                    <h2 class="section-title">Timeline & Process</h2>
+                </div>
+
+                <div class="timeline fade-in-up">
+                    <div class="timeline-item">
+                        <div class="timeline-date">NOW</div>
+                        <div class="timeline-content">
+                            <h4>Applications Open</h4>
+                            <p>Submit your application through the form</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">30 NOVEMBER</div>
+                        <div class="timeline-content">
+                            <h4>Applications Close</h4>
+                            <p>Final deadline for submissions</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">1-7 DECEMBER</div>
+                        <div class="timeline-content">
+                            <h4>Shortlisting & Interviews</h4>
+                            <p>Technical assessment + interviews with selected candidates</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">~14 DECEMBER</div>
+                        <div class="timeline-content">
+                            <h4>Internship Starts</h4>
+                            <p>8-12 weeks of intensive R&D work (until mid-March 2026)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Apply -->
+        <section id="apply">
+            <div class="container">
+                <div class="section-header fade-in-up">
+                    <div class="section-label">06 / Application</div>
+                    <h2 class="section-title">How to Apply</h2>
+                </div>
+
+                <div class="content-block fade-in-up">
+                    <h3>Application Process</h3>
+                    <ol style="list-style: decimal; padding-left: 2rem; color: var(--color-text-secondary);">
+                        <li style="margin: 1rem 0; padding-left: 0.5rem;">Click "Apply Now" and fill in the application form</li>
+                        <li style="margin: 1rem 0; padding-left: 0.5rem;">Provide: Basic details, LinkedIn/GitHub, short answers, and upload your CV</li>
+                        <li style="margin: 1rem 0; padding-left: 0.5rem;">We'll email shortlisted candidates with a brief technical task + interview details</li>
+                    </ol>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="https://tally.so/r/q44pQd" target="_blank" rel="noopener noreferrer" class="cta-button">
+                        Apply Now
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq">
+            <div class="container">
+                <div class="section-header fade-in-up">
+                    <div class="section-label">07 / FAQ</div>
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                </div>
+
+                <div class="fade-in-up">
+                    <div class="faq-item">
+                        <div class="faq-question">Is this a paid internship?</div>
+                        <div class="faq-answer">
+                            <p>Yes, this is a paid position. Compensation details will be discussed during the interview process based on experience and commitment level.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Can I do this fully remote?</div>
+                        <div class="faq-answer">
+                            <p>Yes, the internship can be done fully remote. However, if you're in or near Gurgaon, we offer a hybrid setup with occasional in-person collaboration opportunities.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">What kind of time commitment is expected?</div>
+                        <div class="faq-answer">
+                            <p>This is a high-intensity internship expecting 30-40 hours per week of focused work. You'll be contributing to real R&D, so consistent availability and meeting deadlines is critical.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Do I need prior 3D experience?</div>
+                        <div class="faq-answer">
+                            <p>No, prior 3D experience is not required but is a strong bonus. We'll provide guidance and resources. What matters most is strong Python skills, willingness to learn, and comfort with technical depth.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Will I get a certificate or letter of recommendation?</div>
+                        <div class="faq-answer">
+                            <p>Yes, upon successful completion, you'll receive a letter of recommendation and internship completion certificate. More importantly, you'll have real R&D contributions and potentially co-authorship opportunities.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Can this convert into a long-term role?</div>
+                        <div class="faq-answer">
+                            <p>Absolutely. High-performing interns who demonstrate strong engineering skills and research mindset will be considered for extended roles or full-time positions at Meegrow Labs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="final-cta">
+            <div class="container fade-in-up">
+                <h2>Ready to build real 3D AI,<br>not toy notebooks?</h2>
+                <p>
+                    This isn't a "certificate" internship. If you're serious about AI engineering, want to work on cutting-edge research,
+                    and are ready to ship production-grade code—apply now.
+                </p>
+                <a href="https://tally.so/r/q44pQd" target="_blank" rel="noopener noreferrer" class="cta-button">
+                    Apply Now
+                </a>
+                <p style="margin-top: 1.5rem; font-size: 0.875rem; color: var(--color-text-muted);">
+                    Applications close on 30 November
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">Meegrow Labs</div>
+                <div class="footer-links">
+                    <a href="mailto:careers@meegrowlabs.com">careers@meegrowlabs.com</a>
+                    <a href="https://linkedin.com/company/meegrowlabs" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/meegrowlabs" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FAQ Toggle Script -->
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const isActive = item.classList.contains('active');
+
+                // Close all other FAQs
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    faq.classList.remove('active');
+                });
+
+                // Toggle current FAQ
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href !== '') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
