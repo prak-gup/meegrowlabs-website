@@ -15,7 +15,7 @@ export default function InternshipBanner() {
 
             <p className="text-lg text-slate-300 max-w-2xl mb-6">
               8-12 week intensive research internship on Prompt-to-BIM AI systems.
-              For serious 3rd-year B.Tech CSE students ready for real R&D work.
+              For serious 3rd/4th-year Computer Science students or recent CS graduates with the relevant skills.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-6">
