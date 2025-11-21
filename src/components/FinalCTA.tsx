@@ -5,7 +5,7 @@ export default function FinalCTA() {
     <section className="relative py-32 px-6 bg-white">
       <div className="max-w-5xl mx-auto text-center">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-8 leading-tight text-slate-900">
-          Ready to Ship Your First Serious AI Automation?
+          Ready to Ship Your First Serious AI Workflow Automation?
         </h2>
 
         <p className="text-xl md:text-2xl text-slate-700 mb-12 max-w-3xl mx-auto leading-relaxed">
@@ -18,6 +18,7 @@ export default function FinalCTA() {
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block px-12 py-5 text-xl bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors shadow-xl"
+          aria-label="Book an AI workflow automation call with Meegrowlabs"
         >
           Get Started
         </a>

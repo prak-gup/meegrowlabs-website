@@ -31,10 +31,10 @@ export default function HowItWorks() {
       <div className="max-w-6xl mx-auto">
         <div className="mb-20">
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-slate-900">
-            How It Works
+            How Our AI Workflow Automation Engagement Runs
           </h2>
           <p className="text-xl text-slate-700 max-w-2xl">
-            From first conversation to production system in weeks, not months
+            From first conversation to production system in weeks, not months—each step keeps data governance and measurable outcomes front and center.
           </p>
         </div>
 

@@ -37,10 +37,10 @@ export default function Automations() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-20">
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-slate-900">
-            Automations We've Built
+            Agentic AI Workflow Automations We Ship
           </h2>
           <p className="text-xl text-slate-700 max-w-2xl">
-            Real systems solving real problems for teams like yours
+            Real systems solving real problems for teams like yours—from onboarding bots to ML-powered reporting.
           </p>
         </div>
 

@@ -15,11 +15,12 @@ export default function Hero() {
         {/* Left: Text Content */}
         <div className="space-y-8">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-slate-900 leading-tight">
-            AUTOMATION FOR THE INTELLIGENT AGE
+            AI WORKFLOW AUTOMATION FOR MODERN TEAMS
           </h1>
 
           <p className="text-lg md:text-xl text-slate-700 leading-relaxed max-w-xl">
-            The power behind smarter systems, automated workflows, and data-driven decisions. AI built for modern enterprises ready to move faster.
+            Agentic AI workflows, intelligent routing, and enterprise-ready automation pipelines that
+            move data securely between your finance, ops, product, and CX stacks.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
