@@ -14,7 +14,7 @@ export default function InternshipBanner() {
             </h2>
 
             <p className="text-lg text-slate-300 max-w-2xl mb-6">
-              8-12 week intensive research internship on Prompt-to-BIM AI systems.
+              8-12 week intensive research internship on Project Horizon—the natural language to 3D AI platform.
               For serious 3rd/4th-year Computer Science students or recent CS graduates with the relevant skills.
             </p>
 
