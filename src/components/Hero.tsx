@@ -1,14 +1,6 @@
 const CONTACT_FORM_LINK = "https://tally.so/r/444qZ5"
 
 export default function Hero() {
-  const scrollToInternship = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    const internshipSection = document.getElementById('internship-banner')
-    if (internshipSection) {
-      internshipSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }
-
   return (
     <section className="relative bg-cream-100 px-6 pt-32 pb-20">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
@@ -31,14 +23,6 @@ export default function Hero() {
               className="inline-block px-10 py-4 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors shadow-lg text-lg text-center"
             >
               Discover how
-            </a>
-            <a
-              href="#internship-banner"
-              onClick={scrollToInternship}
-              className="inline-block px-10 py-4 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors shadow-lg text-lg text-center relative overflow-hidden group"
-            >
-              <span className="relative z-10">Winter Internship 2025</span>
-              <span className="absolute top-0 right-0 w-3 h-3 bg-white rounded-full animate-ping"></span>
             </a>
           </div>
         </div>

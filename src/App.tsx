@@ -3,7 +3,6 @@ import { Suspense, lazy } from 'react'
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
 
-const InternshipBanner = lazy(() => import('./components/InternshipBanner'))
 const WhatWeDo = lazy(() => import('./components/WhatWeDo'))
 const Automations = lazy(() => import('./components/Automations'))
 const Industries = lazy(() => import('./components/Industries'))
@@ -20,7 +19,6 @@ function App() {
       <main>
         <Hero />
         <Suspense fallback={<div className="py-10 text-center text-slate-500">Loading...</div>}>
-          <InternshipBanner />
           <WhatWeDo />
           <Automations />
           <Industries />
