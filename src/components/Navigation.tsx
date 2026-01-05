@@ -10,12 +10,6 @@ export default function Navigation() {
 
         <div className="flex items-center gap-4">
           <a
-            href="/internship.html"
-            className="hidden md:block px-6 py-2.5 bg-sage-500 text-white font-semibold rounded-lg hover:bg-sage-600 transition-colors"
-          >
-            Winter Internship
-          </a>
-          <a
             href={CONTACT_FORM_LINK}
             target="_blank"
             rel="noopener noreferrer"
