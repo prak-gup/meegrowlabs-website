@@ -1,5 +1,12 @@
+type Industry = {
+  name: string
+  fullName: string
+  useCases: string[]
+  deck?: { href: string; label: string }
+}
+
 export default function Industries() {
-  const industries = [
+  const industries: Industry[] = [
     {
       name: 'BFSI',
       fullName: 'Banking, Financial Services & Insurance',
@@ -28,7 +35,11 @@ export default function Industries() {
         'Automated video/audio transcription',
         'Sentiment analysis on audience feedback',
         'Content recommendation systems'
-      ]
+      ],
+      deck: {
+        href: '/media-house-ai-strategy/',
+        label: 'View our AI strategy deck for media houses'
+      }
     },
     {
       name: 'Healthcare',
@@ -121,6 +132,18 @@ export default function Industries() {
                     </li>
                   ))}
                 </ul>
+
+                {industry.deck && (
+                  <a
+                    href={industry.deck.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 px-5 py-3 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-colors"
+                  >
+                    <span>{industry.deck.label}</span>
+                    <span aria-hidden="true">→</span>
+                  </a>
+                )}
               </div>
             </details>
           ))}
