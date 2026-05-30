@@ -123,6 +123,7 @@ export async function buildEncryptedPage({ plaintext, password, title, badge }) 
     btn.textContent = 'Unlocking…';
     try {
       const html = await unlock(pwEl.value);
+      try { sessionStorage.setItem('ml_ac', pwEl.value); } catch (_) {}
       document.open();
       document.write(html);
       document.close();
@@ -134,6 +135,21 @@ export async function buildEncryptedPage({ plaintext, password, title, badge }) 
       pwEl.focus();
     }
   });
+
+  // Session-shared unlock: if a sibling Meegrow share was already unlocked in
+  // this browser session with the same code, reveal automatically (no re-prompt).
+  // A mismatching remembered code simply fails and the gate is shown as normal.
+  (async function () {
+    let stored = null;
+    try { stored = sessionStorage.getItem('ml_ac'); } catch (_) {}
+    if (!stored) return;
+    try {
+      const html = await unlock(stored);
+      document.open();
+      document.write(html);
+      document.close();
+    } catch (_) { /* remembered code doesn't match this document — show the gate */ }
+  })();
 </script>
 </body>
 </html>
