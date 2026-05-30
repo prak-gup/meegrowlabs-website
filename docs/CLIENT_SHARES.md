@@ -23,6 +23,9 @@ the encrypted gate is the right tradeoff.
 ## Create a new share
 
 ```bash
+# via npm alias (note the `--` before args):
+npm run client-share -- <slug> <source.html> <password|--open> ["Title"] ["Badge"]
+# or directly:
 node scripts/new-client-share.mjs <slug> <source.html> <password|--open> ["Title"] ["Badge"]
 ```
 
