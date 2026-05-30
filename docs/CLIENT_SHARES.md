@@ -23,14 +23,21 @@ the encrypted gate is the right tradeoff.
 ## Create a new share
 
 ```bash
-node scripts/new-client-share.mjs <code> <source.html> <password> ["Title"] ["Badge"]
+node scripts/new-client-share.mjs <slug> <source.html> <password|--open> ["Title"] ["Badge"]
 ```
 
-Example:
+Password-protected (encrypted):
 
 ```bash
 node scripts/new-client-share.mjs au ~/Downloads/Tejas_Review.html AU2026 \
   "Tejas — Editorial Guidelines · Client Review" "Client AU · Confidential"
+```
+
+Open (no access code — still `noindex` + robots-disallowed, but anyone with the
+link can read it):
+
+```bash
+node scripts/new-client-share.mjs au ~/Downloads/Tejas_Review.html --open
 ```
 
 This writes `public/client/<code>/index.html`. Then ship it (Netlify auto-deploys
