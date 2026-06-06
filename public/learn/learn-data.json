@@ -1,0 +1,1014 @@
+{
+  "brand": "Zero to AI Hero by Meegrow Labs",
+  "site": "https://meegrowlabs.com",
+  "levels": [
+    {
+      "level": 1,
+      "levelTitle": "Computers Are Not Magic",
+      "lessons": [
+        {
+          "id": "L01-01",
+          "num": 1,
+          "title": "What is a file?",
+          "ytId": ""
+        },
+        {
+          "id": "L01-02",
+          "num": 2,
+          "title": "What is a folder?",
+          "ytId": ""
+        },
+        {
+          "id": "L01-03",
+          "num": 3,
+          "title": "What is a file path?",
+          "ytId": ""
+        },
+        {
+          "id": "L01-04",
+          "num": 4,
+          "title": "What is a file type?",
+          "ytId": ""
+        },
+        {
+          "id": "L01-05",
+          "num": 5,
+          "title": "What is a program?",
+          "ytId": ""
+        },
+        {
+          "id": "L01-06",
+          "num": 6,
+          "title": "What is a terminal?",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "levelTitle": "Your First 30 Minutes in the Terminal",
+      "lessons": [
+        {
+          "id": "L02-01",
+          "num": 1,
+          "title": "Where am I?",
+          "ytId": ""
+        },
+        {
+          "id": "L02-02",
+          "num": 2,
+          "title": "What’s here?",
+          "ytId": ""
+        },
+        {
+          "id": "L02-03",
+          "num": 3,
+          "title": "Moving into folders",
+          "ytId": ""
+        },
+        {
+          "id": "L02-04",
+          "num": 4,
+          "title": "Going back up",
+          "ytId": ""
+        },
+        {
+          "id": "L02-05",
+          "num": 5,
+          "title": "Going home.",
+          "ytId": ""
+        },
+        {
+          "id": "L02-06",
+          "num": 6,
+          "title": "Creating folders.",
+          "ytId": ""
+        },
+        {
+          "id": "L02-07",
+          "num": 7,
+          "title": "Creating files.",
+          "ytId": ""
+        },
+        {
+          "id": "L02-08",
+          "num": 8,
+          "title": "Deleting files.",
+          "ytId": ""
+        },
+        {
+          "id": "L02-09",
+          "num": 9,
+          "title": "Deleting a folder.",
+          "ytId": ""
+        },
+        {
+          "id": "L02-10",
+          "num": 10,
+          "title": "Copying a file.",
+          "ytId": ""
+        },
+        {
+          "id": "L02-11",
+          "num": 11,
+          "title": "Moving and renaming.",
+          "ytId": ""
+        },
+        {
+          "id": "L02-12",
+          "num": 12,
+          "title": "Putting it all together.",
+          "ytId": ""
+        },
+        {
+          "id": "L02-13",
+          "num": 13,
+          "title": "Your terminal cheat-sheet.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "levelTitle": "Reading and Writing Files",
+      "lessons": [
+        {
+          "id": "L03-01",
+          "num": 1,
+          "title": "Looking inside files.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-02",
+          "num": 2,
+          "title": "Peeking at the top.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-03",
+          "num": 3,
+          "title": "Peeking at the end.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-04",
+          "num": 4,
+          "title": "Printing text.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-05",
+          "num": 5,
+          "title": "Save it to a file.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-06",
+          "num": 6,
+          "title": "Add, don't erase.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-07",
+          "num": 7,
+          "title": "Copy a file in one line.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-08",
+          "num": 8,
+          "title": "Ctrl-F for any file.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-09",
+          "num": 9,
+          "title": "Searching everywhere.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-10",
+          "num": 10,
+          "title": "Chaining with pipes.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-11",
+          "num": 11,
+          "title": "Counting with wc.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-12",
+          "num": 12,
+          "title": "Play detective.",
+          "ytId": ""
+        },
+        {
+          "id": "L03-13",
+          "num": 13,
+          "title": "Level 3 locked in.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "levelTitle": "Your Code Has a History",
+      "lessons": [
+        {
+          "id": "L04-01",
+          "num": 1,
+          "title": "Why use version control?",
+          "ytId": ""
+        },
+        {
+          "id": "L04-02",
+          "num": 2,
+          "title": "Switch on git init.",
+          "ytId": ""
+        },
+        {
+          "id": "L04-03",
+          "num": 3,
+          "title": "Choose with git add.",
+          "ytId": ""
+        },
+        {
+          "id": "L04-04",
+          "num": 4,
+          "title": "Save a checkpoint.",
+          "ytId": ""
+        },
+        {
+          "id": "L04-05",
+          "num": 5,
+          "title": "Edit. Add. Commit.",
+          "ytId": ""
+        },
+        {
+          "id": "L04-06",
+          "num": 6,
+          "title": "Scroll your timeline.",
+          "ytId": ""
+        },
+        {
+          "id": "L04-07",
+          "num": 7,
+          "title": "Compare versions.",
+          "ytId": ""
+        },
+        {
+          "id": "L04-08",
+          "num": 8,
+          "title": "Undo without fear.",
+          "ytId": ""
+        },
+        {
+          "id": "L04-09",
+          "num": 9,
+          "title": "What is GitHub?",
+          "ytId": ""
+        },
+        {
+          "id": "L04-10",
+          "num": 10,
+          "title": "How do I share my code?",
+          "ytId": ""
+        },
+        {
+          "id": "L04-11",
+          "num": 11,
+          "title": "How do I get code from GitHub?",
+          "ytId": ""
+        },
+        {
+          "id": "L04-12",
+          "num": 12,
+          "title": "How do I try ideas without breaking things?",
+          "ytId": ""
+        },
+        {
+          "id": "L04-13",
+          "num": 13,
+          "title": "My idea works. Now what?",
+          "ytId": ""
+        },
+        {
+          "id": "L04-14",
+          "num": 14,
+          "title": "How do real teams use git daily?",
+          "ytId": ""
+        },
+        {
+          "id": "L04-15",
+          "num": 15,
+          "title": "What do I write in a commit message?",
+          "ytId": ""
+        },
+        {
+          "id": "L04-16",
+          "num": 16,
+          "title": "Ready to do a full git cycle?",
+          "ytId": ""
+        },
+        {
+          "id": "L04-17",
+          "num": 17,
+          "title": "You went from scared to confident with git.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "levelTitle": "How Software Actually Works",
+      "lessons": [
+        {
+          "id": "L05-01",
+          "num": 1,
+          "title": "What is code, really?",
+          "ytId": ""
+        },
+        {
+          "id": "L05-02",
+          "num": 2,
+          "title": "Why so many languages?",
+          "ytId": ""
+        },
+        {
+          "id": "L05-03",
+          "num": 3,
+          "title": "What loads behind a site?",
+          "ytId": ""
+        },
+        {
+          "id": "L05-04",
+          "num": 4,
+          "title": "Client vs server.",
+          "ytId": ""
+        },
+        {
+          "id": "L05-05",
+          "num": 5,
+          "title": "HTTP — how devices talk.",
+          "ytId": ""
+        },
+        {
+          "id": "L05-06",
+          "num": 6,
+          "title": "What is an API?",
+          "ytId": ""
+        },
+        {
+          "id": "L05-07",
+          "num": 7,
+          "title": "JSON — how data travels.",
+          "ytId": ""
+        },
+        {
+          "id": "L05-08",
+          "num": 8,
+          "title": "What is a database?",
+          "ytId": ""
+        },
+        {
+          "id": "L05-09",
+          "num": 9,
+          "title": "SQL — talking to databases.",
+          "ytId": ""
+        },
+        {
+          "id": "L05-10",
+          "num": 10,
+          "title": "Frontend vs backend.",
+          "ytId": ""
+        },
+        {
+          "id": "L05-11",
+          "num": 11,
+          "title": "The tech stack.",
+          "ytId": ""
+        },
+        {
+          "id": "L05-12",
+          "num": 12,
+          "title": "What is the cloud?",
+          "ytId": ""
+        },
+        {
+          "id": "L05-13",
+          "num": 13,
+          "title": "Going live: deployment.",
+          "ytId": ""
+        },
+        {
+          "id": "L05-14",
+          "num": 14,
+          "title": "DNS and domains.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "levelTitle": "Talk to the Internet",
+      "lessons": [
+        {
+          "id": "L06-01",
+          "num": 1,
+          "title": "What is a web address?",
+          "ytId": ""
+        },
+        {
+          "id": "L06-02",
+          "num": 2,
+          "title": "Fetch the web from your terminal.",
+          "ytId": ""
+        },
+        {
+          "id": "L06-03",
+          "num": 3,
+          "title": "Ask for exactly what you want.",
+          "ytId": ""
+        },
+        {
+          "id": "L06-04",
+          "num": 4,
+          "title": "What does 200 mean?",
+          "ytId": ""
+        },
+        {
+          "id": "L06-05",
+          "num": 5,
+          "title": "Show your ID at the gate.",
+          "ytId": ""
+        },
+        {
+          "id": "L06-06",
+          "num": 6,
+          "title": "Don't just read — send data back.",
+          "ytId": ""
+        },
+        {
+          "id": "L06-07",
+          "num": 7,
+          "title": "Pull real data from a live API.",
+          "ytId": ""
+        },
+        {
+          "id": "L06-08",
+          "num": 8,
+          "title": "What is an API key?",
+          "ytId": ""
+        },
+        {
+          "id": "L06-09",
+          "num": 9,
+          "title": "Call GitHub's real API.",
+          "ytId": ""
+        },
+        {
+          "id": "L06-10",
+          "num": 10,
+          "title": "Turn docs into requests.",
+          "ytId": ""
+        },
+        {
+          "id": "L06-11",
+          "num": 11,
+          "title": "It said 401. Now what?",
+          "ytId": ""
+        },
+        {
+          "id": "L06-12",
+          "num": 12,
+          "title": "From curl to real code.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "levelTitle": "Building With Real Tools",
+      "lessons": [
+        {
+          "id": "L07-01",
+          "num": 1,
+          "title": "Install Node.js.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-02",
+          "num": 2,
+          "title": "Talk to Node live.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-03",
+          "num": 3,
+          "title": "Run a real script.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-04",
+          "num": 4,
+          "title": "What is npm?",
+          "ytId": ""
+        },
+        {
+          "id": "L07-05",
+          "num": 5,
+          "title": "Start a real project.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-06",
+          "num": 6,
+          "title": "Add others' code.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-07",
+          "num": 7,
+          "title": "Hide the junk.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-08",
+          "num": 8,
+          "title": "Build a web server.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-09",
+          "num": 9,
+          "title": "Running your server.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-10",
+          "num": 10,
+          "title": "What is localhost?",
+          "ytId": ""
+        },
+        {
+          "id": "L07-11",
+          "num": 11,
+          "title": "Adding routes.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-12",
+          "num": 12,
+          "title": "Serving JSON.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-13",
+          "num": 13,
+          "title": "Serving HTML.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-14",
+          "num": 14,
+          "title": "Stopping and restarting.",
+          "ytId": ""
+        },
+        {
+          "id": "L07-15",
+          "num": 15,
+          "title": "Level 7 challenge.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 8,
+      "levelTitle": "Claude Code — Your AI Pair Programmer",
+      "lessons": [
+        {
+          "id": "L08-01",
+          "num": 1,
+          "title": "What is Claude Code?",
+          "ytId": ""
+        },
+        {
+          "id": "L08-02",
+          "num": 2,
+          "title": "Install Claude Code.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-03",
+          "num": 3,
+          "title": "Your first conversation.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-04",
+          "num": 4,
+          "title": "Read code with Claude.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-05",
+          "num": 5,
+          "title": "Create files with Claude.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-06",
+          "num": 6,
+          "title": "Edit code with Claude.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-07",
+          "num": 7,
+          "title": "Build from a description.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-08",
+          "num": 8,
+          "title": "Write better prompts.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-09",
+          "num": 9,
+          "title": "Build it one ask at a time.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-10",
+          "num": 10,
+          "title": "When Claude gets stuck.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-11",
+          "num": 11,
+          "title": "Read it before you keep it.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-12",
+          "num": 12,
+          "title": "Something broke? Debug together.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-13",
+          "num": 13,
+          "title": "Claude Code plus Git.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-14",
+          "num": 14,
+          "title": "When not to use Claude Code.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-15",
+          "num": 15,
+          "title": "Tips that make Claude shine.",
+          "ytId": ""
+        },
+        {
+          "id": "L08-16",
+          "num": 16,
+          "title": "Level 8 challenge.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 9,
+      "levelTitle": "Claude Skills — Teach Claude Your Workflow",
+      "lessons": [
+        {
+          "id": "L09-01",
+          "num": 1,
+          "title": "Teach Claude your way.",
+          "ytId": ""
+        },
+        {
+          "id": "L09-02",
+          "num": 2,
+          "title": "Build your first skill.",
+          "ytId": ""
+        },
+        {
+          "id": "L09-03",
+          "num": 3,
+          "title": "Write great skills.",
+          "ytId": ""
+        },
+        {
+          "id": "L09-04",
+          "num": 4,
+          "title": "Share with your team.",
+          "ytId": ""
+        },
+        {
+          "id": "L09-05",
+          "num": 5,
+          "title": "Habits of great builders.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 10,
+      "levelTitle": "MCP — Connect Claude to Everything",
+      "lessons": [
+        {
+          "id": "L10-01",
+          "num": 1,
+          "title": "Connect Claude to everything.",
+          "ytId": ""
+        },
+        {
+          "id": "L10-02",
+          "num": 2,
+          "title": "Add your first connection.",
+          "ytId": ""
+        },
+        {
+          "id": "L10-03",
+          "num": 3,
+          "title": "Organise & share.",
+          "ytId": ""
+        },
+        {
+          "id": "L10-04",
+          "num": 4,
+          "title": "Stay fast at scale.",
+          "ytId": ""
+        },
+        {
+          "id": "L10-05",
+          "num": 5,
+          "title": "MCP in practice.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 11,
+      "levelTitle": "Context Is Everything",
+      "lessons": [
+        {
+          "id": "L11-01",
+          "num": 1,
+          "title": "What is CLAUDE.md?",
+          "ytId": ""
+        },
+        {
+          "id": "L11-02",
+          "num": 2,
+          "title": "Memory & Sessions.",
+          "ytId": ""
+        },
+        {
+          "id": "L11-03",
+          "num": 3,
+          "title": "The context window.",
+          "ytId": ""
+        },
+        {
+          "id": "L11-04",
+          "num": 4,
+          "title": "Specs, plans & handoffs.",
+          "ytId": ""
+        },
+        {
+          "id": "L11-05",
+          "num": 5,
+          "title": "Working smart at scale.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 12,
+      "levelTitle": "Claude Code Advanced",
+      "lessons": [
+        {
+          "id": "L12-01",
+          "num": 1,
+          "title": "What is a subagent?",
+          "ytId": ""
+        },
+        {
+          "id": "L12-02",
+          "num": 2,
+          "title": "What is a worktree?",
+          "ytId": ""
+        },
+        {
+          "id": "L12-03",
+          "num": 3,
+          "title": "Hooks & permissions.",
+          "ytId": ""
+        },
+        {
+          "id": "L12-04",
+          "num": 4,
+          "title": "What is headless mode?",
+          "ytId": ""
+        },
+        {
+          "id": "L12-05",
+          "num": 5,
+          "title": "Models, cost & your IDE.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 13,
+      "levelTitle": "Junior Developer Patterns",
+      "lessons": [
+        {
+          "id": "L13-01",
+          "num": 1,
+          "title": "Reading someone else&#39;s code.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-02",
+          "num": 2,
+          "title": "Understanding a function.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-03",
+          "num": 3,
+          "title": "The debugging mindset.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-04",
+          "num": 4,
+          "title": "console.log debugging.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-05",
+          "num": 5,
+          "title": "Finding answers fast.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-06",
+          "num": 6,
+          "title": "Working with external APIs.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-07",
+          "num": 7,
+          "title": "Hide your secrets.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-08",
+          "num": 8,
+          "title": "Five non-negotiables.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-09",
+          "num": 9,
+          "title": "Go live to the world.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-10",
+          "num": 10,
+          "title": "Your own web address.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-11",
+          "num": 11,
+          "title": "How companies ship.",
+          "ytId": ""
+        },
+        {
+          "id": "L13-12",
+          "num": 12,
+          "title": "Your learning path.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 14,
+      "levelTitle": "The Project — Build a Real Game",
+      "lessons": [
+        {
+          "id": "L14-01",
+          "num": 1,
+          "title": "When HTTP isn't enough.",
+          "ytId": ""
+        },
+        {
+          "id": "L14-02",
+          "num": 2,
+          "title": "Plan before you build.",
+          "ytId": ""
+        },
+        {
+          "id": "L14-03",
+          "num": 3,
+          "title": "Set up the game.",
+          "ytId": ""
+        },
+        {
+          "id": "L14-04",
+          "num": 4,
+          "title": "Build the rules.",
+          "ytId": ""
+        },
+        {
+          "id": "L14-05",
+          "num": 5,
+          "title": "Pair two players.",
+          "ytId": ""
+        },
+        {
+          "id": "L14-06",
+          "num": 6,
+          "title": "Build the board.",
+          "ytId": ""
+        },
+        {
+          "id": "L14-07",
+          "num": 7,
+          "title": "Wire it up.",
+          "ytId": ""
+        },
+        {
+          "id": "L14-08",
+          "num": 8,
+          "title": "Debug live code.",
+          "ytId": ""
+        },
+        {
+          "id": "L14-09",
+          "num": 9,
+          "title": "Make it finished.",
+          "ytId": ""
+        },
+        {
+          "id": "L14-10",
+          "num": 10,
+          "title": "Launch your game.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 15,
+      "levelTitle": "Claude Agents",
+      "lessons": [
+        {
+          "id": "L15-01",
+          "num": 1,
+          "title": "Create your own specialized agents.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 16,
+      "levelTitle": "Claude Code from Mobile",
+      "lessons": [
+        {
+          "id": "L16-01",
+          "num": 1,
+          "title": "Drive Claude Code from your phone.",
+          "ytId": ""
+        }
+      ]
+    },
+    {
+      "level": 17,
+      "levelTitle": "Opus 4.8 & Workflows",
+      "lessons": [
+        {
+          "id": "L17-01",
+          "num": 1,
+          "title": "Command a fleet of agents.",
+          "ytId": ""
+        }
+      ]
+    }
+  ]
+}

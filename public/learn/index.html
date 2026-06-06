@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero to AI Hero — Free Course | Meegrow Labs</title>
+<meta name="description" content="Go from zero to AI hero — learn to use and build with AI from scratch, in simple 2-minute lessons. Free course by Meegrow Labs. Hindi & English.">
+<meta property="og:title" content="Zero to AI Hero — Free Course by Meegrow Labs">
+<meta property="og:description" content="151 free 2-minute lessons: from 'what's a file?' to AI agents. Learn to use & build with AI.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://meegrowlabs.com/learn/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--cream:#EFE9D9;--paper:#F7F3E9;--ink:#0F0F0F;--ink2:#5b5749;--green:#1F8A4C;--pink:#F06CA8;--yellow:#F5C518;--clay:#D97757}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--cream);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.45}
+  a{color:inherit}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+  /* header */
+  header{border-bottom:4px solid var(--ink);background:var(--cream);position:sticky;top:0;z-index:5}
+  .bar{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+  .wm{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:18px;letter-spacing:.18em}
+  .wm b{color:var(--green)}
+  .btn{display:inline-block;background:var(--green);color:var(--cream);border:3px solid var(--ink);font-weight:700;
+       padding:9px 18px;border-radius:999px;text-decoration:none;font-size:15px;box-shadow:4px 4px 0 var(--ink)}
+  /* hero */
+  .hero{padding:64px 0 40px;text-align:center}
+  .hero .eyebrow{font-family:"JetBrains Mono",monospace;font-weight:700;letter-spacing:.2em;color:var(--green);font-size:15px}
+  .hero h1{font-family:"Archivo Black",sans-serif;font-size:clamp(44px,8vw,104px);line-height:.92;letter-spacing:-2px;margin:14px 0}
+  .hero h1 .h{color:var(--green)}
+  .hero p{font-size:clamp(17px,2.4vw,23px);max-width:720px;margin:0 auto 22px;color:var(--ink)}
+  .badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+  .badge{border:3px solid var(--ink);border-radius:999px;padding:7px 16px;font-weight:700;font-size:14px;background:var(--paper)}
+  .badge.g{background:var(--green);color:var(--cream)} .badge.y{background:var(--yellow)} .badge.p{background:var(--pink)}
+  .stat{margin-top:26px;font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--ink2);font-size:15px}
+  /* levels */
+  .level{margin:30px 0;border:4px solid var(--ink);background:var(--paper);box-shadow:8px 8px 0 var(--ink)}
+  .level h2{font-family:"Archivo Black",sans-serif;font-size:clamp(20px,3vw,30px);padding:18px 22px;border-bottom:4px solid var(--ink);
+           display:flex;align-items:center;gap:14px;letter-spacing:-.5px}
+  .lvtag{font-family:"JetBrains Mono",monospace;font-size:14px;background:var(--ink);color:var(--cream);padding:5px 11px;border-radius:6px;flex:none}
+  .lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:0}
+  .lesson{display:flex;gap:13px;align-items:flex-start;padding:15px 20px;border-bottom:2px solid #e4ddc9;border-right:2px solid #e4ddc9;cursor:pointer;background:none;text-align:left;font:inherit;width:100%}
+  .lesson:hover{background:#fff}
+  .lesson:disabled{cursor:default;opacity:.5}
+  .num{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--green);flex:none;width:34px;font-size:15px;padding-top:2px}
+  .ltitle{font-weight:600;font-size:16px}
+  .lstate{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink2);margin-top:3px;letter-spacing:.06em}
+  .play{margin-left:auto;flex:none;color:var(--clay);font-size:18px}
+  footer{text-align:center;padding:50px 20px 70px;color:var(--ink2);font-size:14px}
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(15,15,15,.86);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+  .modal.on{display:flex}
+  .mbox{width:min(960px,100%)}
+  .mbox .mt{color:var(--cream);font-family:"Archivo Black",sans-serif;font-size:20px;margin-bottom:12px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+  .mbox .x{cursor:pointer;border:3px solid var(--cream);border-radius:999px;width:38px;height:38px;flex:none;color:var(--cream);background:none;font-size:18px}
+  .frame{position:relative;padding-top:56.25%;border:4px solid var(--cream);background:#000}
+  .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .soon{color:var(--cream);text-align:center;padding:60px 20px;font-family:"JetBrains Mono",monospace}
+</style>
+</head>
+<body>
+<header><div class="wrap bar">
+  <div class="wm">&gt;_ MEEGROW <b>LABS</b></div>
+  <a class="btn" href="#L1">Start at Lesson 1 →</a>
+</div></header>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">FREE COURSE · हिंदी + ENGLISH</div>
+    <h1>Zero to <span class="h">AI Hero</span></h1>
+    <p>Learn to actually <b>use and build with AI</b> — from "what's a file?" all the way to AI agents. 151 bite-sized 2-minute lessons. No degree, no jargon.</p>
+    <div class="badges"><span class="badge g">Beginner friendly</span><span class="badge y">2-min lessons</span><span class="badge p">For students & founders</span></div>
+    <div class="stat" id="stat">Loading the course…</div>
+  </section>
+  <main id="course"></main>
+</div>
+
+<footer>
+  Made by <b>Meegrow Labs</b> · <a href="https://meegrowlabs.com" style="color:var(--green);font-weight:700">meegrowlabs.com</a><br>
+  New lesson every day. Narration is AI-generated; content is human-reviewed.
+</footer>
+
+<div class="modal" id="modal">
+  <div class="mbox">
+    <div class="mt"><span id="mtitle"></span><button class="x" id="mx" aria-label="Close">✕</button></div>
+    <div class="frame" id="mframe"></div>
+  </div>
+</div>
+
+<script>
+const YT = (id) => `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&autoplay=1`;
+const modal = document.getElementById('modal'), mframe = document.getElementById('mframe'), mtitle = document.getElementById('mtitle');
+function open(t, ytId){ mtitle.textContent = t; mframe.innerHTML = ytId ? `<iframe src="${YT(ytId)}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>` : `<div class="soon">This lesson goes live soon — new lessons drop daily.</div>`; modal.classList.add('on'); }
+function close(){ modal.classList.remove('on'); mframe.innerHTML=''; }
+document.getElementById('mx').onclick = close;
+modal.onclick = (e)=>{ if(e.target===modal) close(); };
+document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') close(); });
+
+fetch('learn-data.json').then(r=>r.json()).then(d=>{
+  const live = d.levels.flatMap(l=>l.lessons).filter(x=>x.ytId).length;
+  document.getElementById('stat').textContent = `17 levels · 151 lessons${live?` · ${live} live now`:''}`;
+  const root = document.getElementById('course');
+  for(const lv of d.levels){
+    const sec = document.createElement('section'); sec.className='level'; sec.id='L'+lv.level;
+    const grid = lv.lessons.map(ls=>{
+      const live = !!ls.ytId;
+      return `<button class="lesson" ${live?'':'disabled'} data-t="${(ls.num+'. '+ls.title).replace(/"/g,'&quot;')}" data-y="${ls.ytId||''}">
+        <span class="num">${String(ls.num).padStart(2,'0')}</span>
+        <span><span class="ltitle">${ls.title}</span><span class="lstate">${live?'▶ WATCH':'COMING SOON'}</span></span>
+        ${live?'<span class="play">▶</span>':''}
+      </button>`;
+    }).join('');
+    sec.innerHTML = `<h2><span class="lvtag">L${lv.level}</span> ${lv.levelTitle}</h2><div class="lessons">${grid}</div>`;
+    root.appendChild(sec);
+  }
+  root.querySelectorAll('.lesson').forEach(b=>{ if(!b.disabled) b.onclick=()=>open(b.dataset.t, b.dataset.y); });
+});
+</script>
+</body>
+</html>
