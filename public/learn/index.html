@@ -150,9 +150,12 @@ fetch('learn-data.json').then(r=>r.json()).then(d=>{
 const cf = document.getElementById('capForm');
 if (cf) cf.addEventListener('submit', (e) => {
   e.preventDefault();
-  const body = new URLSearchParams(new FormData(cf)).toString();
+  const fd = new FormData(cf);
+  const email = fd.get('email');
   const done = () => { cf.hidden = true; document.getElementById('capOk').hidden = false; };
-  fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body }).then(done).catch(done);
+  const ml = fetch('/.netlify/functions/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
+  const nf = fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fd).toString() }); // Netlify Forms backstop
+  Promise.allSettled([ml, nf]).then(done);
 });
 </script>
 </body>
