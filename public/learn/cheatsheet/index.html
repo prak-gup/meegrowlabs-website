@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero to AI Hero — Quick-Start Cheat Sheet | Meegrow Labs</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@700&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--cream:#EFE9D9;--paper:#F7F3E9;--ink:#0F0F0F;--ink2:#5b5749;--green:#1F8A4C;--pink:#F06CA8;--yellow:#F5C518;--clay:#D97757}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--cream);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.5}
+  .wrap{max-width:920px;margin:0 auto;padding:40px 20px 80px}
+  .top{display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid var(--ink);padding-bottom:16px;margin-bottom:30px;flex-wrap:wrap;gap:10px}
+  .wm{font-family:"JetBrains Mono",monospace;font-weight:700;letter-spacing:.18em}.wm b{color:var(--green)}
+  .back{font-weight:700;text-decoration:none;border:3px solid var(--ink);border-radius:999px;padding:7px 16px;font-size:14px}
+  h1{font-family:"Archivo Black";font-size:clamp(32px,6vw,58px);line-height:.95;letter-spacing:-1.5px;margin-bottom:8px}
+  h1 .h{color:var(--green)}
+  .sub{color:var(--ink2);font-size:18px;margin-bottom:8px}
+  .print{font-size:14px;color:var(--ink2)}
+  .card{border:4px solid var(--ink);background:var(--paper);border-radius:14px;box-shadow:8px 8px 0 var(--ink);padding:22px 24px;margin-top:26px}
+  .card h2{font-family:"Archivo Black";font-size:22px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .tag{font-family:"JetBrains Mono",monospace;font-size:12px;background:var(--ink);color:var(--cream);padding:4px 9px;border-radius:6px}
+  table{width:100%;border-collapse:collapse}
+  td{padding:9px 6px;vertical-align:top;border-bottom:1px solid #e4ddc9;font-size:15px}
+  td.cmd{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--green);white-space:nowrap;width:38%}
+  td.hi{font-family:"Noto Sans Devanagari","Space Grotesk";color:var(--ink2);font-size:13px}
+  .two{display:grid;grid-template-columns:1fr;gap:0}
+  .note{background:var(--yellow);border:3px solid var(--ink);border-radius:10px;padding:12px 16px;font-weight:600;margin-top:14px;font-size:15px}
+  .tips li{margin:8px 0 8px 18px}
+  .cta{margin-top:34px;text-align:center}
+  .btn{display:inline-block;background:var(--green);color:var(--cream);border:3px solid var(--ink);border-radius:999px;padding:12px 26px;font-weight:700;text-decoration:none;box-shadow:5px 5px 0 var(--ink)}
+  @media print{.btn,.back{display:none}body{background:#fff}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="wm">&gt;_ MEEGROW <b>LABS</b> · ZERO TO AI HERO</div>
+    <a class="back" href="/learn/">← Course</a>
+  </div>
+
+  <h1>The <span class="h">AI Quick-Start</span><br>Cheat Sheet</h1>
+  <p class="sub">Everything a beginner needs to start commanding a computer & AI — Hindi + English.</p>
+  <p class="print">💡 Tip: press <b>Ctrl/Cmd + P</b> to save this as a PDF.</p>
+
+  <div class="card">
+    <h2><span class="tag">1</span> Terminal essentials</h2>
+    <table>
+      <tr><td class="cmd">pwd</td><td>where am I?<div class="hi">मैं अभी कहाँ हूँ</div></td></tr>
+      <tr><td class="cmd">ls</td><td>list what's here<div class="hi">यहाँ क्या-क्या है</div></td></tr>
+      <tr><td class="cmd">cd folder</td><td>go into a folder<div class="hi">फोल्डर के अंदर जाओ</div></td></tr>
+      <tr><td class="cmd">cd ..</td><td>go back up one level<div class="hi">एक स्तर ऊपर</div></td></tr>
+      <tr><td class="cmd">cd ~</td><td>go home<div class="hi">होम पर जाओ</div></td></tr>
+      <tr><td class="cmd">mkdir name</td><td>make a folder<div class="hi">नया फोल्डर बनाओ</div></td></tr>
+      <tr><td class="cmd">touch file.txt</td><td>make a file<div class="hi">नई फाइल बनाओ</div></td></tr>
+      <tr><td class="cmd">cat file</td><td>read a file<div class="hi">फाइल पढ़ो</div></td></tr>
+      <tr><td class="cmd">cp a b</td><td>copy · <b>mv a b</b> move/rename<div class="hi">कॉपी · मूव/रिनेम</div></td></tr>
+      <tr><td class="cmd">rm file</td><td>delete (no undo!)<div class="hi">हटाओ — वापस नहीं आएगा</div></td></tr>
+      <tr><td class="cmd">grep word file</td><td>find text inside a file<div class="hi">फाइल में शब्द ढूँढो</div></td></tr>
+    </table>
+    <div class="note">💻 On Windows? Install <b>Git Bash</b> or <b>WSL</b> once — then every command above works the same.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="tag">2</span> Git in 6 commands</h2>
+    <table>
+      <tr><td class="cmd">git init</td><td>start tracking a project</td></tr>
+      <tr><td class="cmd">git add .</td><td>stage your changes</td></tr>
+      <tr><td class="cmd">git commit -m "msg"</td><td>save a snapshot</td></tr>
+      <tr><td class="cmd">git status</td><td>what changed?</td></tr>
+      <tr><td class="cmd">git log</td><td>see history</td></tr>
+      <tr><td class="cmd">git push</td><td>upload to GitHub</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="tag">3</span> Talking to AI (the skill that 10x's you)</h2>
+    <ul class="tips">
+      <li><b>Be specific.</b> "Fix my code" → "This function returns undefined when the list is empty. Make it return 0 instead."</li>
+      <li><b>Give context.</b> Tell it the language, the goal, and what you already tried.</li>
+      <li><b>Ask it to explain</b>, not just do — that's how you learn.</li>
+      <li><b>Iterate.</b> First answer wrong? Tell it what's off and refine — don't start over.</li>
+      <li><b>Claude Code:</b> install with <span style="font-family:JetBrains Mono;color:var(--clay);font-weight:700">npm i -g @anthropic-ai/claude-code</span>, then just talk in plain English.</li>
+    </ul>
+  </div>
+
+  <div class="cta">
+    <a class="btn" href="/learn/">▶ Start the free course → Lesson 1</a>
+  </div>
+</div>
+</body>
+</html>
