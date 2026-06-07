@@ -3,6 +3,18 @@
   "site": "https://meegrowlabs.com",
   "levels": [
     {
+      "level": 0,
+      "levelTitle": "Start Here",
+      "lessons": [
+        {
+          "id": "L00-01",
+          "num": 1,
+          "title": "Set up your terminal (Mac · Windows · Linux)",
+          "ytId": ""
+        }
+      ]
+    },
+    {
       "level": 1,
       "levelTitle": "Computers Are Not Magic",
       "lessons": [
