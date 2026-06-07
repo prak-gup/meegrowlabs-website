@@ -1,0 +1,859 @@
+{
+  "1": {
+    "ytId": "Bft3oQKwF-Y",
+    "key": "L01",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "What is a file?",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "What is a folder?",
+        "start": 82
+      },
+      {
+        "num": 3,
+        "title": "What is a file path?",
+        "start": 161
+      },
+      {
+        "num": 4,
+        "title": "What is a file type?",
+        "start": 241
+      },
+      {
+        "num": 5,
+        "title": "What is a program?",
+        "start": 322
+      },
+      {
+        "num": 6,
+        "title": "What is a terminal?",
+        "start": 401
+      }
+    ]
+  },
+  "2": {
+    "ytId": "brCdd-qm5hM",
+    "key": "L02",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Where am I?",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "What’s here?",
+        "start": 81
+      },
+      {
+        "num": 3,
+        "title": "Moving into folders",
+        "start": 161
+      },
+      {
+        "num": 4,
+        "title": "Going back up",
+        "start": 247
+      },
+      {
+        "num": 5,
+        "title": "Going home.",
+        "start": 329
+      },
+      {
+        "num": 6,
+        "title": "Creating folders.",
+        "start": 408
+      },
+      {
+        "num": 7,
+        "title": "Creating files.",
+        "start": 485
+      },
+      {
+        "num": 8,
+        "title": "Deleting files.",
+        "start": 559
+      },
+      {
+        "num": 9,
+        "title": "Deleting a folder.",
+        "start": 634
+      },
+      {
+        "num": 10,
+        "title": "Copying a file.",
+        "start": 717
+      },
+      {
+        "num": 11,
+        "title": "Moving and renaming.",
+        "start": 800
+      },
+      {
+        "num": 12,
+        "title": "Putting it all together.",
+        "start": 884
+      },
+      {
+        "num": 13,
+        "title": "Your terminal cheat-sheet.",
+        "start": 968
+      }
+    ]
+  },
+  "3": {
+    "ytId": "2uvGqi-OJ6I",
+    "key": "L03",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Looking inside files.",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Peeking at the top.",
+        "start": 73
+      },
+      {
+        "num": 3,
+        "title": "Peeking at the end.",
+        "start": 150
+      },
+      {
+        "num": 4,
+        "title": "Printing text.",
+        "start": 225
+      },
+      {
+        "num": 5,
+        "title": "Save it to a file.",
+        "start": 301
+      },
+      {
+        "num": 6,
+        "title": "Add, don't erase.",
+        "start": 369
+      },
+      {
+        "num": 7,
+        "title": "Copy a file in one line.",
+        "start": 442
+      },
+      {
+        "num": 8,
+        "title": "Ctrl-F for any file.",
+        "start": 514
+      },
+      {
+        "num": 9,
+        "title": "Searching everywhere.",
+        "start": 582
+      },
+      {
+        "num": 10,
+        "title": "Chaining with pipes.",
+        "start": 656
+      },
+      {
+        "num": 11,
+        "title": "Counting with wc.",
+        "start": 729
+      },
+      {
+        "num": 12,
+        "title": "Play detective.",
+        "start": 802
+      },
+      {
+        "num": 13,
+        "title": "Level 3 locked in.",
+        "start": 881
+      }
+    ]
+  },
+  "4": {
+    "ytId": "tzf0tfrQDNM",
+    "key": "L04",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Why use version control?",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Switch on git init.",
+        "start": 67
+      },
+      {
+        "num": 3,
+        "title": "Choose with git add.",
+        "start": 137
+      },
+      {
+        "num": 4,
+        "title": "Save a checkpoint.",
+        "start": 210
+      },
+      {
+        "num": 5,
+        "title": "Edit. Add. Commit.",
+        "start": 280
+      },
+      {
+        "num": 6,
+        "title": "Scroll your timeline.",
+        "start": 354
+      },
+      {
+        "num": 7,
+        "title": "Compare versions.",
+        "start": 424
+      },
+      {
+        "num": 8,
+        "title": "Undo without fear.",
+        "start": 496
+      },
+      {
+        "num": 9,
+        "title": "What is GitHub?",
+        "start": 569
+      },
+      {
+        "num": 10,
+        "title": "How do I share my code?",
+        "start": 643
+      },
+      {
+        "num": 11,
+        "title": "How do I get code from GitHub?",
+        "start": 725
+      },
+      {
+        "num": 12,
+        "title": "How do I try ideas without breaking things?",
+        "start": 817
+      },
+      {
+        "num": 13,
+        "title": "My idea works. Now what?",
+        "start": 906
+      },
+      {
+        "num": 14,
+        "title": "How do real teams use git daily?",
+        "start": 996
+      },
+      {
+        "num": 15,
+        "title": "What do I write in a commit message?",
+        "start": 1087
+      },
+      {
+        "num": 16,
+        "title": "Ready to do a full git cycle?",
+        "start": 1180
+      },
+      {
+        "num": 17,
+        "title": "You went from scared to confident with git.",
+        "start": 1272
+      }
+    ]
+  },
+  "5": {
+    "ytId": "RG4N_VFmobw",
+    "key": "L05",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "What is code, really?",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Why so many languages?",
+        "start": 74
+      },
+      {
+        "num": 3,
+        "title": "What loads behind a site?",
+        "start": 152
+      },
+      {
+        "num": 4,
+        "title": "Client vs server.",
+        "start": 233
+      },
+      {
+        "num": 5,
+        "title": "HTTP — how devices talk.",
+        "start": 310
+      },
+      {
+        "num": 6,
+        "title": "What is an API?",
+        "start": 387
+      },
+      {
+        "num": 7,
+        "title": "JSON — how data travels.",
+        "start": 465
+      },
+      {
+        "num": 8,
+        "title": "What is a database?",
+        "start": 544
+      },
+      {
+        "num": 9,
+        "title": "SQL — talking to databases.",
+        "start": 635
+      },
+      {
+        "num": 10,
+        "title": "Frontend vs backend.",
+        "start": 721
+      },
+      {
+        "num": 11,
+        "title": "The tech stack.",
+        "start": 808
+      },
+      {
+        "num": 12,
+        "title": "What is the cloud?",
+        "start": 895
+      },
+      {
+        "num": 13,
+        "title": "Going live: deployment.",
+        "start": 980
+      },
+      {
+        "num": 14,
+        "title": "DNS and domains.",
+        "start": 1066
+      }
+    ]
+  },
+  "6": {
+    "ytId": "ekoJotOzhNY",
+    "key": "L06",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "What is a web address?",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Fetch the web from your terminal.",
+        "start": 68
+      },
+      {
+        "num": 3,
+        "title": "Ask for exactly what you want.",
+        "start": 136
+      },
+      {
+        "num": 4,
+        "title": "What does 200 mean?",
+        "start": 207
+      },
+      {
+        "num": 5,
+        "title": "Show your ID at the gate.",
+        "start": 276
+      },
+      {
+        "num": 6,
+        "title": "Don't just read — send data back.",
+        "start": 342
+      },
+      {
+        "num": 7,
+        "title": "Pull real data from a live API.",
+        "start": 410
+      },
+      {
+        "num": 8,
+        "title": "What is an API key?",
+        "start": 480
+      },
+      {
+        "num": 9,
+        "title": "Call GitHub's real API.",
+        "start": 545
+      },
+      {
+        "num": 10,
+        "title": "Turn docs into requests.",
+        "start": 616
+      },
+      {
+        "num": 11,
+        "title": "It said 401. Now what?",
+        "start": 683
+      },
+      {
+        "num": 12,
+        "title": "From curl to real code.",
+        "start": 747
+      }
+    ]
+  },
+  "7": {
+    "ytId": "Aepa-Eq9O0k",
+    "key": "L07",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Install Node.js.",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Talk to Node live.",
+        "start": 90
+      },
+      {
+        "num": 3,
+        "title": "Run a real script.",
+        "start": 180
+      },
+      {
+        "num": 4,
+        "title": "What is npm?",
+        "start": 268
+      },
+      {
+        "num": 5,
+        "title": "Start a real project.",
+        "start": 355
+      },
+      {
+        "num": 6,
+        "title": "Add others' code.",
+        "start": 444
+      },
+      {
+        "num": 7,
+        "title": "Hide the junk.",
+        "start": 534
+      },
+      {
+        "num": 8,
+        "title": "Build a web server.",
+        "start": 624
+      },
+      {
+        "num": 9,
+        "title": "Running your server.",
+        "start": 713
+      },
+      {
+        "num": 10,
+        "title": "What is localhost?",
+        "start": 778
+      },
+      {
+        "num": 11,
+        "title": "Adding routes.",
+        "start": 847
+      },
+      {
+        "num": 12,
+        "title": "Serving JSON.",
+        "start": 917
+      },
+      {
+        "num": 13,
+        "title": "Serving HTML.",
+        "start": 987
+      },
+      {
+        "num": 14,
+        "title": "Stopping and restarting.",
+        "start": 1056
+      },
+      {
+        "num": 15,
+        "title": "Level 7 challenge.",
+        "start": 1122
+      }
+    ]
+  },
+  "8": {
+    "ytId": "i-Tlg4BO854",
+    "key": "L08",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "What is Claude Code?",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Install Claude Code.",
+        "start": 71
+      },
+      {
+        "num": 3,
+        "title": "Your first conversation.",
+        "start": 146
+      },
+      {
+        "num": 4,
+        "title": "Read code with Claude.",
+        "start": 217
+      },
+      {
+        "num": 5,
+        "title": "Create files with Claude.",
+        "start": 289
+      },
+      {
+        "num": 6,
+        "title": "Edit code with Claude.",
+        "start": 358
+      },
+      {
+        "num": 7,
+        "title": "Build from a description.",
+        "start": 427
+      },
+      {
+        "num": 8,
+        "title": "Write better prompts.",
+        "start": 498
+      },
+      {
+        "num": 9,
+        "title": "Build it one ask at a time.",
+        "start": 567
+      },
+      {
+        "num": 10,
+        "title": "When Claude gets stuck.",
+        "start": 651
+      },
+      {
+        "num": 11,
+        "title": "Read it before you keep it.",
+        "start": 733
+      },
+      {
+        "num": 12,
+        "title": "Something broke? Debug together.",
+        "start": 810
+      },
+      {
+        "num": 13,
+        "title": "Claude Code plus Git.",
+        "start": 891
+      },
+      {
+        "num": 14,
+        "title": "When not to use Claude Code.",
+        "start": 973
+      },
+      {
+        "num": 15,
+        "title": "Tips that make Claude shine.",
+        "start": 1057
+      },
+      {
+        "num": 16,
+        "title": "Level 8 challenge.",
+        "start": 1145
+      }
+    ]
+  },
+  "9": {
+    "ytId": "fsB7miITjfE",
+    "key": "L09",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Teach Claude your way.",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Build your first skill.",
+        "start": 91
+      },
+      {
+        "num": 3,
+        "title": "Write great skills.",
+        "start": 182
+      },
+      {
+        "num": 4,
+        "title": "Share with your team.",
+        "start": 278
+      },
+      {
+        "num": 5,
+        "title": "Habits of great builders.",
+        "start": 368
+      }
+    ]
+  },
+  "10": {
+    "ytId": "micuHjrLIbc",
+    "key": "L10",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Connect Claude to everything.",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Add your first connection.",
+        "start": 92
+      },
+      {
+        "num": 3,
+        "title": "Organise & share.",
+        "start": 183
+      },
+      {
+        "num": 4,
+        "title": "Stay fast at scale.",
+        "start": 276
+      },
+      {
+        "num": 5,
+        "title": "MCP in practice.",
+        "start": 367
+      }
+    ]
+  },
+  "11": {
+    "ytId": "n0HrzLOnNdE",
+    "key": "L11",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "What is CLAUDE.md?",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Memory & Sessions.",
+        "start": 72
+      },
+      {
+        "num": 3,
+        "title": "The context window.",
+        "start": 145
+      },
+      {
+        "num": 4,
+        "title": "Specs, plans & handoffs.",
+        "start": 219
+      },
+      {
+        "num": 5,
+        "title": "Working smart at scale.",
+        "start": 292
+      }
+    ]
+  },
+  "12": {
+    "ytId": "pOFnBcOTdNU",
+    "key": "L12",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "What is a subagent?",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "What is a worktree?",
+        "start": 71
+      },
+      {
+        "num": 3,
+        "title": "Hooks & permissions.",
+        "start": 143
+      },
+      {
+        "num": 4,
+        "title": "What is headless mode?",
+        "start": 214
+      },
+      {
+        "num": 5,
+        "title": "Models, cost & your IDE.",
+        "start": 288
+      }
+    ]
+  },
+  "13": {
+    "ytId": "Z1a1ROxfphs",
+    "key": "L13",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Reading someone else&#39;s code.",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Understanding a function.",
+        "start": 75
+      },
+      {
+        "num": 3,
+        "title": "The debugging mindset.",
+        "start": 150
+      },
+      {
+        "num": 4,
+        "title": "console.log debugging.",
+        "start": 220
+      },
+      {
+        "num": 5,
+        "title": "Finding answers fast.",
+        "start": 294
+      },
+      {
+        "num": 6,
+        "title": "Working with external APIs.",
+        "start": 372
+      },
+      {
+        "num": 7,
+        "title": "Hide your secrets.",
+        "start": 447
+      },
+      {
+        "num": 8,
+        "title": "Five non-negotiables.",
+        "start": 535
+      },
+      {
+        "num": 9,
+        "title": "Go live to the world.",
+        "start": 626
+      },
+      {
+        "num": 10,
+        "title": "Your own web address.",
+        "start": 712
+      },
+      {
+        "num": 11,
+        "title": "How companies ship.",
+        "start": 799
+      },
+      {
+        "num": 12,
+        "title": "Your learning path.",
+        "start": 888
+      }
+    ]
+  },
+  "14": {
+    "ytId": "bCpSxvvF9f4",
+    "key": "L14",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "When HTTP isn't enough.",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "Plan before you build.",
+        "start": 77
+      },
+      {
+        "num": 3,
+        "title": "Set up the game.",
+        "start": 155
+      },
+      {
+        "num": 4,
+        "title": "Build the rules.",
+        "start": 234
+      },
+      {
+        "num": 5,
+        "title": "Pair two players.",
+        "start": 308
+      },
+      {
+        "num": 6,
+        "title": "Build the board.",
+        "start": 382
+      },
+      {
+        "num": 7,
+        "title": "Wire it up.",
+        "start": 456
+      },
+      {
+        "num": 8,
+        "title": "Debug live code.",
+        "start": 528
+      },
+      {
+        "num": 9,
+        "title": "Make it finished.",
+        "start": 602
+      },
+      {
+        "num": 10,
+        "title": "Launch your game.",
+        "start": 675
+      }
+    ]
+  },
+  "15": {
+    "ytId": "1ZnV2jSl_cQ",
+    "key": "L15-17",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Create your own specialized agents.",
+        "start": 0
+      }
+    ]
+  },
+  "16": {
+    "ytId": "1ZnV2jSl_cQ",
+    "key": "L15-17",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Drive Claude Code from your phone.",
+        "start": 78
+      }
+    ]
+  },
+  "17": {
+    "ytId": "1ZnV2jSl_cQ",
+    "key": "L15-17",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Command a fleet of agents.",
+        "start": 159
+      }
+    ]
+  }
+}

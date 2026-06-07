@@ -118,32 +118,40 @@
 </div>
 
 <script>
-const YT = (id) => `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&autoplay=1`;
+const YT = (id, start) => `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&autoplay=1${start?`&start=${start}`:''}`;
 const modal = document.getElementById('modal'), mframe = document.getElementById('mframe'), mtitle = document.getElementById('mtitle');
-function open(t, ytId){ mtitle.textContent = t; mframe.innerHTML = ytId ? `<iframe src="${YT(ytId)}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>` : `<div class="soon">This lesson goes live soon — new lessons drop daily.</div>`; modal.classList.add('on'); }
+function open(t, ytId, start){ mtitle.textContent = t; mframe.innerHTML = ytId ? `<iframe src="${YT(ytId, start)}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>` : `<div class="soon">This lesson goes live soon — new lessons drop daily.</div>`; modal.classList.add('on'); }
 function close(){ modal.classList.remove('on'); mframe.innerHTML=''; }
 document.getElementById('mx').onclick = close;
 modal.onclick = (e)=>{ if(e.target===modal) close(); };
 document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') close(); });
 
-fetch('learn-data.json').then(r=>r.json()).then(d=>{
-  const live = d.levels.flatMap(l=>l.lessons).filter(x=>x.ytId).length;
-  document.getElementById('stat').textContent = `17 levels · 151 lessons${live?` · ${live} live now`:''}`;
+Promise.all([
+  fetch('learn-data.json').then(r=>r.json()),
+  fetch('chapters.json').then(r=>r.json()).catch(()=>({}))
+]).then(([d, chapters])=>{
+  const liveLevels = Object.keys(chapters).length;
+  const liveLessons = Object.values(chapters).reduce((s,c)=>s+(c.lessons?c.lessons.length:0),0);
+  document.getElementById('stat').textContent = `17 levels · 151 lessons${liveLessons?` · ${liveLessons} live now`:''}`;
   const root = document.getElementById('course');
   for(const lv of d.levels){
+    const ch = chapters[lv.level]; // {ytId, lessons:[{num,title,start}]}
     const sec = document.createElement('section'); sec.className='level'; sec.id='L'+lv.level;
-    const grid = lv.lessons.map(ls=>{
-      const live = !!ls.ytId;
-      return `<button class="lesson" ${live?'':'disabled'} data-t="${(ls.num+'. '+ls.title).replace(/"/g,'&quot;')}" data-y="${ls.ytId||''}">
+    const grid = lv.lessons.map((ls,i)=>{
+      const cl = ch && ch.lessons ? (ch.lessons.find(x=>x.num===ls.num) || ch.lessons[i]) : null;
+      const live = !!(ch && ch.ytId);
+      const start = cl ? cl.start : 0;
+      return `<button class="lesson" ${live?'':'disabled'} data-t="${(ls.num+'. '+ls.title).replace(/"/g,'&quot;')}" data-y="${live?ch.ytId:''}" data-s="${start}">
         <span class="num">${String(ls.num).padStart(2,'0')}</span>
         <span><span class="ltitle">${ls.title}</span><span class="lstate">${live?'▶ WATCH':'COMING SOON'}</span></span>
         ${live?'<span class="play">▶</span>':''}
       </button>`;
     }).join('');
-    sec.innerHTML = `<h2><span class="lvtag">L${lv.level}</span> ${lv.levelTitle}</h2><div class="lessons">${grid}</div>`;
+    const lvlabel = lv.level===0 ? 'L0' : 'L'+lv.level;
+    sec.innerHTML = `<h2><span class="lvtag">${lvlabel}</span> ${lv.levelTitle}</h2><div class="lessons">${grid}</div>`;
     root.appendChild(sec);
   }
-  root.querySelectorAll('.lesson').forEach(b=>{ if(!b.disabled) b.onclick=()=>open(b.dataset.t, b.dataset.y); });
+  root.querySelectorAll('.lesson').forEach(b=>{ if(!b.disabled) b.onclick=()=>open(b.dataset.t, b.dataset.y, parseInt(b.dataset.s||'0',10)); });
 });
 
 // Email capture (Netlify Forms, AJAX) -> reveal cheat sheet
