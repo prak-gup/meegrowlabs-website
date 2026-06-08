@@ -8,12 +8,18 @@ export default function Navigation() {
           Meegrowlabs
         </a>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <a
+            href="/learn"
+            className="hidden sm:inline-block px-4 py-3 font-semibold text-slate-900 hover:text-slate-600 transition-colors"
+          >
+            Free Course
+          </a>
           <a
             href={CONTACT_FORM_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-3 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-colors shadow-lg"
+            className="px-6 sm:px-8 py-3 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-colors shadow-lg"
           >
             Get started
           </a>

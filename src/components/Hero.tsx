@@ -6,6 +6,17 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
         {/* Left: Text Content */}
         <div className="space-y-8">
+          <a
+            href="/learn"
+            className="group inline-flex items-center gap-2 rounded-full bg-mustard-400 px-4 py-2 text-sm font-bold text-slate-900 shadow-sm ring-1 ring-mustard-500/40 transition-colors hover:bg-mustard-500"
+          >
+            <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-mustard-300">
+              New · Free
+            </span>
+            Zero to AI Hero — 151 free lessons in Hindi &amp; English
+            <span className="transition-transform group-hover:translate-x-0.5">→</span>
+          </a>
+
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-slate-900 leading-tight">
             AI WORKFLOW AUTOMATION FOR MODERN TEAMS
           </h1>
