@@ -36,7 +36,7 @@
     ]
   },
   "2": {
-    "ytId": "brCdd-qm5hM",
+    "ytId": "bkF5YMH3sJU",
     "key": "L02",
     "lessons": [
       {
@@ -46,7 +46,7 @@
       },
       {
         "num": 2,
-        "title": "What’s here?",
+        "title": "What\u2019s here?",
         "start": 81
       },
       {
@@ -107,7 +107,7 @@
     ]
   },
   "3": {
-    "ytId": "2uvGqi-OJ6I",
+    "ytId": "L5KdUyAFFS0",
     "key": "L03",
     "lessons": [
       {
@@ -178,7 +178,7 @@
     ]
   },
   "4": {
-    "ytId": "tzf0tfrQDNM",
+    "ytId": "9F9J6nWR470",
     "key": "L04",
     "lessons": [
       {
@@ -269,7 +269,7 @@
     ]
   },
   "5": {
-    "ytId": "RG4N_VFmobw",
+    "ytId": "7TgqFYUDP28",
     "key": "L05",
     "lessons": [
       {
@@ -294,7 +294,7 @@
       },
       {
         "num": 5,
-        "title": "HTTP — how devices talk.",
+        "title": "HTTP \u2014 how devices talk.",
         "start": 310
       },
       {
@@ -304,7 +304,7 @@
       },
       {
         "num": 7,
-        "title": "JSON — how data travels.",
+        "title": "JSON \u2014 how data travels.",
         "start": 465
       },
       {
@@ -314,7 +314,7 @@
       },
       {
         "num": 9,
-        "title": "SQL — talking to databases.",
+        "title": "SQL \u2014 talking to databases.",
         "start": 635
       },
       {
@@ -375,7 +375,7 @@
       },
       {
         "num": 6,
-        "title": "Don't just read — send data back.",
+        "title": "Don't just read \u2014 send data back.",
         "start": 342
       },
       {
@@ -411,7 +411,7 @@
     ]
   },
   "7": {
-    "ytId": "Aepa-Eq9O0k",
+    "ytId": "4FSjHnq7Um0",
     "key": "L07",
     "lessons": [
       {
@@ -492,7 +492,7 @@
     ]
   },
   "8": {
-    "ytId": "i-Tlg4BO854",
+    "ytId": "wYrxNVIeoeQ",
     "key": "L08",
     "lessons": [
       {
@@ -702,7 +702,7 @@
     ]
   },
   "13": {
-    "ytId": "Z1a1ROxfphs",
+    "ytId": "1c5PhdLYLCs",
     "key": "L13",
     "lessons": [
       {
