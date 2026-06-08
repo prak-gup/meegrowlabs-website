@@ -35,6 +35,77 @@
       }
     ]
   },
+  "2": {
+    "ytId": "HYDPsUUsSYU",
+    "key": "L02",
+    "lessons": [
+      {
+        "num": 1,
+        "title": "Where am I?",
+        "start": 0
+      },
+      {
+        "num": 2,
+        "title": "What\u2019s here?",
+        "start": 81
+      },
+      {
+        "num": 3,
+        "title": "Moving into folders",
+        "start": 161
+      },
+      {
+        "num": 4,
+        "title": "Going back up",
+        "start": 247
+      },
+      {
+        "num": 5,
+        "title": "Going home.",
+        "start": 329
+      },
+      {
+        "num": 6,
+        "title": "Creating folders.",
+        "start": 408
+      },
+      {
+        "num": 7,
+        "title": "Creating files.",
+        "start": 485
+      },
+      {
+        "num": 8,
+        "title": "Deleting files.",
+        "start": 559
+      },
+      {
+        "num": 9,
+        "title": "Deleting a folder.",
+        "start": 634
+      },
+      {
+        "num": 10,
+        "title": "Copying a file.",
+        "start": 717
+      },
+      {
+        "num": 11,
+        "title": "Moving and renaming.",
+        "start": 800
+      },
+      {
+        "num": 12,
+        "title": "Putting it all together.",
+        "start": 884
+      },
+      {
+        "num": 13,
+        "title": "Your terminal cheat-sheet.",
+        "start": 968
+      }
+    ]
+  },
   "6": {
     "ytId": "ekoJotOzhNY",
     "key": "L06",
