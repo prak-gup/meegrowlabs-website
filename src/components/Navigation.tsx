@@ -16,6 +16,12 @@ export default function Navigation() {
             Free Course
           </a>
           <a
+            href="https://blog.meegrowlabs.com"
+            className="hidden sm:inline-block px-4 py-3 font-semibold text-slate-900 hover:text-slate-600 transition-colors"
+          >
+            Blog
+          </a>
+          <a
             href={CONTACT_FORM_LINK}
             target="_blank"
             rel="noopener noreferrer"
