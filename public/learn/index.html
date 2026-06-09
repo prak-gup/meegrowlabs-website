@@ -61,7 +61,7 @@
            display:flex;align-items:center;gap:14px;letter-spacing:-.5px}
   .lvtag{font-family:"JetBrains Mono",monospace;font-size:14px;background:var(--ink);color:var(--cream);padding:5px 11px;border-radius:6px;flex:none}
   .lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:0}
-  .lesson{display:flex;gap:13px;align-items:flex-start;padding:15px 20px;border-bottom:2px solid #e4ddc9;border-right:2px solid #e4ddc9;cursor:pointer;background:none;text-align:left;font:inherit;width:100%}
+  .lesson{display:flex;gap:13px;align-items:flex-start;padding:15px 20px;border-bottom:2px solid #e4ddc9;border-right:2px solid #e4ddc9;cursor:pointer;background:none;text-align:left;font:inherit;width:100%;text-decoration:none;color:inherit}
   .lesson:hover{background:#fff}
   .lesson:disabled{cursor:default;opacity:.5}
   .num{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--green);flex:none;width:34px;font-size:15px;padding-top:2px}
@@ -146,20 +146,18 @@ Promise.all([
     const ch = chapters[lv.level]; // {ytId, lessons:[{num,title,start}]}
     const sec = document.createElement('section'); sec.className='level'; sec.id='L'+lv.level;
     const grid = lv.lessons.map((ls,i)=>{
-      const cl = ch && ch.lessons ? (ch.lessons.find(x=>x.num===ls.num) || ch.lessons[i]) : null;
       const live = !!(ch && ch.ytId);
-      const start = cl ? cl.start : 0;
-      return `<button class="lesson" ${live?'':'disabled'} data-t="${(ls.num+'. '+ls.title).replace(/"/g,'&quot;')}" data-y="${live?ch.ytId:''}" data-s="${start}">
+      const href = ls.slug ? `/learn/${ls.slug}/` : '#';
+      return `<a class="lesson" href="${href}">
         <span class="num">${String(ls.num).padStart(2,'0')}</span>
-        <span><span class="ltitle">${ls.title}</span><span class="lstate">${live?'▶ WATCH':'COMING SOON'}</span></span>
-        ${live?'<span class="play">▶</span>':''}
-      </button>`;
+        <span><span class="ltitle">${ls.title}</span><span class="lstate">${live?'▶ WATCH':'OPEN LESSON'}</span></span>
+        <span class="play">▶</span>
+      </a>`;
     }).join('');
     const lvlabel = lv.level===0 ? 'L0' : 'L'+lv.level;
     sec.innerHTML = `<h2><span class="lvtag">${lvlabel}</span> ${lv.levelTitle}</h2><div class="lessons">${grid}</div>`;
     root.appendChild(sec);
   }
-  root.querySelectorAll('.lesson').forEach(b=>{ if(!b.disabled) b.onclick=()=>open(b.dataset.t, b.dataset.y, parseInt(b.dataset.s||'0',10)); });
 });
 
 // Email capture (Netlify Forms, AJAX) -> reveal cheat sheet
