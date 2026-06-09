@@ -13,7 +13,7 @@ export default function Hero() {
             <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-mustard-300">
               New · Free
             </span>
-            Zero to AI Hero — 151 free lessons in Hindi &amp; English
+            Zero to AI Hero — 151 free lessons · हिंदी &amp; English
             <span className="transition-transform group-hover:translate-x-0.5">→</span>
           </a>
 
