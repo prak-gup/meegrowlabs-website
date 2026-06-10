@@ -17,6 +17,7 @@
     "manifest": "loop-data.json",
     "videoMap": "loop-video-map.json",
     "accent": "#D97757",
-    "bilingual": false
+    "bilingual": false,
+    "bunnyLibrary": "680461"
   }
 ]
