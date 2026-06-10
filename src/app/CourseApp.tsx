@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
 import { useProgress } from '../learn/useProgress'
-import { loadCourses, loadManifest, loadVideoMap, ytEmbed, type Course, type Level, type Lesson, type VideoMap } from '../learn/course'
+import { loadCourses, loadManifest, loadVideoMap, embedUrl, type Course, type Level, type Lesson, type VideoMap } from '../learn/course'
 
 function usePath() {
   const [path, setPath] = useState(typeof window !== 'undefined' ? window.location.pathname : '/app')
@@ -80,7 +80,7 @@ export default function CourseApp() {
   if (current) {
     const idx = flat.findIndex((l) => l.id === current.id)
     const v = vmap[current.id]
-    const src = ytEmbed(lang === 'hi' ? v?.hi : v?.en) || ytEmbed(v?.en)
+    const src = embedUrl(lang === 'hi' ? v?.hi : v?.en, course) || embedUrl(v?.en, course)
     const prev = idx > 0 ? flat[idx - 1] : null
     const next = idx < flat.length - 1 ? flat[idx + 1] : null
     const done = progress[pkey(course.id, current.id)] === 'complete'
