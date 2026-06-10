@@ -26,6 +26,8 @@ export default function CourseApp() {
   const [manifest, setManifest] = useState<{ slug: string; levels: Level[]; flat: Lesson[]; vmap: VideoMap } | null>(null)
   const [lang, setLang] = useState<'en' | 'hi'>(() => (localStorage.getItem('hf_lang') as 'en' | 'hi') || 'en')
   const [expFilter, setExpFilter] = useState<string>('All')
+  const [langFilter, setLangFilter] = useState<string>('All')
+  const [statusFilter, setStatusFilter] = useState<string>('All')
 
   useEffect(() => { loadCatalog().then((d) => { setFeatured(d.featured); setPaths(d.paths); setCourses(d.courses) }) }, [])
   useEffect(() => { localStorage.setItem('hf_lang', lang) }, [lang])
@@ -54,11 +56,15 @@ export default function CourseApp() {
 
   // ---------- Catalog: smart home ----------
   if (!courseSlug && !isPath) {
-    const byId = Object.fromEntries(courses.map((c) => [c.id, c]))
     const pathBySlug = Object.fromEntries(paths.map((p) => [p.slug, p]))
     const inProgress = courses.filter((c) => { const d = courseDone(c.id); return d > 0 && d < lessonCount(c) })
     const expLevels = ['All', 'Beginner', 'Intermediate', 'Advanced']
-    const shown = expFilter === 'All' ? courses : courses.filter((c) => c.experience === expFilter)
+    const cStatus = (c: Course) => { const d = courseDone(c.id), t = lessonCount(c); return d === 0 ? 'Not started' : d >= t ? 'Completed' : 'In progress' }
+    const shown = courses.filter((c) =>
+      (expFilter === 'All' || c.experience === expFilter) &&
+      (langFilter === 'All' || (langFilter === 'हिंदी + English' ? c.bilingual : !c.bilingual)) &&
+      (statusFilter === 'All'
+        || (statusFilter === 'New' ? c.isNew : statusFilter === 'Trending' ? c.trending : cStatus(c) === statusFilter)))
     return (
       <Shell onHome={() => go('/app')} onSignOut={signOut} right={null}>
         <h1 className="text-3xl font-display font-bold text-slate-900">Explore courses</h1>
@@ -104,56 +110,42 @@ export default function CourseApp() {
           </section>
         )}
 
-        {/* Guided paths */}
-        <section className="mt-8">
-          <h2 className="font-display font-bold text-lg text-slate-900">Guided paths</h2>
-          <div className="mt-3 space-y-3">
-            {paths.map((p) => {
-              const pc = p.courseIds.map((id) => byId[id]).filter(Boolean)
-              const totalLessons = pc.reduce((s, c) => s + lessonCount(c), 0)
-              const done = pc.reduce((s, c) => s + courseDone(c.id), 0)
-              return (
-                <button key={p.id} onClick={() => go(`/app/path/${p.slug}`)}
-                  className="w-full text-left border-4 border-slate-900 rounded-2xl p-5 bg-[#F7F3E9] hover:bg-white shadow-[6px_6px_0_#0F0F0F]">
+        {/* Left filter sidebar + filtered course library */}
+        <div className="mt-8 grid md:grid-cols-[190px_1fr] gap-6">
+          <aside className="space-y-5">
+            <FilterGroup title="Paths">
+              {paths.map((p) => <FilterLink key={p.id} onClick={() => go(`/app/path/${p.slug}`)} active={false}>{p.name}{p.badge ? ' 🔥' : ''}</FilterLink>)}
+            </FilterGroup>
+            <FilterGroup title="Experience">
+              {expLevels.map((l) => <FilterLink key={l} onClick={() => setExpFilter(l)} active={expFilter === l}>{l}</FilterLink>)}
+            </FilterGroup>
+            <FilterGroup title="Language">
+              {['All', 'हिंदी + English', 'English only'].map((l) => <FilterLink key={l} onClick={() => setLangFilter(l)} active={langFilter === l}>{l}</FilterLink>)}
+            </FilterGroup>
+            <FilterGroup title="Status">
+              {['All', 'New', 'Trending', 'In progress', 'Completed', 'Not started'].map((l) => <FilterLink key={l} onClick={() => setStatusFilter(l)} active={statusFilter === l}>{l}</FilterLink>)}
+            </FilterGroup>
+          </aside>
+          <div>
+            <div className="flex items-center justify-between">
+              <h2 className="font-display font-bold text-lg text-slate-900">{shown.length} course{shown.length === 1 ? '' : 's'}</h2>
+              {(expFilter !== 'All' || langFilter !== 'All' || statusFilter !== 'All') &&
+                <button onClick={() => { setExpFilter('All'); setLangFilter('All'); setStatusFilter('All') }} className="text-sm text-green-700 font-semibold">Clear filters</button>}
+            </div>
+            <div className="mt-3 grid sm:grid-cols-2 gap-3">
+              {shown.map((c) => (
+                <button key={c.id} onClick={() => go(`/app/${c.slug}`)} className="text-left border-2 border-slate-900 rounded-xl p-4 bg-white hover:bg-[#F7F3E9]">
                   <div className="flex items-center gap-2">
-                    <span className="h-2 w-12 rounded-full" style={{ background: p.accent }} />
-                    <span className="font-mono text-xs uppercase tracking-wider text-slate-500">{p.kind} · {p.difficulty}</span>
-                    {p.badge && <span className="text-xs font-bold bg-slate-900 text-white px-2 py-0.5 rounded-full">{p.badge}</span>}
+                    <span className="font-display font-bold text-slate-900">{c.title}</span>
+                    {c.isNew && <span className="text-[10px] font-bold bg-[#D97757] text-white px-1.5 py-0.5 rounded">NEW</span>}
                   </div>
-                  <div className="mt-2 text-xl font-display font-bold text-slate-900">{p.name}</div>
-                  <p className="mt-1 text-slate-600 text-sm">{p.blurb}</p>
-                  <div className="mt-3 flex items-center gap-3 text-sm">
-                    <span className="font-semibold text-slate-700">{pc.length} course{pc.length === 1 ? '' : 's'} · {totalLessons} lessons</span>
-                    {done > 0 && <span className="font-mono text-xs text-green-700">{done}/{totalLessons} done</span>}
-                    <span className="ml-auto font-semibold text-green-700">View →</span>
-                  </div>
+                  <div className="text-xs text-slate-500">{c.experience} · {c.subtitle}{courseDone(c.id) ? ` · ${courseDone(c.id)} done` : ''}</div>
                 </button>
-              )
-            })}
+              ))}
+              {!shown.length && <p className="text-slate-500 col-span-2">No courses match these filters.</p>}
+            </div>
           </div>
-        </section>
-
-        {/* Browse all by experience */}
-        <section className="mt-8">
-          <h2 className="font-display font-bold text-lg text-slate-900">All courses</h2>
-          <div className="mt-2 flex gap-2 flex-wrap">
-            {expLevels.map((l) => (
-              <button key={l} onClick={() => setExpFilter(l)}
-                className={`text-sm font-bold border-2 border-slate-900 rounded-full px-3 py-1 ${expFilter === l ? 'bg-slate-900 text-white' : 'bg-white'}`}>{l}</button>
-            ))}
-          </div>
-          <div className="mt-4 grid sm:grid-cols-2 gap-3">
-            {shown.map((c) => (
-              <button key={c.id} onClick={() => go(`/app/${c.slug}`)} className="text-left border-2 border-slate-900 rounded-xl p-4 bg-white hover:bg-[#F7F3E9]">
-                <div className="flex items-center gap-2">
-                  <span className="font-display font-bold text-slate-900">{c.title}</span>
-                  {c.isNew && <span className="text-[10px] font-bold bg-[#D97757] text-white px-1.5 py-0.5 rounded">NEW</span>}
-                </div>
-                <div className="text-xs text-slate-500">{c.experience} · {c.subtitle}{courseDone(c.id) ? ` · ${courseDone(c.id)} done` : ''}</div>
-              </button>
-            ))}
-          </div>
-        </section>
+        </div>
       </Shell>
     )
   }
@@ -278,4 +270,14 @@ function Shell({ children, onSignOut, onHome, right }: { children: React.ReactNo
 const Center = ({ children }: { children: React.ReactNode }) => <div className="min-h-screen bg-cream-100 flex items-center justify-center text-slate-600">{children}</div>
 const Tab = ({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) => (
   <button onClick={onClick} className={`font-bold border-[3px] border-slate-900 rounded-full px-4 py-1.5 ${on ? 'bg-green-700 text-white' : 'bg-[#F7F3E9]'}`}>{children}</button>
+)
+const FilterGroup = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <div>
+    <div className="font-mono text-xs uppercase tracking-wider text-slate-500 mb-1.5">{title}</div>
+    {/* chips that wrap on mobile, vertical list on desktop */}
+    <div className="flex flex-wrap gap-x-3 gap-y-1 md:flex-col md:gap-0">{children}</div>
+  </div>
+)
+const FilterLink = ({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) => (
+  <button onClick={onClick} className={`text-left text-sm py-1 ${active ? 'font-bold text-green-700' : 'text-slate-700 hover:text-slate-900'}`}>{children}</button>
 )
