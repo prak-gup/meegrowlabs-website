@@ -1,0 +1,100 @@
+{
+  "levels": [
+    {
+      "level": 1,
+      "levelTitle": "Loop Engineering",
+      "lessons": [
+        {
+          "id": "ep01",
+          "num": 1,
+          "title": "What Is Loop Engineering?",
+          "slug": "what-is-loop-engineering"
+        },
+        {
+          "id": "ep02",
+          "num": 2,
+          "title": "Prompting → Harness → Loop",
+          "slug": "prompting-harness-loop"
+        },
+        {
+          "id": "ep03",
+          "num": 3,
+          "title": "Anatomy of a Loop",
+          "slug": "anatomy-of-a-loop"
+        },
+        {
+          "id": "ep04",
+          "num": 4,
+          "title": "Automations — the Heartbeat",
+          "slug": "automations-the-heartbeat"
+        },
+        {
+          "id": "ep05",
+          "num": 5,
+          "title": "Worktrees — Parallel Without Chaos",
+          "slug": "worktrees-parallel-without-chaos"
+        },
+        {
+          "id": "ep06",
+          "num": 6,
+          "title": "Skills — Stop Re-Explaining",
+          "slug": "skills-stop-re-explaining"
+        },
+        {
+          "id": "ep07",
+          "num": 7,
+          "title": "Connectors — Touch Your Tools",
+          "slug": "connectors-touch-your-tools"
+        },
+        {
+          "id": "ep08",
+          "num": 8,
+          "title": "Sub-agents — Maker vs Checker",
+          "slug": "sub-agents-maker-vs-checker"
+        },
+        {
+          "id": "ep09",
+          "num": 9,
+          "title": "Memory — State on Disk",
+          "slug": "memory-state-on-disk"
+        },
+        {
+          "id": "ep10",
+          "num": 10,
+          "title": "One Loop, End to End",
+          "slug": "one-loop-end-to-end"
+        },
+        {
+          "id": "ep11",
+          "num": 11,
+          "title": "The Catch — Verify, Don't Surrender",
+          "slug": "the-catch-verify-dont-surrender"
+        },
+        {
+          "id": "ep12",
+          "num": 12,
+          "title": "Build the Loop, Stay the Engineer",
+          "slug": "build-the-loop-stay-the-engineer"
+        },
+        {
+          "id": "ep13",
+          "num": 13,
+          "title": "Use Case: Nightly Bug-Triage Loop",
+          "slug": "use-case-nightly-bug-triage-loop"
+        },
+        {
+          "id": "ep14",
+          "num": 14,
+          "title": "Use Case: The PR-Review Loop",
+          "slug": "use-case-the-pr-review-loop"
+        },
+        {
+          "id": "ep15",
+          "num": 15,
+          "title": "Use Case: The Docs & Changelog Loop",
+          "slug": "use-case-the-docs-and-changelog-loop"
+        }
+      ]
+    }
+  ]
+}

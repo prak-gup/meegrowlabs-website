@@ -1,0 +1,22 @@
+[
+  {
+    "id": "zero-to-ai-hero",
+    "slug": "zero-to-ai-hero",
+    "title": "Zero to AI Hero",
+    "subtitle": "From 'what's a file?' to AI agents — 151 lessons, हिंदी & English.",
+    "manifest": "learn-data.json",
+    "videoMap": "lesson-video-map.json",
+    "accent": "#1F8A4C",
+    "bilingual": true
+  },
+  {
+    "id": "loop-engineering",
+    "slug": "loop-engineering",
+    "title": "Loop Engineering",
+    "subtitle": "Go from prompting to self-running AI loops — 15 episodes.",
+    "manifest": "loop-data.json",
+    "videoMap": "loop-video-map.json",
+    "accent": "#D97757",
+    "bilingual": false
+  }
+]
