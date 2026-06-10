@@ -1,0 +1,52 @@
+{
+  "levels": [
+    {
+      "level": 1,
+      "levelTitle": "Computers Are Not Magic",
+      "lessons": [
+        {
+          "id": "L01-01",
+          "num": 1,
+          "title": "What is a file?",
+          "ytId": "",
+          "slug": "what-is-a-file"
+        },
+        {
+          "id": "L01-02",
+          "num": 2,
+          "title": "What is a folder?",
+          "ytId": "",
+          "slug": "what-is-a-folder"
+        },
+        {
+          "id": "L01-03",
+          "num": 3,
+          "title": "What is a file path?",
+          "ytId": "",
+          "slug": "what-is-a-file-path"
+        },
+        {
+          "id": "L01-04",
+          "num": 4,
+          "title": "What is a file type?",
+          "ytId": "",
+          "slug": "what-is-a-file-type"
+        },
+        {
+          "id": "L01-05",
+          "num": 5,
+          "title": "What is a program?",
+          "ytId": "",
+          "slug": "what-is-a-program"
+        },
+        {
+          "id": "L01-06",
+          "num": 6,
+          "title": "What is a terminal?",
+          "ytId": "",
+          "slug": "what-is-a-terminal"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "levels": [
+    {
+      "level": 4,
+      "levelTitle": "Your Code Has a History",
+      "lessons": [
+        {
+          "id": "L04-01",
+          "num": 1,
+          "title": "Why use version control?",
+          "ytId": "",
+          "slug": "why-use-version-control"
+        },
+        {
+          "id": "L04-02",
+          "num": 2,
+          "title": "Switch on git init.",
+          "ytId": "",
+          "slug": "switch-on-git-init"
+        },
+        {
+          "id": "L04-03",
+          "num": 3,
+          "title": "Choose with git add.",
+          "ytId": "",
+          "slug": "choose-with-git-add"
+        },
+        {
+          "id": "L04-04",
+          "num": 4,
+          "title": "Save a checkpoint.",
+          "ytId": "",
+          "slug": "save-a-checkpoint"
+        },
+        {
+          "id": "L04-05",
+          "num": 5,
+          "title": "Edit. Add. Commit.",
+          "ytId": "",
+          "slug": "edit-add-commit"
+        },
+        {
+          "id": "L04-06",
+          "num": 6,
+          "title": "Scroll your timeline.",
+          "ytId": "",
+          "slug": "scroll-your-timeline"
+        },
+        {
+          "id": "L04-07",
+          "num": 7,
+          "title": "Compare versions.",
+          "ytId": "",
+          "slug": "compare-versions"
+        },
+        {
+          "id": "L04-08",
+          "num": 8,
+          "title": "Undo without fear.",
+          "ytId": "",
+          "slug": "undo-without-fear"
+        },
+        {
+          "id": "L04-09",
+          "num": 9,
+          "title": "What is GitHub?",
+          "ytId": "",
+          "slug": "what-is-github"
+        },
+        {
+          "id": "L04-10",
+          "num": 10,
+          "title": "How do I share my code?",
+          "ytId": "",
+          "slug": "how-do-i-share-my-code"
+        },
+        {
+          "id": "L04-11",
+          "num": 11,
+          "title": "How do I get code from GitHub?",
+          "ytId": "",
+          "slug": "how-do-i-get-code-from-github"
+        },
+        {
+          "id": "L04-12",
+          "num": 12,
+          "title": "How do I try ideas without breaking things?",
+          "ytId": "",
+          "slug": "how-do-i-try-ideas-without-breaking-things"
+        },
+        {
+          "id": "L04-13",
+          "num": 13,
+          "title": "My idea works. Now what?",
+          "ytId": "",
+          "slug": "my-idea-works-now-what"
+        },
+        {
+          "id": "L04-14",
+          "num": 14,
+          "title": "How do real teams use git daily?",
+          "ytId": "",
+          "slug": "how-do-real-teams-use-git-daily"
+        },
+        {
+          "id": "L04-15",
+          "num": 15,
+          "title": "What do I write in a commit message?",
+          "ytId": "",
+          "slug": "what-do-i-write-in-a-commit-message"
+        },
+        {
+          "id": "L04-16",
+          "num": 16,
+          "title": "Ready to do a full git cycle?",
+          "ytId": "",
+          "slug": "ready-to-do-a-full-git-cycle"
+        },
+        {
+          "id": "L04-17",
+          "num": 17,
+          "title": "You went from scared to confident with git.",
+          "ytId": "",
+          "slug": "you-went-from-scared-to-confident-with-git"
+        }
+      ]
+    }
+  ]
+}

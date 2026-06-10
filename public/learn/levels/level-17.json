@@ -1,0 +1,17 @@
+{
+  "levels": [
+    {
+      "level": 17,
+      "levelTitle": "Opus 4.8 & Workflows",
+      "lessons": [
+        {
+          "id": "L17-01",
+          "num": 1,
+          "title": "Command a fleet of agents.",
+          "ytId": "",
+          "slug": "command-a-fleet-of-agents"
+        }
+      ]
+    }
+  ]
+}

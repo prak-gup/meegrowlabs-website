@@ -1,0 +1,94 @@
+{
+  "levels": [
+    {
+      "level": 6,
+      "levelTitle": "Talk to the Internet",
+      "lessons": [
+        {
+          "id": "L06-01",
+          "num": 1,
+          "title": "What is a web address?",
+          "ytId": "",
+          "slug": "what-is-a-web-address"
+        },
+        {
+          "id": "L06-02",
+          "num": 2,
+          "title": "Fetch the web from your terminal.",
+          "ytId": "",
+          "slug": "fetch-the-web-from-your-terminal"
+        },
+        {
+          "id": "L06-03",
+          "num": 3,
+          "title": "Ask for exactly what you want.",
+          "ytId": "",
+          "slug": "ask-for-exactly-what-you-want"
+        },
+        {
+          "id": "L06-04",
+          "num": 4,
+          "title": "What does 200 mean?",
+          "ytId": "",
+          "slug": "what-does-200-mean"
+        },
+        {
+          "id": "L06-05",
+          "num": 5,
+          "title": "Show your ID at the gate.",
+          "ytId": "",
+          "slug": "show-your-id-at-the-gate"
+        },
+        {
+          "id": "L06-06",
+          "num": 6,
+          "title": "Don't just read — send data back.",
+          "ytId": "",
+          "slug": "dont-just-read-send-data-back"
+        },
+        {
+          "id": "L06-07",
+          "num": 7,
+          "title": "Pull real data from a live API.",
+          "ytId": "",
+          "slug": "pull-real-data-from-a-live-api"
+        },
+        {
+          "id": "L06-08",
+          "num": 8,
+          "title": "What is an API key?",
+          "ytId": "",
+          "slug": "what-is-an-api-key"
+        },
+        {
+          "id": "L06-09",
+          "num": 9,
+          "title": "Call GitHub's real API.",
+          "ytId": "",
+          "slug": "call-githubs-real-api"
+        },
+        {
+          "id": "L06-10",
+          "num": 10,
+          "title": "Turn docs into requests.",
+          "ytId": "",
+          "slug": "turn-docs-into-requests"
+        },
+        {
+          "id": "L06-11",
+          "num": 11,
+          "title": "It said 401. Now what?",
+          "ytId": "",
+          "slug": "it-said-401-now-what"
+        },
+        {
+          "id": "L06-12",
+          "num": 12,
+          "title": "From curl to real code.",
+          "ytId": "",
+          "slug": "from-curl-to-real-code"
+        }
+      ]
+    }
+  ]
+}

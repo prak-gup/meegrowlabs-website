@@ -1,0 +1,45 @@
+{
+  "levels": [
+    {
+      "level": 10,
+      "levelTitle": "MCP — Connect Claude to Everything",
+      "lessons": [
+        {
+          "id": "L10-01",
+          "num": 1,
+          "title": "Connect Claude to everything.",
+          "ytId": "",
+          "slug": "connect-claude-to-everything"
+        },
+        {
+          "id": "L10-02",
+          "num": 2,
+          "title": "Add your first connection.",
+          "ytId": "",
+          "slug": "add-your-first-connection"
+        },
+        {
+          "id": "L10-03",
+          "num": 3,
+          "title": "Organise & share.",
+          "ytId": "",
+          "slug": "organise-and-share"
+        },
+        {
+          "id": "L10-04",
+          "num": 4,
+          "title": "Stay fast at scale.",
+          "ytId": "",
+          "slug": "stay-fast-at-scale"
+        },
+        {
+          "id": "L10-05",
+          "num": 5,
+          "title": "MCP in practice.",
+          "ytId": "",
+          "slug": "mcp-in-practice"
+        }
+      ]
+    }
+  ]
+}

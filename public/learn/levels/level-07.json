@@ -1,0 +1,115 @@
+{
+  "levels": [
+    {
+      "level": 7,
+      "levelTitle": "Building With Real Tools",
+      "lessons": [
+        {
+          "id": "L07-01",
+          "num": 1,
+          "title": "Install Node.js.",
+          "ytId": "",
+          "slug": "install-nodejs"
+        },
+        {
+          "id": "L07-02",
+          "num": 2,
+          "title": "Talk to Node live.",
+          "ytId": "",
+          "slug": "talk-to-node-live"
+        },
+        {
+          "id": "L07-03",
+          "num": 3,
+          "title": "Run a real script.",
+          "ytId": "",
+          "slug": "run-a-real-script"
+        },
+        {
+          "id": "L07-04",
+          "num": 4,
+          "title": "What is npm?",
+          "ytId": "",
+          "slug": "what-is-npm"
+        },
+        {
+          "id": "L07-05",
+          "num": 5,
+          "title": "Start a real project.",
+          "ytId": "",
+          "slug": "start-a-real-project"
+        },
+        {
+          "id": "L07-06",
+          "num": 6,
+          "title": "Add others' code.",
+          "ytId": "",
+          "slug": "add-others-code"
+        },
+        {
+          "id": "L07-07",
+          "num": 7,
+          "title": "Hide the junk.",
+          "ytId": "",
+          "slug": "hide-the-junk"
+        },
+        {
+          "id": "L07-08",
+          "num": 8,
+          "title": "Build a web server.",
+          "ytId": "",
+          "slug": "build-a-web-server"
+        },
+        {
+          "id": "L07-09",
+          "num": 9,
+          "title": "Running your server.",
+          "ytId": "",
+          "slug": "running-your-server"
+        },
+        {
+          "id": "L07-10",
+          "num": 10,
+          "title": "What is localhost?",
+          "ytId": "",
+          "slug": "what-is-localhost"
+        },
+        {
+          "id": "L07-11",
+          "num": 11,
+          "title": "Adding routes.",
+          "ytId": "",
+          "slug": "adding-routes"
+        },
+        {
+          "id": "L07-12",
+          "num": 12,
+          "title": "Serving JSON.",
+          "ytId": "",
+          "slug": "serving-json"
+        },
+        {
+          "id": "L07-13",
+          "num": 13,
+          "title": "Serving HTML.",
+          "ytId": "",
+          "slug": "serving-html"
+        },
+        {
+          "id": "L07-14",
+          "num": 14,
+          "title": "Stopping and restarting.",
+          "ytId": "",
+          "slug": "stopping-and-restarting"
+        },
+        {
+          "id": "L07-15",
+          "num": 15,
+          "title": "Level 7 challenge.",
+          "ytId": "",
+          "slug": "level-7-challenge"
+        }
+      ]
+    }
+  ]
+}

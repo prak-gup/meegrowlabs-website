@@ -1,0 +1,101 @@
+{
+  "levels": [
+    {
+      "level": 3,
+      "levelTitle": "Reading and Writing Files",
+      "lessons": [
+        {
+          "id": "L03-01",
+          "num": 1,
+          "title": "Looking inside files.",
+          "ytId": "",
+          "slug": "looking-inside-files"
+        },
+        {
+          "id": "L03-02",
+          "num": 2,
+          "title": "Peeking at the top.",
+          "ytId": "",
+          "slug": "peeking-at-the-top"
+        },
+        {
+          "id": "L03-03",
+          "num": 3,
+          "title": "Peeking at the end.",
+          "ytId": "",
+          "slug": "peeking-at-the-end"
+        },
+        {
+          "id": "L03-04",
+          "num": 4,
+          "title": "Printing text.",
+          "ytId": "",
+          "slug": "printing-text"
+        },
+        {
+          "id": "L03-05",
+          "num": 5,
+          "title": "Save it to a file.",
+          "ytId": "",
+          "slug": "save-it-to-a-file"
+        },
+        {
+          "id": "L03-06",
+          "num": 6,
+          "title": "Add, don't erase.",
+          "ytId": "",
+          "slug": "add-dont-erase"
+        },
+        {
+          "id": "L03-07",
+          "num": 7,
+          "title": "Copy a file in one line.",
+          "ytId": "",
+          "slug": "copy-a-file-in-one-line"
+        },
+        {
+          "id": "L03-08",
+          "num": 8,
+          "title": "Ctrl-F for any file.",
+          "ytId": "",
+          "slug": "ctrl-f-for-any-file"
+        },
+        {
+          "id": "L03-09",
+          "num": 9,
+          "title": "Searching everywhere.",
+          "ytId": "",
+          "slug": "searching-everywhere"
+        },
+        {
+          "id": "L03-10",
+          "num": 10,
+          "title": "Chaining with pipes.",
+          "ytId": "",
+          "slug": "chaining-with-pipes"
+        },
+        {
+          "id": "L03-11",
+          "num": 11,
+          "title": "Counting with wc.",
+          "ytId": "",
+          "slug": "counting-with-wc"
+        },
+        {
+          "id": "L03-12",
+          "num": 12,
+          "title": "Play detective.",
+          "ytId": "",
+          "slug": "play-detective"
+        },
+        {
+          "id": "L03-13",
+          "num": 13,
+          "title": "Level 3 locked in.",
+          "ytId": "",
+          "slug": "level-3-locked-in"
+        }
+      ]
+    }
+  ]
+}

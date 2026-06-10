@@ -1,0 +1,122 @@
+{
+  "levels": [
+    {
+      "level": 8,
+      "levelTitle": "Claude Code — Your AI Pair Programmer",
+      "lessons": [
+        {
+          "id": "L08-01",
+          "num": 1,
+          "title": "What is Claude Code?",
+          "ytId": "",
+          "slug": "what-is-claude-code"
+        },
+        {
+          "id": "L08-02",
+          "num": 2,
+          "title": "Install Claude Code.",
+          "ytId": "",
+          "slug": "install-claude-code"
+        },
+        {
+          "id": "L08-03",
+          "num": 3,
+          "title": "Your first conversation.",
+          "ytId": "",
+          "slug": "your-first-conversation"
+        },
+        {
+          "id": "L08-04",
+          "num": 4,
+          "title": "Read code with Claude.",
+          "ytId": "",
+          "slug": "read-code-with-claude"
+        },
+        {
+          "id": "L08-05",
+          "num": 5,
+          "title": "Create files with Claude.",
+          "ytId": "",
+          "slug": "create-files-with-claude"
+        },
+        {
+          "id": "L08-06",
+          "num": 6,
+          "title": "Edit code with Claude.",
+          "ytId": "",
+          "slug": "edit-code-with-claude"
+        },
+        {
+          "id": "L08-07",
+          "num": 7,
+          "title": "Build from a description.",
+          "ytId": "",
+          "slug": "build-from-a-description"
+        },
+        {
+          "id": "L08-08",
+          "num": 8,
+          "title": "Write better prompts.",
+          "ytId": "",
+          "slug": "write-better-prompts"
+        },
+        {
+          "id": "L08-09",
+          "num": 9,
+          "title": "Build it one ask at a time.",
+          "ytId": "",
+          "slug": "build-it-one-ask-at-a-time"
+        },
+        {
+          "id": "L08-10",
+          "num": 10,
+          "title": "When Claude gets stuck.",
+          "ytId": "",
+          "slug": "when-claude-gets-stuck"
+        },
+        {
+          "id": "L08-11",
+          "num": 11,
+          "title": "Read it before you keep it.",
+          "ytId": "",
+          "slug": "read-it-before-you-keep-it"
+        },
+        {
+          "id": "L08-12",
+          "num": 12,
+          "title": "Something broke? Debug together.",
+          "ytId": "",
+          "slug": "something-broke-debug-together"
+        },
+        {
+          "id": "L08-13",
+          "num": 13,
+          "title": "Claude Code plus Git.",
+          "ytId": "",
+          "slug": "claude-code-plus-git"
+        },
+        {
+          "id": "L08-14",
+          "num": 14,
+          "title": "When not to use Claude Code.",
+          "ytId": "",
+          "slug": "when-not-to-use-claude-code"
+        },
+        {
+          "id": "L08-15",
+          "num": 15,
+          "title": "Tips that make Claude shine.",
+          "ytId": "",
+          "slug": "tips-that-make-claude-shine"
+        },
+        {
+          "id": "L08-16",
+          "num": 16,
+          "title": "Level 8 challenge.",
+          "ytId": "",
+          "slug": "level-8-challenge"
+        }
+      ]
+    }
+  ]
+}

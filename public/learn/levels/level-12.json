@@ -1,0 +1,45 @@
+{
+  "levels": [
+    {
+      "level": 12,
+      "levelTitle": "Claude Code Advanced",
+      "lessons": [
+        {
+          "id": "L12-01",
+          "num": 1,
+          "title": "What is a subagent?",
+          "ytId": "",
+          "slug": "what-is-a-subagent"
+        },
+        {
+          "id": "L12-02",
+          "num": 2,
+          "title": "What is a worktree?",
+          "ytId": "",
+          "slug": "what-is-a-worktree"
+        },
+        {
+          "id": "L12-03",
+          "num": 3,
+          "title": "Hooks & permissions.",
+          "ytId": "",
+          "slug": "hooks-and-permissions"
+        },
+        {
+          "id": "L12-04",
+          "num": 4,
+          "title": "What is headless mode?",
+          "ytId": "",
+          "slug": "what-is-headless-mode"
+        },
+        {
+          "id": "L12-05",
+          "num": 5,
+          "title": "Models, cost & your IDE.",
+          "ytId": "",
+          "slug": "models-cost-and-your-ide"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "levels": [
+    {
+      "level": 15,
+      "levelTitle": "Claude Agents",
+      "lessons": [
+        {
+          "id": "L15-01",
+          "num": 1,
+          "title": "Create your own specialized agents.",
+          "ytId": "",
+          "slug": "create-your-own-specialized-agents"
+        }
+      ]
+    }
+  ]
+}

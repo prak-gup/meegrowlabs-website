@@ -1,0 +1,45 @@
+{
+  "levels": [
+    {
+      "level": 11,
+      "levelTitle": "Context Is Everything",
+      "lessons": [
+        {
+          "id": "L11-01",
+          "num": 1,
+          "title": "What is CLAUDE.md?",
+          "ytId": "",
+          "slug": "what-is-claudemd"
+        },
+        {
+          "id": "L11-02",
+          "num": 2,
+          "title": "Memory & Sessions.",
+          "ytId": "",
+          "slug": "memory-and-sessions"
+        },
+        {
+          "id": "L11-03",
+          "num": 3,
+          "title": "The context window.",
+          "ytId": "",
+          "slug": "the-context-window"
+        },
+        {
+          "id": "L11-04",
+          "num": 4,
+          "title": "Specs, plans & handoffs.",
+          "ytId": "",
+          "slug": "specs-plans-and-handoffs"
+        },
+        {
+          "id": "L11-05",
+          "num": 5,
+          "title": "Working smart at scale.",
+          "ytId": "",
+          "slug": "working-smart-at-scale"
+        }
+      ]
+    }
+  ]
+}

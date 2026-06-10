@@ -1,0 +1,45 @@
+{
+  "levels": [
+    {
+      "level": 9,
+      "levelTitle": "Claude Skills — Teach Claude Your Workflow",
+      "lessons": [
+        {
+          "id": "L09-01",
+          "num": 1,
+          "title": "Teach Claude your way.",
+          "ytId": "",
+          "slug": "teach-claude-your-way"
+        },
+        {
+          "id": "L09-02",
+          "num": 2,
+          "title": "Build your first skill.",
+          "ytId": "",
+          "slug": "build-your-first-skill"
+        },
+        {
+          "id": "L09-03",
+          "num": 3,
+          "title": "Write great skills.",
+          "ytId": "",
+          "slug": "write-great-skills"
+        },
+        {
+          "id": "L09-04",
+          "num": 4,
+          "title": "Share with your team.",
+          "ytId": "",
+          "slug": "share-with-your-team"
+        },
+        {
+          "id": "L09-05",
+          "num": 5,
+          "title": "Habits of great builders.",
+          "ytId": "",
+          "slug": "habits-of-great-builders"
+        }
+      ]
+    }
+  ]
+}

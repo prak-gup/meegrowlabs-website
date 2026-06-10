@@ -1,0 +1,101 @@
+{
+  "levels": [
+    {
+      "level": 2,
+      "levelTitle": "Your First 30 Minutes in the Terminal",
+      "lessons": [
+        {
+          "id": "L02-01",
+          "num": 1,
+          "title": "Where am I?",
+          "ytId": "",
+          "slug": "where-am-i"
+        },
+        {
+          "id": "L02-02",
+          "num": 2,
+          "title": "What’s here?",
+          "ytId": "",
+          "slug": "what-s-here"
+        },
+        {
+          "id": "L02-03",
+          "num": 3,
+          "title": "Moving into folders",
+          "ytId": "",
+          "slug": "moving-into-folders"
+        },
+        {
+          "id": "L02-04",
+          "num": 4,
+          "title": "Going back up",
+          "ytId": "",
+          "slug": "going-back-up"
+        },
+        {
+          "id": "L02-05",
+          "num": 5,
+          "title": "Going home.",
+          "ytId": "",
+          "slug": "going-home"
+        },
+        {
+          "id": "L02-06",
+          "num": 6,
+          "title": "Creating folders.",
+          "ytId": "",
+          "slug": "creating-folders"
+        },
+        {
+          "id": "L02-07",
+          "num": 7,
+          "title": "Creating files.",
+          "ytId": "",
+          "slug": "creating-files"
+        },
+        {
+          "id": "L02-08",
+          "num": 8,
+          "title": "Deleting files.",
+          "ytId": "",
+          "slug": "deleting-files"
+        },
+        {
+          "id": "L02-09",
+          "num": 9,
+          "title": "Deleting a folder.",
+          "ytId": "",
+          "slug": "deleting-a-folder"
+        },
+        {
+          "id": "L02-10",
+          "num": 10,
+          "title": "Copying a file.",
+          "ytId": "",
+          "slug": "copying-a-file"
+        },
+        {
+          "id": "L02-11",
+          "num": 11,
+          "title": "Moving and renaming.",
+          "ytId": "",
+          "slug": "moving-and-renaming"
+        },
+        {
+          "id": "L02-12",
+          "num": 12,
+          "title": "Putting it all together.",
+          "ytId": "",
+          "slug": "putting-it-all-together"
+        },
+        {
+          "id": "L02-13",
+          "num": 13,
+          "title": "Your terminal cheat-sheet.",
+          "ytId": "",
+          "slug": "your-terminal-cheat-sheet"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "levels": [
+    {
+      "level": 5,
+      "levelTitle": "How Software Actually Works",
+      "lessons": [
+        {
+          "id": "L05-01",
+          "num": 1,
+          "title": "What is code, really?",
+          "ytId": "",
+          "slug": "what-is-code-really"
+        },
+        {
+          "id": "L05-02",
+          "num": 2,
+          "title": "Why so many languages?",
+          "ytId": "",
+          "slug": "why-so-many-languages"
+        },
+        {
+          "id": "L05-03",
+          "num": 3,
+          "title": "What loads behind a site?",
+          "ytId": "",
+          "slug": "what-loads-behind-a-site"
+        },
+        {
+          "id": "L05-04",
+          "num": 4,
+          "title": "Client vs server.",
+          "ytId": "",
+          "slug": "client-vs-server"
+        },
+        {
+          "id": "L05-05",
+          "num": 5,
+          "title": "HTTP — how devices talk.",
+          "ytId": "",
+          "slug": "http-how-devices-talk"
+        },
+        {
+          "id": "L05-06",
+          "num": 6,
+          "title": "What is an API?",
+          "ytId": "",
+          "slug": "what-is-an-api"
+        },
+        {
+          "id": "L05-07",
+          "num": 7,
+          "title": "JSON — how data travels.",
+          "ytId": "",
+          "slug": "json-how-data-travels"
+        },
+        {
+          "id": "L05-08",
+          "num": 8,
+          "title": "What is a database?",
+          "ytId": "",
+          "slug": "what-is-a-database"
+        },
+        {
+          "id": "L05-09",
+          "num": 9,
+          "title": "SQL — talking to databases.",
+          "ytId": "",
+          "slug": "sql-talking-to-databases"
+        },
+        {
+          "id": "L05-10",
+          "num": 10,
+          "title": "Frontend vs backend.",
+          "ytId": "",
+          "slug": "frontend-vs-backend"
+        },
+        {
+          "id": "L05-11",
+          "num": 11,
+          "title": "The tech stack.",
+          "ytId": "",
+          "slug": "the-tech-stack"
+        },
+        {
+          "id": "L05-12",
+          "num": 12,
+          "title": "What is the cloud?",
+          "ytId": "",
+          "slug": "what-is-the-cloud"
+        },
+        {
+          "id": "L05-13",
+          "num": 13,
+          "title": "Going live: deployment.",
+          "ytId": "",
+          "slug": "going-live-deployment"
+        },
+        {
+          "id": "L05-14",
+          "num": 14,
+          "title": "DNS and domains.",
+          "ytId": "",
+          "slug": "dns-and-domains"
+        }
+      ]
+    }
+  ]
+}

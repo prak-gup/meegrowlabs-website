@@ -1,0 +1,80 @@
+{
+  "levels": [
+    {
+      "level": 14,
+      "levelTitle": "The Project — Build a Real Game",
+      "lessons": [
+        {
+          "id": "L14-01",
+          "num": 1,
+          "title": "When HTTP isn't enough.",
+          "ytId": "",
+          "slug": "when-http-isnt-enough"
+        },
+        {
+          "id": "L14-02",
+          "num": 2,
+          "title": "Plan before you build.",
+          "ytId": "",
+          "slug": "plan-before-you-build"
+        },
+        {
+          "id": "L14-03",
+          "num": 3,
+          "title": "Set up the game.",
+          "ytId": "",
+          "slug": "set-up-the-game"
+        },
+        {
+          "id": "L14-04",
+          "num": 4,
+          "title": "Build the rules.",
+          "ytId": "",
+          "slug": "build-the-rules"
+        },
+        {
+          "id": "L14-05",
+          "num": 5,
+          "title": "Pair two players.",
+          "ytId": "",
+          "slug": "pair-two-players"
+        },
+        {
+          "id": "L14-06",
+          "num": 6,
+          "title": "Build the board.",
+          "ytId": "",
+          "slug": "build-the-board"
+        },
+        {
+          "id": "L14-07",
+          "num": 7,
+          "title": "Wire it up.",
+          "ytId": "",
+          "slug": "wire-it-up"
+        },
+        {
+          "id": "L14-08",
+          "num": 8,
+          "title": "Debug live code.",
+          "ytId": "",
+          "slug": "debug-live-code"
+        },
+        {
+          "id": "L14-09",
+          "num": 9,
+          "title": "Make it finished.",
+          "ytId": "",
+          "slug": "make-it-finished"
+        },
+        {
+          "id": "L14-10",
+          "num": 10,
+          "title": "Launch your game.",
+          "ytId": "",
+          "slug": "launch-your-game"
+        }
+      ]
+    }
+  ]
+}
