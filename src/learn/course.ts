@@ -5,17 +5,19 @@ export type VideoRef = { ytId?: string | null; bunny?: string | null; start?: nu
 export type VideoMap = Record<string, { level: number; en?: VideoRef; hi?: VideoRef }>
 export type Course = {
   id: string; slug: string; title: string; subtitle: string
-  category?: string; difficulty?: string; order?: number
+  experience?: string; badge?: string; isNew?: boolean; trending?: boolean; order?: number
   manifest: string; videoMap: string; accent: string; bilingual: boolean
   bunnyLibrary?: string | null // set once videos are hosted on Bunny Stream
 }
-export type Path = { id: string; slug: string; kind: string; name: string; blurb: string; difficulty: string; accent: string; courseIds: string[] }
+export type Path = { id: string; slug: string; kind: string; name: string; blurb: string; difficulty: string; accent: string; badge?: string; trending?: boolean; courseIds: string[] }
+export type Featured = { type: 'path' | 'course'; slug: string }
 
-export async function loadCatalog(): Promise<{ paths: Path[]; courses: Course[] }> {
+export async function loadCatalog(): Promise<{ featured: Featured[]; paths: Path[]; courses: Course[] }> {
   try {
     const d = await (await fetch('/learn/courses.json')).json()
-    return Array.isArray(d) ? { paths: [], courses: d } : { paths: d.paths ?? [], courses: d.courses ?? [] }
-  } catch { return { paths: [], courses: [] } }
+    if (Array.isArray(d)) return { featured: [], paths: [], courses: d }
+    return { featured: d.featured ?? [], paths: d.paths ?? [], courses: d.courses ?? [] }
+  } catch { return { featured: [], paths: [], courses: [] } }
 }
 
 // "N two-minute lessons" -> N

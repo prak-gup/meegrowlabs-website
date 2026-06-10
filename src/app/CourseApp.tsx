@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
 import { useProgress } from '../learn/useProgress'
-import { loadCatalog, loadManifest, loadVideoMap, embedUrl, lessonCount, type Course, type Path, type Level, type Lesson, type VideoMap } from '../learn/course'
+import { loadCatalog, loadManifest, loadVideoMap, embedUrl, lessonCount, type Course, type Path, type Featured, type Level, type Lesson, type VideoMap } from '../learn/course'
 
 function usePath() {
   const [path, setPath] = useState(typeof window !== 'undefined' ? window.location.pathname : '/app')
@@ -20,12 +20,14 @@ export default function CourseApp() {
   const { user, loading, signOut } = useAuth()
   const { path, go } = usePath()
   const { progress, markComplete } = useProgress(user?.id ?? null)
+  const [featured, setFeatured] = useState<Featured[]>([])
   const [paths, setPaths] = useState<Path[]>([])
   const [courses, setCourses] = useState<Course[]>([])
   const [manifest, setManifest] = useState<{ slug: string; levels: Level[]; flat: Lesson[]; vmap: VideoMap } | null>(null)
   const [lang, setLang] = useState<'en' | 'hi'>(() => (localStorage.getItem('hf_lang') as 'en' | 'hi') || 'en')
+  const [expFilter, setExpFilter] = useState<string>('All')
 
-  useEffect(() => { loadCatalog().then(({ paths, courses }) => { setPaths(paths); setCourses(courses) }) }, [])
+  useEffect(() => { loadCatalog().then((d) => { setFeatured(d.featured); setPaths(d.paths); setCourses(d.courses) }) }, [])
   useEffect(() => { localStorage.setItem('hf_lang', lang) }, [lang])
 
   // /app | /app/path/<slug> | /app/<courseSlug> | /app/<courseSlug>/lesson/<slug>
@@ -50,47 +52,108 @@ export default function CourseApp() {
   if (loading) return <Center>Loading…</Center>
   if (!user) { window.location.href = '/login'; return <Center>Redirecting to sign in…</Center> }
 
-  // ---------- Catalog (paths) ----------
+  // ---------- Catalog: smart home ----------
   if (!courseSlug && !isPath) {
     const byId = Object.fromEntries(courses.map((c) => [c.id, c]))
+    const pathBySlug = Object.fromEntries(paths.map((p) => [p.slug, p]))
+    const inProgress = courses.filter((c) => { const d = courseDone(c.id); return d > 0 && d < lessonCount(c) })
+    const expLevels = ['All', 'Beginner', 'Intermediate', 'Advanced']
+    const shown = expFilter === 'All' ? courses : courses.filter((c) => c.experience === expFilter)
     return (
       <Shell onHome={() => go('/app')} onSignOut={signOut} right={null}>
-        <h1 className="text-3xl font-display font-bold text-slate-900">Choose your path</h1>
-        <p className="text-slate-600">Free, bite-sized lessons. Pick a guided path — or jump into any course.</p>
-        <div className="mt-6 space-y-4">
-          {paths.map((p) => {
-            const pc = p.courseIds.map((id) => byId[id]).filter(Boolean)
-            const totalLessons = pc.reduce((s, c) => s + lessonCount(c), 0)
-            const done = pc.reduce((s, c) => s + courseDone(c.id), 0)
-            return (
-              <button key={p.id} onClick={() => go(`/app/path/${p.slug}`)}
-                className="w-full text-left border-4 border-slate-900 rounded-2xl p-6 bg-[#F7F3E9] hover:bg-white shadow-[6px_6px_0_#0F0F0F]">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-12 rounded-full" style={{ background: p.accent }} />
-                  <span className="font-mono text-xs uppercase tracking-wider text-slate-500">{p.kind} · {p.difficulty}</span>
-                </div>
-                <div className="mt-2 text-xl font-display font-bold text-slate-900">{p.name}</div>
-                <p className="mt-1 text-slate-600 text-sm">{p.blurb}</p>
-                <div className="mt-3 flex items-center gap-3 text-sm">
-                  <span className="font-semibold text-slate-700">{pc.length} courses · {totalLessons} lessons</span>
-                  {done > 0 && <span className="font-mono text-xs text-green-700">{done}/{totalLessons} done</span>}
-                  <span className="ml-auto font-semibold text-green-700">View path →</span>
-                </div>
-              </button>
-            )
-          })}
-        </div>
-        <details className="mt-8">
-          <summary className="cursor-pointer font-semibold text-slate-700">Browse all {courses.length} courses</summary>
+        <h1 className="text-3xl font-display font-bold text-slate-900">Explore courses</h1>
+        <p className="text-slate-600">Free, 2-minute video lessons — हिंदी & English.</p>
+
+        {/* 🔥 New & Trending */}
+        {featured.length > 0 && (
+          <section className="mt-6">
+            <h2 className="font-display font-bold text-lg text-slate-900">🔥 New &amp; Trending</h2>
+            <div className="mt-3 flex gap-4 overflow-x-auto pb-2 -mx-1 px-1">
+              {featured.map((f) => {
+                const p = f.type === 'path' ? pathBySlug[f.slug] : null
+                const c = f.type === 'course' ? courses.find((x) => x.slug === f.slug) : null
+                const item = p || c; if (!item) return null
+                const href = p ? `/app/path/${p.slug}` : `/app/${c!.slug}`
+                const badge = p?.badge || c?.badge
+                return (
+                  <button key={f.slug} onClick={() => go(href)}
+                    className="flex-none w-72 text-left border-4 border-slate-900 rounded-2xl p-5 shadow-[6px_6px_0_#0F0F0F]" style={{ background: `${item.accent}1a` }}>
+                    {badge && <span className="inline-block text-xs font-bold bg-slate-900 text-white px-2 py-1 rounded-full">{badge}</span>}
+                    <div className="mt-2 text-lg font-display font-bold text-slate-900">{p ? p.name : c!.title}</div>
+                    <p className="mt-1 text-sm text-slate-600">{p ? p.blurb : c!.subtitle}</p>
+                    <span className="mt-3 inline-block font-semibold text-green-700">Start →</span>
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* Continue learning */}
+        {inProgress.length > 0 && (
+          <section className="mt-8">
+            <h2 className="font-display font-bold text-lg text-slate-900">Continue learning</h2>
+            <div className="mt-3 grid sm:grid-cols-2 gap-3">
+              {inProgress.map((c) => (
+                <button key={c.id} onClick={() => go(`/app/${c.slug}`)} className="text-left border-2 border-slate-900 rounded-xl p-4 bg-white hover:bg-[#F7F3E9]">
+                  <div className="font-display font-bold text-slate-900">{c.title}</div>
+                  <div className="text-xs text-green-700 font-mono">{courseDone(c.id)}/{lessonCount(c)} done · Continue →</div>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Guided paths */}
+        <section className="mt-8">
+          <h2 className="font-display font-bold text-lg text-slate-900">Guided paths</h2>
+          <div className="mt-3 space-y-3">
+            {paths.map((p) => {
+              const pc = p.courseIds.map((id) => byId[id]).filter(Boolean)
+              const totalLessons = pc.reduce((s, c) => s + lessonCount(c), 0)
+              const done = pc.reduce((s, c) => s + courseDone(c.id), 0)
+              return (
+                <button key={p.id} onClick={() => go(`/app/path/${p.slug}`)}
+                  className="w-full text-left border-4 border-slate-900 rounded-2xl p-5 bg-[#F7F3E9] hover:bg-white shadow-[6px_6px_0_#0F0F0F]">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-12 rounded-full" style={{ background: p.accent }} />
+                    <span className="font-mono text-xs uppercase tracking-wider text-slate-500">{p.kind} · {p.difficulty}</span>
+                    {p.badge && <span className="text-xs font-bold bg-slate-900 text-white px-2 py-0.5 rounded-full">{p.badge}</span>}
+                  </div>
+                  <div className="mt-2 text-xl font-display font-bold text-slate-900">{p.name}</div>
+                  <p className="mt-1 text-slate-600 text-sm">{p.blurb}</p>
+                  <div className="mt-3 flex items-center gap-3 text-sm">
+                    <span className="font-semibold text-slate-700">{pc.length} course{pc.length === 1 ? '' : 's'} · {totalLessons} lessons</span>
+                    {done > 0 && <span className="font-mono text-xs text-green-700">{done}/{totalLessons} done</span>}
+                    <span className="ml-auto font-semibold text-green-700">View →</span>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* Browse all by experience */}
+        <section className="mt-8">
+          <h2 className="font-display font-bold text-lg text-slate-900">All courses</h2>
+          <div className="mt-2 flex gap-2 flex-wrap">
+            {expLevels.map((l) => (
+              <button key={l} onClick={() => setExpFilter(l)}
+                className={`text-sm font-bold border-2 border-slate-900 rounded-full px-3 py-1 ${expFilter === l ? 'bg-slate-900 text-white' : 'bg-white'}`}>{l}</button>
+            ))}
+          </div>
           <div className="mt-4 grid sm:grid-cols-2 gap-3">
-            {courses.map((c) => (
+            {shown.map((c) => (
               <button key={c.id} onClick={() => go(`/app/${c.slug}`)} className="text-left border-2 border-slate-900 rounded-xl p-4 bg-white hover:bg-[#F7F3E9]">
-                <div className="font-display font-bold text-slate-900">{c.title}</div>
-                <div className="text-xs text-slate-500">{c.subtitle}{courseDone(c.id) ? ` · ${courseDone(c.id)} done` : ''}</div>
+                <div className="flex items-center gap-2">
+                  <span className="font-display font-bold text-slate-900">{c.title}</span>
+                  {c.isNew && <span className="text-[10px] font-bold bg-[#D97757] text-white px-1.5 py-0.5 rounded">NEW</span>}
+                </div>
+                <div className="text-xs text-slate-500">{c.experience} · {c.subtitle}{courseDone(c.id) ? ` · ${courseDone(c.id)} done` : ''}</div>
               </button>
             ))}
           </div>
-        </details>
+        </section>
       </Shell>
     )
   }
