@@ -9,6 +9,7 @@ const data = JSON.parse(fs.readFileSync(`${LEARN}/learn-data.json`, "utf8"));
 const vmap = JSON.parse(fs.readFileSync(`${Z}/lesson-video-map.json`, "utf8"));
 const hiTitle = JSON.parse(fs.readFileSync(`${Z}/hi-titles.json`, "utf8"));
 const blog = fs.existsSync(`${Z}/blog-published.json`) ? JSON.parse(fs.readFileSync(`${Z}/blog-published.json`, "utf8")) : {};
+const answers = fs.existsSync(`${LEARN}/lesson-answers.json`) ? JSON.parse(fs.readFileSync(`${LEARN}/lesson-answers.json`, "utf8")) : {};
 const PL_EN = "PL5ogw-CYz9s83NYo3HsDHQqsuUwJ-qxa7", PL_HI = "PL5ogw-CYz9s-G3UreFbcfFhMPLQRsc70U";
 
 const kebab = (s) => s.toLowerCase().replace(/[?'".,/()]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
@@ -43,7 +44,8 @@ ${ytId ? `<meta property="og:image" content="https://i.ytimg.com/vi/${ytId}/hqde
 .btn{display:inline-block;background:var(--green);color:var(--cream);border:3px solid var(--ink);font-weight:700;padding:8px 16px;border-radius:999px;text-decoration:none;font-size:14px;box-shadow:3px 3px 0 var(--ink)}
 .crumbs{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink2);margin:22px 0 6px;letter-spacing:.05em}
 h1{font-family:"Archivo Black",sans-serif;font-size:clamp(28px,5vw,46px);line-height:1;letter-spacing:-1px;margin:6px 0 10px}
-.sub{font-size:18px;color:var(--ink2);margin-bottom:20px}
+.sub{font-size:18px;color:var(--ink2);margin-bottom:14px}
+.answer{font-size:19px;line-height:1.55;color:var(--ink);background:var(--paper);border-left:5px solid var(--green);padding:14px 18px;border-radius:0 10px 10px 0;margin:0 0 22px}
 .frame{position:relative;padding-top:56.25%;border:4px solid var(--ink);background:#000;box-shadow:8px 8px 0 var(--ink);border-radius:10px;overflow:hidden}
 .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .langtabs{display:flex;gap:8px;margin:18px 0 0}.langtabs button{font:inherit;font-weight:700;border:3px solid var(--ink);background:var(--paper);padding:7px 16px;border-radius:999px;cursor:pointer}
@@ -58,13 +60,17 @@ function page(ls, idx) {
   const enId = v.en?.ytId, enStart = v.en?.start || 0, hiId = v.hi?.ytId, hiStart = v.hi?.start || 0;
   const canon = `https://meegrowlabs.com/learn/${ls.slug}/`;
   const title = `${ls.title} | Zero to AI Hero (Free, Hindi & English)`;
-  const desc = `${ls.title} — a free 2-minute lesson from Zero to AI Hero by Meegrow Labs. Learn to use & build with AI from scratch, in Hindi & English.`;
+  const answer = answers[ls.id] || "";
+  const fallbackDesc = `${ls.title} — a free 2-minute lesson from Zero to AI Hero by Meegrow Labs. Learn to use & build with AI from scratch, in Hindi & English.`;
+  // Answer-first, unique meta description (truncated to ~160 chars on a word boundary).
+  const desc = answer ? (answer.length <= 160 ? answer : answer.slice(0, 157).replace(/\s+\S*$/, "") + "…") : fallbackDesc;
+  const isQuestion = /\?\s*$/.test(ls.title);
   const prev = idx > 0 ? flat[idx - 1] : null, next = idx < flat.length - 1 ? flat[idx + 1] : null;
   const blogEn = blog[`${ls.id}-en`]?.link, blogHi = blog[`${ls.id}-hi`]?.link;
   const emb = (id, start) => id ? `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1${start ? `&start=${start}` : ""}` : "";
   const schema = enId ? `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org", "@type": "VideoObject", name: ls.title,
-    description: desc, thumbnailUrl: `https://i.ytimg.com/vi/${enId}/hqdefault.jpg`,
+    description: answer || desc, thumbnailUrl: `https://i.ytimg.com/vi/${enId}/hqdefault.jpg`,
     uploadDate: "2026-06-01", contentUrl: `https://www.youtube.com/watch?v=${enId}`,
     embedUrl: `https://www.youtube.com/embed/${enId}`,
     publisher: { "@type": "Organization", name: "Meegrow Labs", url: "https://meegrowlabs.com" }
@@ -75,11 +81,27 @@ function page(ls, idx) {
       { "@type": "ListItem", position: 2, name: ls.levelTitle, item: `https://meegrowlabs.com/learn/#L${ls.level}` },
       { "@type": "ListItem", position: 3, name: ls.title, item: canon }]
   })}</script>`;
-  return `${HEAD(title, desc, canon, enId)}${schema}${breadcrumb}
+  // LearningResource ties each lesson into the Course and gives AI engines a clean, citable concept + answer.
+  const learning = answer ? `<script type="application/ld+json">${JSON.stringify({
+    "@context": "https://schema.org", "@type": "LearningResource", name: ls.title,
+    description: answer, url: canon, inLanguage: hiId ? ["en", "hi"] : ["en"],
+    educationalLevel: "Beginner", learningResourceType: "Video lesson", teaches: ls.title,
+    isPartOf: { "@type": "Course", name: "Zero to AI Hero", url: "https://meegrowlabs.com/learn/" },
+    provider: { "@type": "Organization", name: "Meegrow Labs", url: "https://meegrowlabs.com" }
+  })}</script>` : "";
+  // FAQPage only when the title is genuinely a question, so the Q&A pair is honest.
+  const faq = (isQuestion && answer) ? `<script type="application/ld+json">${JSON.stringify({
+    "@context": "https://schema.org", "@type": "FAQPage", mainEntity: [{
+      "@type": "Question", name: ls.title,
+      acceptedAnswer: { "@type": "Answer", text: answer }
+    }]
+  })}</script>` : "";
+  return `${HEAD(title, desc, canon, enId)}${schema}${breadcrumb}${learning}${faq}
 <div class="wrap">
   <div class="crumbs"><a href="/learn/">Course</a> / Level ${ls.level}: ${esc(ls.levelTitle)} / Lesson ${ls.num}</div>
   <h1>${esc(ls.title)}</h1>
   <p class="sub">Lesson ${ls.num} · ${esc(ls.levelTitle)} · Zero to AI Hero by Meegrow Labs</p>
+  ${answer ? `<p class="answer">${esc(answer)}</p>` : ""}
   <div class="frame"><iframe id="vid" src="${emb(enId, enStart)}" title="${esc(ls.title)}" allow="encrypted-media; fullscreen" allowfullscreen loading="lazy"></iframe></div>
   ${hiId ? `<div class="langtabs">
     <button id="bEn" class="on" onclick="setLang('en')">English</button>
