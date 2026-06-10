@@ -1,0 +1,23 @@
+# Meegrow Labs
+
+> Meegrow Labs is an AI automation studio that turns natural-language descriptions of real-world workflows into secure, production-grade automated systems for finance, operations, product, and customer teams. We also publish "Zero to AI Hero", a free bilingual (English + हिंदी) course that teaches anyone to use and build with AI from scratch.
+
+## Core
+
+- [Meegrow Labs — AI Automation Studio](https://meegrowlabs.com/): What we do — custom agentic AI workflows, platform integrations, and bespoke automation systems for modern teams.
+- [Contact / Start a project](https://tally.so/r/444qZ5): Intake form to scope an automation engagement.
+
+## Zero to AI Hero (free course)
+
+- [Course hub](https://meegrowlabs.com/learn/): 150+ free, ~2-minute lessons taking absolute beginners from "what is a file?" to building with AI. Every lesson is available in English and हिंदी.
+- [Watch the full course on YouTube (English)](https://www.youtube.com/playlist?list=PL5ogw-CYz9s83NYo3HsDHQqsuUwJ-qxa7)
+- [पूरा कोर्स देखें (हिंदी)](https://www.youtube.com/playlist?list=PL5ogw-CYz9s-G3UreFbcfFhMPLQRsc70U)
+
+## Writing
+
+- [Meegrow Labs Blog](https://blog.meegrowlabs.com): Guides and deep-dives on AI automation and the fundamentals taught in Zero to AI Hero.
+
+## Notes
+
+- Course narration is AI-generated; all content is human-reviewed.
+- Canonical host is https://meegrowlabs.com (non-www).
