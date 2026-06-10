@@ -22,6 +22,12 @@ export default function Navigation() {
             Blog
           </a>
           <a
+            href="/app"
+            className="hidden sm:inline-block px-4 py-3 font-semibold text-green-700 hover:text-green-800 transition-colors"
+          >
+            Sign in
+          </a>
+          <a
             href={CONTACT_FORM_LINK}
             target="_blank"
             rel="noopener noreferrer"
