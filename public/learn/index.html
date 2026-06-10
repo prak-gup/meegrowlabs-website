@@ -83,7 +83,10 @@
 <body>
 <header><div class="wrap bar">
   <div class="wm">&gt;_ MEEGROW <b>LABS</b></div>
-  <a class="btn" href="#L1">Start at Lesson 1 →</a>
+  <span style="display:flex;align-items:center;gap:16px">
+    <a href="https://blog.meegrowlabs.com" style="font-weight:700;text-decoration:none;color:var(--ink)">Blog</a>
+    <a class="btn" href="#L1">Start at Lesson 1 →</a>
+  </span>
 </div></header>
 
 <div class="wrap">
@@ -93,7 +96,18 @@
     <p>Learn to actually <b>use and build with AI</b> — from "what's a file?" all the way to AI agents. 151 bite-sized 2-minute lessons. No degree, no jargon.</p>
     <div class="badges"><span class="badge g">हिंदी + English</span><span class="badge y">2-min lessons</span><span class="badge p">Beginner friendly</span></div>
     <div class="stat" id="stat">Loading the course…</div>
-    <p style="margin:14px auto 0;max-width:620px;font-size:15px;color:var(--ink2)">🌐 हर lesson हिंदी और English दोनों में — किसी भी lesson को खोलकर भाषा बदलें. <b>Every lesson plays in Hindi or English — switch language on any lesson.</b></p>
+    <p style="margin:14px auto 0;max-width:620px;font-size:15px;color:var(--ink2)">🌐 हर lesson हिंदी और English दोनों में. <b>Every lesson plays in Hindi or English.</b></p>
+    <div style="margin:16px auto 0;display:inline-flex;border:3px solid var(--ink);border-radius:999px;overflow:hidden;font-weight:700">
+      <button id="langEn" onclick="setLang('en')" style="font:inherit;font-weight:700;border:0;padding:9px 22px;cursor:pointer;background:var(--green);color:var(--cream)">English</button>
+      <button id="langHi" onclick="setLang('hi')" style="font:inherit;font-weight:700;border:0;border-left:3px solid var(--ink);padding:9px 22px;cursor:pointer;background:var(--paper)">हिंदी</button>
+    </div>
+    <script>
+      function setLang(l){try{localStorage.setItem('hf_lang',l)}catch(e){} location.reload()}
+      (function(){var l='en';try{l=localStorage.getItem('hf_lang')||'en'}catch(e){}
+        var en=document.getElementById('langEn'),hi=document.getElementById('langHi');
+        if(l=='hi'){hi.style.background='var(--green)';hi.style.color='var(--cream)';en.style.background='var(--paper)';en.style.color='var(--ink)'}
+      })();
+    </script>
     <div class="oshint">💻 On <b>Windows</b>? Install <b>Git Bash</b> or <b>WSL</b> once (see <b>“Set up your terminal”</b> below) — then every command in this course works exactly the same. On Mac or Linux, just open <b>Terminal</b>.</div>
   </section>
 
@@ -139,6 +153,7 @@ Promise.all([
   fetch('learn-data.json').then(r=>r.json()),
   fetch('chapters.json').then(r=>r.json()).catch(()=>({}))
 ]).then(([d, chapters])=>{
+  let LANG='en'; try{LANG=localStorage.getItem('hf_lang')||'en'}catch(e){}
   const liveLevels = Object.keys(chapters).length;
   const liveLessons = Object.values(chapters).reduce((s,c)=>s+(c.lessons?c.lessons.length:0),0);
   document.getElementById('stat').textContent = `17 levels · 151 lessons${liveLessons?` · ${liveLessons} live now`:''}`;
@@ -148,7 +163,7 @@ Promise.all([
     const sec = document.createElement('section'); sec.className='level'; sec.id='L'+lv.level;
     const grid = lv.lessons.map((ls,i)=>{
       const live = !!(ch && ch.ytId);
-      const href = ls.slug ? `/learn/${ls.slug}/` : '#';
+      const href = ls.slug ? `/learn/${ls.slug}/${LANG==='hi'?'?lang=hi':''}` : '#';
       return `<a class="lesson" href="${href}">
         <span class="num">${String(ls.num).padStart(2,'0')}</span>
         <span><span class="ltitle">${ls.title}</span><span class="lstate">${live?'▶ WATCH':'OPEN LESSON'}</span></span>

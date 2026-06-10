@@ -51,7 +51,7 @@ h1{font-family:"Archivo Black",sans-serif;font-size:clamp(28px,5vw,46px);line-he
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}.actions a{font-weight:700;font-size:14px;border:3px solid var(--ink);background:var(--paper);padding:9px 16px;border-radius:999px;text-decoration:none;color:var(--ink)}
 .nav{display:flex;justify-content:space-between;gap:12px;margin:30px 0;border-top:2px solid #e4ddc9;padding-top:18px;font-weight:600}
 footer{text-align:center;padding:40px 20px 70px;color:var(--ink2);font-size:13px}</style></head><body>
-<header><div class="wrap bar"><a class="wm" href="/learn/" style="text-decoration:none">&gt;_ MEEGROW <b>LABS</b></a><a class="btn" href="/learn/">Full course →</a></div></header>`;
+<header><div class="wrap bar"><a class="wm" href="/learn/" style="text-decoration:none">&gt;_ MEEGROW <b>LABS</b></a><span style="display:flex;align-items:center;gap:16px"><a href="https://blog.meegrowlabs.com" style="font-weight:700;text-decoration:none;color:var(--ink)">Blog</a><a class="btn" href="/learn/">Full course →</a></span></div></header>`;
 
 function page(ls, idx) {
   const v = vmap[ls.id] || {};
@@ -85,7 +85,8 @@ function page(ls, idx) {
     <button id="bEn" class="on" onclick="setLang('en')">English</button>
     <button id="bHi" onclick="setLang('hi')">हिंदी</button></div>
   <script>var SRC={en:"${emb(enId, enStart)}",hi:"${emb(hiId, hiStart)}"};
-  function setLang(l){document.getElementById('vid').src=SRC[l];document.getElementById('bEn').className=l=='en'?'on':'';document.getElementById('bHi').className=l=='hi'?'on':''}</script>` : ""}
+  function setLang(l){document.getElementById('vid').src=SRC[l];document.getElementById('bEn').className=l=='en'?'on':'';document.getElementById('bHi').className=l=='hi'?'on':'';try{localStorage.setItem('hf_lang',l)}catch(e){}}
+  (function(){var p=new URLSearchParams(location.search).get('lang')||(function(){try{return localStorage.getItem('hf_lang')}catch(e){return null}})();if(p=='hi')setLang('hi')})();</script>` : ""}
   <div class="actions">
     <a href="https://www.youtube.com/playlist?list=${PL_EN}">▶ Watch full course (English)</a>
     <a href="https://www.youtube.com/playlist?list=${PL_HI}">▶ पूरा कोर्स (हिंदी)</a>
