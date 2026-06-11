@@ -1,8 +1,6 @@
-const CONTACT_FORM_LINK = "https://tally.so/r/444qZ5"
-
 export default function Navigation() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-sage-50/95 backdrop-blur-sm border-b border-sage-200">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-cream-100/95 backdrop-blur-sm border-b border-sage-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex items-center justify-between gap-4">
         <a href="/" className="text-xl font-display font-bold text-slate-900">
           Meegrowlabs
@@ -23,17 +21,9 @@ export default function Navigation() {
           </a>
           <a
             href="/app"
-            className="hidden sm:inline-block px-4 py-3 font-semibold text-green-700 hover:text-green-800 transition-colors"
+            className="px-6 sm:px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors shadow-lg"
           >
             Sign in
-          </a>
-          <a
-            href={CONTACT_FORM_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 sm:px-8 py-3 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-colors shadow-lg"
-          >
-            Get started
           </a>
         </div>
       </div>
