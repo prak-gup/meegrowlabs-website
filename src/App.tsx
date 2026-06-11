@@ -2,13 +2,8 @@ import { Suspense, lazy } from 'react'
 
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
+import CourseSections from './components/CourseSections'
 
-const WhatWeDo = lazy(() => import('./components/WhatWeDo'))
-const Automations = lazy(() => import('./components/Automations'))
-const Industries = lazy(() => import('./components/Industries'))
-const HowItWorks = lazy(() => import('./components/HowItWorks'))
-const WhoItsFor = lazy(() => import('./components/WhoItsFor'))
-const Platforms = lazy(() => import('./components/Platforms'))
 const FAQ = lazy(() => import('./components/FAQ'))
 const FinalCTA = lazy(() => import('./components/FinalCTA'))
 
@@ -25,17 +20,12 @@ function App() {
     return <Suspense fallback={null}><CourseApp /></Suspense>
   }
   return (
-    <div className="relative min-h-screen bg-sage-50">
+    <div className="relative min-h-screen bg-cream-100">
       <Navigation />
       <main>
         <Hero />
+        <CourseSections />
         <Suspense fallback={<div className="py-10 text-center text-slate-500">Loading...</div>}>
-          <WhatWeDo />
-          <Automations />
-          <Industries />
-          <HowItWorks />
-          <WhoItsFor />
-          <Platforms />
           <FAQ />
           <FinalCTA />
         </Suspense>

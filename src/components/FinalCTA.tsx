@@ -1,70 +1,23 @@
-const CONTACT_FORM_LINK = "https://tally.so/r/444qZ5"
-
 export default function FinalCTA() {
   return (
-    <section className="relative py-32 px-6 bg-white">
-      <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-8 leading-tight text-slate-900">
-          Ready to Ship Your First Serious AI Workflow Automation?
+    <section className="bg-green-600 px-6 py-24">
+      <div className="max-w-3xl mx-auto text-center text-white">
+        <h2 className="text-4xl md:text-5xl font-display font-bold leading-tight">
+          Your 2-minute head start on AI begins now
         </h2>
-
-        <p className="text-xl md:text-2xl text-slate-700 mb-12 max-w-3xl mx-auto leading-relaxed">
-          Share 2-3 workflows you'd love to automate. We'll show you what's possible, build a
-          prototype with your data, and get you running in weeks.
+        <p className="mt-4 text-lg text-green-50 max-w-xl mx-auto">
+          Join learners across India going from zero to AI hero — free, in हिंदी &amp; English.
         </p>
-
-        <a
-          href={CONTACT_FORM_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block px-12 py-5 text-xl bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors shadow-xl"
-          aria-label="Book an AI workflow automation call with Meegrowlabs"
-        >
-          Get Started
-        </a>
-
-        <p className="mt-8 text-slate-600">
-          No commitment. Just a conversation about what's possible.
-        </p>
-      </div>
-
-      <footer className="mt-32 pt-16 border-t border-sage-200">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            <div>
-              <h3 className="text-xl font-display font-bold text-slate-900 mb-4">Meegrowlabs</h3>
-              <p className="text-slate-600">AI Automation for Real Work</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-slate-900 mb-3">Contact</h4>
-              <a
-                href={CONTACT_FORM_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-600 hover:text-slate-900 transition-colors"
-              >
-                Get in Touch
-              </a>
-            </div>
-            <div>
-              <h4 className="font-semibold text-slate-900 mb-3">Services</h4>
-              <ul className="space-y-2 text-slate-600">
-                <li>Custom AI Automation</li>
-                <li>Workflow Integration</li>
-                <li>AI Consulting</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-slate-900 mb-3">Company</h4>
-              <p className="text-slate-600">Building intelligent systems for modern teams</p>
-            </div>
-          </div>
-
-          <div className="text-center text-sm text-slate-500 pt-8 border-t border-sage-200">
-            © {new Date().getFullYear()} Meegrowlabs. All rights reserved.
-          </div>
+        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/app" className="inline-block px-10 py-4 bg-white text-green-700 font-bold rounded-lg hover:bg-cream-100 transition-colors shadow-lg text-lg">
+            🎓 Start the free course →
+          </a>
+          <a href="/learn" className="inline-block px-8 py-4 bg-green-700 text-white font-bold rounded-lg border-2 border-white/40 hover:bg-green-800 transition-colors text-lg">
+            See all lessons
+          </a>
         </div>
-      </footer>
+        <p className="mt-6 text-sm text-green-100">No credit card. Just your email to save progress.</p>
+      </div>
     </section>
   )
 }

@@ -2,157 +2,77 @@ const CONTACT_FORM_LINK = "https://tally.so/r/444qZ5"
 
 export default function Hero() {
   return (
-    <section className="relative bg-cream-100 px-6 pt-32 pb-20">
+    <section className="relative bg-cream-100 px-6 pt-32 pb-20 overflow-hidden">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-        {/* Left: Text Content */}
-        <div className="space-y-8">
-          <a
-            href="/learn"
-            className="group inline-flex items-center gap-2 rounded-full bg-mustard-400 px-4 py-2 text-sm font-bold text-slate-900 shadow-sm ring-1 ring-mustard-500/40 transition-colors hover:bg-mustard-500"
-          >
-            <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-mustard-300">
-              New · Free
-            </span>
-            Zero to AI Hero — 151 free lessons · हिंदी &amp; English
-            <span className="transition-transform group-hover:translate-x-0.5">→</span>
-          </a>
+        {/* Left: course pitch */}
+        <div className="space-y-7">
+          <span className="inline-flex items-center gap-2 rounded-full bg-mustard-400 px-4 py-2 text-sm font-bold text-slate-900 ring-1 ring-mustard-500/40">
+            <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-mustard-300">100% Free</span>
+            हिंदी &amp; English · 2-minute lessons
+          </span>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-slate-900 leading-tight">
-            AI WORKFLOW AUTOMATION FOR MODERN TEAMS
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-slate-900 leading-[1.02]">
+            Go from <span className="text-green-600">zero to AI hero</span>
           </h1>
 
           <p className="text-lg md:text-xl text-slate-700 leading-relaxed max-w-xl">
-            Agentic AI workflows, intelligent routing, and enterprise-ready automation pipelines that
-            move data securely between your finance, ops, product, and CX stacks.
+            Learn to actually <strong>use and build with AI</strong> — from “what’s a file?” all the way to
+            Claude Code and AI agents. <strong>150+ free 2-minute lessons</strong>, in simple हिंदी &amp; English.
+            No degree. No jargon. No being left behind.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <a
-              href="/app"
-              className="inline-block px-10 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors shadow-lg text-lg text-center"
-            >
-              🎓 Start the free course →
+            <a href="/app" className="inline-block px-10 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors shadow-lg text-lg text-center">
+              🎓 Start learning free →
             </a>
-            <a
-              href={CONTACT_FORM_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-10 py-4 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors shadow-lg text-lg text-center"
-            >
-              For teams: Discover how
+            <a href="/learn" className="inline-block px-8 py-4 bg-white text-slate-900 font-bold rounded-lg border-2 border-slate-900 hover:bg-cream-200 transition-colors text-lg text-center">
+              Browse the course
             </a>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-600 pt-1">
+            <span>✓ 18 levels · 150+ lessons</span>
+            <span>✓ Beginner-friendly</span>
+            <span>✓ Save your progress</span>
           </div>
         </div>
 
-        {/* Right: Animated Workflow Cards */}
-        <div className="relative max-w-lg mx-auto lg:max-w-none space-y-6">
-
-          {/* Input Card */}
-          <div className="group bg-white rounded-2xl p-6 shadow-sm border border-sage-200 hover:shadow-lg hover:scale-105 transition-all duration-300 animate-fade-in">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-cream-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-sage-200 transition-colors duration-300">
-                <svg className="w-7 h-7 text-slate-700 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Input</div>
-                <div className="font-bold text-lg text-slate-900">Raw Data</div>
-              </div>
-              {/* Animated dots */}
-              <div className="flex gap-1">
-                <div className="w-1.5 h-1.5 bg-sage-400 rounded-full animate-pulse"></div>
-                <div className="w-1.5 h-1.5 bg-sage-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                <div className="w-1.5 h-1.5 bg-sage-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+        {/* Right: course preview card */}
+        <div className="relative max-w-md mx-auto lg:max-w-none w-full">
+          <div className="bg-white rounded-2xl border-4 border-slate-900 shadow-[12px_12px_0_#0F0F0F] overflow-hidden">
+            <div className="bg-slate-900 px-5 py-3 flex items-center justify-between">
+              <span className="font-mono text-xs font-bold tracking-widest text-mustard-300">&gt;_ ZERO TO AI HERO</span>
+              <span className="text-[10px] font-bold uppercase bg-green-600 text-white px-2 py-0.5 rounded-full">Free</span>
+            </div>
+            <div className="p-5 space-y-2">
+              {[
+                ['01', 'What is a file?', '✓'],
+                ['02', 'Your first terminal command', '✓'],
+                ['08', 'Build apps with Claude Code', '▶'],
+                ['15', 'Your first AI agent', '▶'],
+              ].map(([n, t, s]) => (
+                <div key={n} className="flex items-center gap-3 rounded-lg border-2 border-slate-200 px-3 py-2.5">
+                  <span className="font-mono text-xs font-bold text-green-700 w-6">{n}</span>
+                  <span className="font-medium text-slate-800 text-sm flex-1">{t}</span>
+                  <span className={s === '✓' ? 'text-green-600' : 'text-clay'}>{s}</span>
+                </div>
+              ))}
+              <div className="pt-2 text-center">
+                <span className="font-mono text-xs text-slate-500">+ 146 more · हिंदी &amp; English</span>
               </div>
             </div>
           </div>
-
-          {/* Animated Arrow */}
-          <div className="flex justify-center animate-bounce" style={{ animationDuration: '2s' }}>
-            <svg className="w-8 h-10 text-sage-500" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" transform="rotate(90 12 12)"/>
-            </svg>
-          </div>
-
-          {/* AI Process Card */}
-          <div className="group relative bg-gradient-to-br from-mustard-400 to-mustard-500 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 animate-fade-in overflow-hidden" style={{ animationDelay: '0.2s' }}>
-            {/* Animated background shimmer */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-
-            <div className="relative flex items-center gap-4">
-              <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-md group-hover:rotate-12 transition-transform duration-300">
-                <svg className="w-7 h-7 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <div className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-1">AI Process</div>
-                <div className="font-bold text-lg text-slate-900">ML Models</div>
-              </div>
-              {/* Processing indicator */}
-              <div className="w-8 h-8 border-3 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-          </div>
-
-          {/* Animated Arrow */}
-          <div className="flex justify-center animate-bounce" style={{ animationDuration: '2s', animationDelay: '0.5s' }}>
-            <svg className="w-8 h-10 text-sage-500" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" transform="rotate(90 12 12)"/>
-            </svg>
-          </div>
-
-          {/* Output Card */}
-          <div className="group relative bg-gradient-to-br from-sage-500 to-sage-600 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 animate-fade-in overflow-hidden" style={{ animationDelay: '0.4s' }}>
-            {/* Success glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-
-            <div className="relative flex items-center gap-4">
-              <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-7 h-7 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <div className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1">Output</div>
-                <div className="font-bold text-lg text-slate-900">Insights & Actions</div>
-              </div>
-              {/* Success checkmark */}
-              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
 
-      {/* Bottom Section - 3 Pillars */}
-      <div className="max-w-7xl mx-auto mt-32">
-        <div className="bg-slate-900 rounded-3xl p-12">
-          <div className="grid md:grid-cols-3 gap-12 text-white">
-            <div>
-              <div className="text-sm font-semibold mb-3 text-sage-300">TECH</div>
-              <p className="text-slate-300 leading-relaxed">
-                Innovation you can't ignore — built to make automation seamless and intelligent.
-              </p>
-            </div>
-            <div>
-              <div className="text-sm font-semibold mb-3 text-sage-300">PROCESS</div>
-              <p className="text-slate-300 leading-relaxed">
-                The link between strategy, execution, and measurable growth.
-              </p>
-            </div>
-            <div>
-              <div className="text-sm font-semibold mb-3 text-sage-300">SOLVED</div>
-              <p className="text-slate-300 leading-relaxed">
-                Real outcomes. Real impact. Real transformation.
-              </p>
-            </div>
-          </div>
-        </div>
+      {/* tiny "for teams" line */}
+      <div className="max-w-7xl mx-auto mt-16 text-center">
+        <p className="text-sm text-slate-500">
+          Building with AI at work?{' '}
+          <a href={CONTACT_FORM_LINK} target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-900 underline underline-offset-2">
+            Meegrow Labs for teams →
+          </a>
+        </p>
       </div>
     </section>
   )

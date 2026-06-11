@@ -1,60 +1,26 @@
-const faqs = [
-  {
-    question: 'What is an agentic AI workflow?',
-    answer:
-      'An agentic AI workflow combines deterministic automations with AI policies. LLM-driven agents evaluate context, decide which downstream actions to call, and log reasoning so operators can audit every step.'
-  },
-  {
-    question: 'How fast can we launch the first automation?',
-    answer:
-      'Most teams see a validated prototype in 2–3 weeks. Because we reuse battle-tested pipelines for data ingestion, evaluation, and monitoring, productionizing a workflow typically takes under six weeks.'
-  },
-  {
-    question: 'Do you work with sensitive data?',
-    answer:
-      'Yes. We rely on Supabase auth + RLS, encrypted storage, and scoped service accounts. Every workflow is designed with SOC 2-ready audit logs and optional data anonymization.'
-  },
-  {
-    question: 'Which teams get the biggest lift?',
-    answer:
-      'Operators, finance, and CX teams that touch repetitive data entry or analytics benefit the most. We also partner with founders who want AI-powered onboarding, reporting, or support without hiring an internal ML team.'
-  }
+const FAQS = [
+  ['Is it really free?', 'Yes — 100% free. All 150+ lessons, in हिंदी and English. No credit card, no catch.'],
+  ['Do I need to know how to code?', 'No. We start from absolute zero — “what’s a file?” — and build up. If you can use WhatsApp, you can do this.'],
+  ['Is it in Hindi or English?', 'Both. Every lesson plays in हिंदी or English — switch language any time with one tap.'],
+  ['How long are the lessons?', 'About 2 minutes each. Watch one on a chai break. Your progress is saved when you sign in.'],
+  ['What will I be able to do by the end?', 'Use and build with AI for real — from the terminal and Git to Claude Code and your own AI agents.'],
+  ['Do I need to sign up?', 'Browse freely. Sign in (free, just your email) to save progress and pick up where you left off.'],
 ]
 
 export default function FAQ() {
   return (
-    <section className="relative py-32 px-6 bg-cream-100" id="faq">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-12 text-center space-y-3">
-          <p className="text-sm font-semibold tracking-[0.3em] text-slate-500">FAQ</p>
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900">
-            AI Workflow Automation Questions We Hear Most
-          </h2>
-          <p className="text-lg text-slate-600">
-            Straight answers about timeline, data security, and how we slot into your existing ops.
-          </p>
-        </div>
-
-        <div className="space-y-6">
-          {faqs.map((faq) => (
-            <details
-              key={faq.question}
-              className="group rounded-2xl border border-sage-200 bg-white p-6 open:shadow-lg transition-shadow"
-            >
-              <summary className="flex cursor-pointer items-center justify-between gap-4 text-left">
-                <span className="text-2xl font-display font-semibold text-slate-900">
-                  {faq.question}
-                </span>
-                <span className="text-sage-500 text-3xl group-open:rotate-45 transition-transform">
-                  +
-                </span>
-              </summary>
-              <p className="mt-4 text-slate-700 leading-relaxed text-lg">{faq.answer}</p>
-            </details>
+    <section className="bg-white px-6 py-20">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900 text-center">Questions?</h2>
+        <div className="mt-10 space-y-4">
+          {FAQS.map(([q, a]) => (
+            <div key={q} className="border-l-4 border-green-600 bg-cream-100 rounded-r-xl p-5">
+              <div className="font-display font-bold text-lg text-slate-900">{q}</div>
+              <p className="mt-1 text-slate-700">{a}</p>
+            </div>
           ))}
         </div>
       </div>
     </section>
   )
 }
-
