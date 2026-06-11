@@ -11,8 +11,19 @@ type AuthCtx = {
   signUpWithPassword: (email: string, password: string) => Promise<Result>
   signInWithPassword: (email: string, password: string) => Promise<Result>
   signInWithEmail: (email: string) => Promise<Result>
+  resetPassword: (email: string) => Promise<Result>
   signInWithGoogle: () => Promise<void>
   signOut: () => Promise<void>
+}
+
+// Map raw Supabase errors to friendly, actionable copy.
+export function friendlyAuthError(msg: string): string {
+  const m = msg.toLowerCase()
+  if (m.includes('invalid login')) return 'Wrong email or password. Try again, or reset your password.'
+  if (m.includes('rate limit') || m.includes('too many')) return 'Too many email requests right now — sign in with your password instead, or try again in a bit.'
+  if (m.includes('not confirmed')) return 'Your email isn’t confirmed yet. Check your inbox, or sign in with Google.'
+  if (m.includes('password should be')) return 'Password must be at least 8 characters.'
+  return msg
 }
 
 const Ctx = createContext<AuthCtx | null>(null)
@@ -64,6 +75,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!supabase) return { error: 'Auth not configured yet.' }
       const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: `${window.location.origin}/app` } })
       if (!error) toMailerLite(email)
+      return { error: error?.message ?? null }
+    },
+    async resetPassword(email) {
+      if (!supabase) return { error: 'Auth not configured yet.' }
+      const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/app?reset=1` })
       return { error: error?.message ?? null }
     },
     async signInWithGoogle() {
