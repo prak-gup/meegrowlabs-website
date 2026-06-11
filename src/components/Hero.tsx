@@ -25,7 +25,7 @@ export default function Hero() {
             <a href="/app" className="inline-block px-10 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors shadow-lg text-lg text-center">
               🎓 Start learning free →
             </a>
-            <a href="/learn" className="inline-block px-8 py-4 bg-white text-slate-900 font-bold rounded-lg border-2 border-slate-900 hover:bg-cream-200 transition-colors text-lg text-center">
+            <a href="/app" className="inline-block px-8 py-4 bg-white text-slate-900 font-bold rounded-lg border-2 border-slate-900 hover:bg-cream-200 transition-colors text-lg text-center">
               Browse the course
             </a>
           </div>

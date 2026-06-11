@@ -52,7 +52,7 @@ export default function CourseApp() {
   }, [course?.slug, courses])
 
   if (loading) return <Center>Loading…</Center>
-  if (!user) { window.location.href = '/login'; return <Center>Redirecting to sign in…</Center> }
+  // No login wall — anyone can browse + watch; sign-in is only needed to SAVE progress.
 
   // ---------- Catalog: smart home ----------
   if (!courseSlug && !isPath) {
@@ -66,7 +66,7 @@ export default function CourseApp() {
       (statusFilter === 'All'
         || (statusFilter === 'New' ? c.isNew : statusFilter === 'Trending' ? c.trending : cStatus(c) === statusFilter)))
     return (
-      <Shell onHome={() => go('/app')} onSignOut={signOut} right={null}>
+      <Shell onHome={() => go('/app')} onSignOut={signOut} authed={!!user} right={null}>
         <h1 className="text-3xl font-display font-bold text-slate-900">Explore courses</h1>
         <p className="text-slate-600">Free, 2-minute video lessons — हिंदी & English.</p>
 
@@ -157,7 +157,7 @@ export default function CourseApp() {
     const byId = Object.fromEntries(courses.map((c) => [c.id, c]))
     const pc = p.courseIds.map((id) => byId[id]).filter(Boolean)
     return (
-      <Shell onHome={() => go('/app')} onSignOut={signOut} right={null}>
+      <Shell onHome={() => go('/app')} onSignOut={signOut} authed={!!user} right={null}>
         <button onClick={() => go('/app')} className="text-green-700 font-semibold">← All paths</button>
         <div className="mt-2 font-mono text-xs uppercase tracking-wider text-slate-500">{p.kind} · {p.difficulty}</div>
         <h1 className="text-3xl font-display font-bold text-slate-900">{p.name}</h1>
@@ -199,7 +199,7 @@ export default function CourseApp() {
     const next = idx < flat.length - 1 ? flat[idx + 1] : null
     const done = progress[pkey(course.id, current.id)] === 'complete'
     return (
-      <Shell onHome={() => go('/app')} onSignOut={signOut} right={<span className="font-mono text-xs text-slate-500">{completed}/{flat.length}</span>}>
+      <Shell onHome={() => go('/app')} onSignOut={signOut} authed={!!user} right={<span className="font-mono text-xs text-slate-500">{completed}/{flat.length}</span>}>
         <button onClick={() => go(`/app/${course.slug}`)} className="text-green-700 font-semibold">← {course.title}</button>
         <h1 className="mt-2 text-2xl md:text-3xl font-display font-bold text-slate-900">{current.title}</h1>
         {course.bilingual && (
@@ -213,8 +213,8 @@ export default function CourseApp() {
             : <div className="absolute inset-0 flex items-center justify-center text-slate-500">Video coming soon</div>}
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          <button onClick={() => { markComplete(pkey(course.id, current.id)); if (next) go(`/app/${course.slug}/lesson/${next.slug}`) }}
-            className="bg-green-700 text-white font-bold px-5 py-2.5 rounded-lg">{done ? '✓ Completed — next' : 'Mark complete & continue →'}</button>
+          <button onClick={() => { if (!user) { go('/login'); return } markComplete(pkey(course.id, current.id)); if (next) go(`/app/${course.slug}/lesson/${next.slug}`) }}
+            className="bg-green-700 text-white font-bold px-5 py-2.5 rounded-lg">{!user ? 'Sign in to save progress →' : done ? '✓ Completed — next' : 'Mark complete & continue →'}</button>
           {prev && <button onClick={() => go(`/app/${course.slug}/lesson/${prev.slug}`)} className="font-semibold text-slate-700">← {prev.title}</button>}
           {next && <button onClick={() => go(`/app/${course.slug}/lesson/${next.slug}`)} className="font-semibold text-slate-700 ml-auto">{next.title} →</button>}
         </div>
@@ -225,7 +225,7 @@ export default function CourseApp() {
   // ---------- Course dashboard ----------
   const firstIncomplete = flat.find((l) => progress[pkey(course.id, l.id)] !== 'complete') ?? flat[0]
   return (
-    <Shell onHome={() => go('/app')} onSignOut={signOut} right={<span className="font-mono text-xs text-slate-500">{completed}/{flat.length}</span>}>
+    <Shell onHome={() => go('/app')} onSignOut={signOut} authed={!!user} right={<span className="font-mono text-xs text-slate-500">{completed}/{flat.length}</span>}>
       <button onClick={() => go('/app')} className="text-green-700 font-semibold">← All paths</button>
       <div className="mt-2 flex items-end justify-between flex-wrap gap-3">
         <div>
@@ -254,13 +254,21 @@ export default function CourseApp() {
   )
 }
 
-function Shell({ children, onSignOut, onHome, right }: { children: React.ReactNode; onSignOut: () => void; onHome: () => void; right: React.ReactNode }) {
+function Shell({ children, onSignOut, onHome, right, authed }: { children: React.ReactNode; onSignOut: () => void; onHome: () => void; right: React.ReactNode; authed: boolean }) {
   return (
     <div className="min-h-screen bg-cream-100">
       <header className="border-b-4 border-slate-900 bg-cream-100 sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between">
-          <button onClick={onHome} className="font-mono font-bold tracking-widest text-slate-900">&gt;_ MEEGROW <span className="text-green-700">LABS</span></button>
-          <div className="flex items-center gap-4">{right}<button onClick={onSignOut} className="font-semibold text-slate-700">Sign out</button></div>
+          <div className="flex items-center gap-4">
+            <a href="/" className="font-semibold text-slate-500 hover:text-slate-900">←</a>
+            <button onClick={onHome} className="font-mono font-bold tracking-widest text-slate-900">&gt;_ MEEGROW <span className="text-green-700">LABS</span></button>
+          </div>
+          <div className="flex items-center gap-4">
+            {right}
+            {authed
+              ? <button onClick={onSignOut} className="font-semibold text-slate-700">Sign out</button>
+              : <a href="/login" className="font-semibold bg-green-600 text-white px-4 py-2 rounded-lg">Sign in</a>}
+          </div>
         </div>
       </header>
       <main className="max-w-3xl mx-auto px-5 py-8">{children}</main>

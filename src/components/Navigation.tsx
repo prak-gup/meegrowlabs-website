@@ -8,7 +8,7 @@ export default function Navigation() {
 
         <div className="flex items-center gap-3 sm:gap-4">
           <a
-            href="/learn"
+            href="/app"
             className="hidden sm:inline-block px-4 py-3 font-semibold text-slate-900 hover:text-slate-600 transition-colors"
           >
             Free Course
@@ -20,7 +20,7 @@ export default function Navigation() {
             Blog
           </a>
           <a
-            href="/app"
+            href="/login"
             className="px-6 sm:px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors shadow-lg"
           >
             Sign in
