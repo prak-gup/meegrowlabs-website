@@ -52,7 +52,8 @@ export default function CourseApp() {
   }, [course?.slug, courses])
 
   if (loading) return <Center>Loading…</Center>
-  // No login wall — anyone can browse + watch; sign-in is only needed to SAVE progress.
+  // Gated: must sign in to access any course.
+  if (!user) { window.location.href = '/login'; return <Center>Redirecting to sign in…</Center> }
 
   // ---------- Catalog: smart home ----------
   if (!courseSlug && !isPath) {
