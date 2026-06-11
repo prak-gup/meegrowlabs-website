@@ -28,12 +28,18 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <a
+              href="/app"
+              className="inline-block px-10 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors shadow-lg text-lg text-center"
+            >
+              🎓 Start the free course →
+            </a>
+            <a
               href={CONTACT_FORM_LINK}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-10 py-4 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors shadow-lg text-lg text-center"
             >
-              Discover how
+              For teams: Discover how
             </a>
           </div>
         </div>
