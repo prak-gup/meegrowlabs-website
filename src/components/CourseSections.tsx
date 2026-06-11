@@ -1,7 +1,7 @@
 const PATHS = [
   { t: 'Coding Foundations', d: 'Files, terminal & Git — the basics every AI power-user needs.', tag: 'Beginner', a: 'bg-green-600' },
   { t: 'How Software Works', d: 'Servers, APIs, databases & building real things.', tag: 'Beginner', a: 'bg-mustard-400' },
-  { t: 'Build with Claude Code', d: 'Make real apps just by describing them — Skills, MCP.', tag: 'Intermediate', a: 'bg-clay' },
+  { t: 'Build with Claude Code', d: 'Make real apps just by describing them — Skills, MCP.', tag: 'Intermediate', a: 'bg-[#D97757]' },
   { t: 'AI Agents & Projects', d: 'Agents, automation, and shipping real projects.', tag: 'Advanced', a: 'bg-pink-400' },
   { t: 'Loop Engineering', d: 'The hot new way to run AI: self-running loops.', tag: '🔥 New', a: 'bg-slate-900' },
 ]

@@ -7,7 +7,7 @@ export default function Hero() {
         {/* Left: course pitch */}
         <div className="space-y-7">
           <span className="inline-flex items-center gap-2 rounded-full bg-mustard-400 px-4 py-2 text-sm font-bold text-slate-900 ring-1 ring-mustard-500/40">
-            <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-mustard-300">100% Free</span>
+            <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-mustard-400">100% Free</span>
             हिंदी &amp; English · 2-minute lessons
           </span>
 
@@ -41,7 +41,7 @@ export default function Hero() {
         <div className="relative max-w-md mx-auto lg:max-w-none w-full">
           <div className="bg-white rounded-2xl border-4 border-slate-900 shadow-[12px_12px_0_#0F0F0F] overflow-hidden">
             <div className="bg-slate-900 px-5 py-3 flex items-center justify-between">
-              <span className="font-mono text-xs font-bold tracking-widest text-mustard-300">&gt;_ ZERO TO AI HERO</span>
+              <span className="font-mono text-xs font-bold tracking-widest text-mustard-400">&gt;_ ZERO TO AI HERO</span>
               <span className="text-[10px] font-bold uppercase bg-green-600 text-white px-2 py-0.5 rounded-full">Free</span>
             </div>
             <div className="p-5 space-y-2">
@@ -54,7 +54,7 @@ export default function Hero() {
                 <div key={n} className="flex items-center gap-3 rounded-lg border-2 border-slate-200 px-3 py-2.5">
                   <span className="font-mono text-xs font-bold text-green-700 w-6">{n}</span>
                   <span className="font-medium text-slate-800 text-sm flex-1">{t}</span>
-                  <span className={s === '✓' ? 'text-green-600' : 'text-clay'}>{s}</span>
+                  <span className={s === '✓' ? 'text-green-600' : 'text-[#D97757]'}>{s}</span>
                 </div>
               ))}
               <div className="pt-2 text-center">
