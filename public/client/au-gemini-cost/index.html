@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Tejas — AI Cost Optimisation Progress · Amar Ujala × Meegrow Labs</title>
+<style>
+  :root{
+    --ink:#1a1c22; --muted:#5c6270; --line:#e6e8ee; --bg:#fbfbfd; --card:#ffffff;
+    --brand:#b8232f; --brand-soft:#fdecec; --good:#1a7f52; --good-soft:#e7f4ee;
+    --accent:#2b5c9b; --shadow:0 1px 2px rgba(20,24,40,.04),0 8px 24px rgba(20,24,40,.05);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.62;font-size:17px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 22px}
+  header.top{padding:56px 0 30px;border-bottom:1px solid var(--line)}
+  .eyebrow{display:flex;gap:10px;align-items:center;font-size:13px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--muted);font-weight:600}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--brand)}
+  h1{font-size:33px;line-height:1.18;margin:16px 0 10px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:16px;margin:0}
+  .meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;
+    background:var(--card);border:1px solid var(--line);color:var(--muted)}
+  .chip.live{background:var(--good-soft);color:var(--good);border-color:transparent}
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);
+    margin:0 0 14px;font-weight:700}
+  h3{font-size:19px;margin:22px 0 6px}
+  p{margin:0 0 14px}
+  .lead{font-size:19px;line-height:1.55}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:22px 24px;box-shadow:var(--shadow);margin:18px 0}
+  .stat-row{display:flex;flex-wrap:wrap;gap:14px;margin:20px 0 6px}
+  .stat{flex:1 1 200px;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+  .stat .n{font-size:30px;font-weight:750;letter-spacing:-.02em;line-height:1}
+  .stat .n.brand{color:var(--brand)} .stat .n.good{color:var(--good)}
+  .stat .l{font-size:13.5px;color:var(--muted);margin-top:8px}
+  ul{margin:6px 0 14px;padding-left:20px} li{margin:7px 0}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:16px 0}
+  .steps li{position:relative;padding:16px 18px 16px 58px;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;margin:10px 0;box-shadow:var(--shadow)}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:16px;top:16px;
+    width:28px;height:28px;border-radius:8px;background:var(--brand-soft);color:var(--brand);
+    font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+  .steps .st{font-weight:650;font-size:16px}
+  .steps .sd{color:var(--muted);font-size:14.5px;margin-top:3px}
+  .tag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:6px;
+    margin-left:8px;vertical-align:middle}
+  .tag.done{background:var(--good-soft);color:var(--good)}
+  .tag.next{background:#eef2f9;color:var(--accent)}
+  .tag.plan{background:#f2f0f5;color:#6b5b8a}
+  .callout{background:var(--brand-soft);border:1px solid #f6d4d6;border-radius:14px;
+    padding:20px 24px;margin:20px 0}
+  .callout .big{font-size:22px;font-weight:750;color:var(--brand);margin:0 0 6px}
+  .note{font-size:14.5px;color:var(--muted)}
+  footer{padding:34px 0 60px;color:var(--muted);font-size:13.5px}
+  strong{font-weight:650}
+  @media (max-width:560px){h1{font-size:27px}.lead{font-size:17px}body{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow"><span class="dot"></span> Amar Ujala &times; Meegrow Labs &nbsp;·&nbsp; Confidential</div>
+    <h1>Tejas — AI Cost Optimisation</h1>
+    <p class="sub">Progress update on reducing the AI engine's running cost, without any change to editorial quality.</p>
+    <div class="meta">
+      <span class="chip">6 July 2026</span>
+      <span class="chip live">● Live on production</span>
+      <span class="chip">Stage 1 of 3 shipped</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>In one line</h2>
+    <p class="lead">Tejas's AI usage has grown strongly with adoption, and its running cost grew faster than expected. Today we shipped the ability to <strong>see exactly where every rupee goes</strong> — and it immediately revealed the single biggest saving. The cost-cutting itself begins with the next update.</p>
+  </section>
+
+  <section>
+    <h2>Why the cost had been rising</h2>
+    <p>Two things were happening at once:</p>
+    <ul>
+      <li><strong>Genuine, healthy growth.</strong> Daily editors on Tejas rose to roughly 250, and total AI usage grew about 70% over five weeks. More of your desk is using the tool, more often — the good kind of cost.</li>
+      <li><strong>A blind spot in the meter.</strong> The usage figures shown in the admin dashboard were rough estimates that counted only the visible text. They were missing the largest parts of each request — the instructions sent to the AI, the follow-on steps behind a single click, and the AI's own internal "thinking". So the real bill was far higher than the dashboard suggested, and there was no way to see which features were driving it.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What we shipped today</h2>
+    <p>We deployed a precise <strong>measurement layer</strong> to production. Every AI request on Tejas now records its true usage — including the hidden steps and the internal thinking — feature by feature. This is the instrument we need to cut cost safely: it lets us prove every saving and immediately catch anything that goes wrong.</p>
+    <div class="card">
+      <p style="margin:0"><strong>Rolled out cleanly.</strong> The change was reviewed, a subtle issue was caught and fixed <em>before</em> it reached production, verified against a full test suite, and deployed with no disruption to editors. It changes measurement only — no editor sees any difference in how Tejas behaves.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What the meter revealed on day one</h2>
+    <p>Within the first 20 minutes of live use, the data confirmed where the money is going — and handed us the biggest lever:</p>
+    <div class="callout">
+      <p class="big">≈ 87% of the AI's output on proof-reading was invisible "thinking"</p>
+      <p class="note" style="margin:0">On the most-used feature, the AI was spending most of its (billed) output on internal reasoning the editor never sees — and reasoning that this task doesn't need. Switching it off is expected to remove the large majority of that cost, with no change to the result the editor receives.</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="n brand">~16×</div><div class="l">how much the old dashboard was under-counting real usage on proof-reading</div></div>
+      <div class="stat"><div class="n">2–4</div><div class="l">hidden AI calls behind a single article action, now visible for the first time</div></div>
+      <div class="stat"><div class="n good">~250</div><div class="l">daily editors driving genuine, growing adoption</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The savings plan</h2>
+    <p>We are shipping in three careful stages, each measured for a few days before the next, so quality is never put at risk and every saving is verified.</p>
+    <ol class="steps">
+      <li>
+        <div class="st">Stage 1 — Measure <span class="tag done">Shipped today</span></div>
+        <div class="sd">The measurement layer is live. We can now see true, per-feature cost and prove every change from here.</div>
+      </li>
+      <li>
+        <div class="st">Stage 2 — Quick wins <span class="tag next">Next</span></div>
+        <div class="sd">Turn off the unnecessary "thinking", right-size each feature, and move lighter tasks to a cheaper AI tier. This is where the largest cost reduction lands.</div>
+      </li>
+      <li>
+        <div class="st">Stage 3 — Structural <span class="tag plan">Planned</span></div>
+        <div class="sd">Re-use the standing instructions instead of resending them every time (a large discount), and streamline the behind-the-scenes steps. Any change touching Hindi output ships behind a switch, with desk sign-off.</div>
+      </li>
+    </ol>
+    <p class="note">Target: a meaningful reduction in the AI running cost — on the order of 40–70% of the per-request weight — with <strong>no visible change to editorial quality</strong>. We will report actual before-and-after numbers as each stage lands, now that the meter makes them trustworthy.</p>
+  </section>
+
+  <section>
+    <h2>What to expect next</h2>
+    <p>The next update (Stage 2) is where the bill starts to come down. Because the measurement layer is now in place, we will be able to show the saving in hard numbers within a day or two of shipping it — and confirm the desk sees no difference in the copy Tejas produces.</p>
+  </section>
+
+  <footer>
+    <p>Prepared by Meegrow Labs for Amar Ujala · 6 July 2026 · Confidential progress update.<br>
+    Figures are drawn from live production usage on the date above and will be updated as the work progresses.</p>
+  </footer>
+
+</div>
+</body>
+</html>
