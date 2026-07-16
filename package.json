@@ -8,7 +8,8 @@
     "build": "tsc && vite build && tsx scripts/prerender.tsx",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "client-share": "node scripts/new-client-share.mjs"
+    "client-share": "node scripts/new-client-share.mjs",
+    "verify": "bash scripts/verify-legal.sh && bash scripts/verify-fonts.sh"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",
