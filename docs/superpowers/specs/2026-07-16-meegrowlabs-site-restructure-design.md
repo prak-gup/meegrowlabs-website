@@ -118,9 +118,13 @@ Netlify matches real files before redirect rules.
 
 ### Design tokens — single source of truth
 
-Extracted to **`public/assets/site.css`**, linked by every static page,
-replacing the per-file `<style>` blocks currently duplicated across
-`/privacy/`, `/terms/`, `/data-deletion/`, `/social/`.
+Extracted to **`public/assets/site.css`**, linked by the **new** static pages
+(`/seo-geo/`, `/antidote/`, `/research/`) and by the upgraded `/social/`.
+
+`/privacy/`, `/terms/` and `/data-deletion/` **keep their inline `<style>`
+blocks and are not touched** (§6, §7). They are live evidence in an active Meta
+App Review, and the duplication is not worth the risk. Migrating them to
+`site.css` is a follow-up for after the review clears.
 
 ```
 fonts   Archivo Black (display) · Space Grotesk (body) · JetBrains Mono (labels)
