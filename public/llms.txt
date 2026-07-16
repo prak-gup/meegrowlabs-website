@@ -1,11 +1,21 @@
 # Meegrow Labs
 
-> Meegrow Labs is an AI automation studio that turns natural-language descriptions of real-world workflows into secure, production-grade automated systems for finance, operations, product, and customer teams. We also publish "Zero to AI Hero", a free bilingual (English + हिंदी) course that teaches anyone to use and build with AI from scratch.
+> Meegrow Labs is an AI growth company. Growth, engineered. Search didn't die — it moved: customers now ask machines, and we make sure you're the answer they get. We run SEO/GEO for clients, build growth software (Antidote, Antidote Research, Meegrow Social), and publish "Zero to AI Hero," a free bilingual (English + हिंदी) course that teaches anyone to use and build with AI from scratch.
 
 ## Core
 
-- [Meegrow Labs — AI Automation Studio](https://meegrowlabs.com/): What we do — custom agentic AI workflows, platform integrations, and bespoke automation systems for modern teams.
-- [Contact / Start a project](https://tally.so/r/444qZ5): Intake form to scope an automation engagement.
+- [Meegrow Labs — Growth, engineered](https://meegrowlabs.com/): Company home — services, products, and the free course.
+- [Contact / Talk to us](https://tally.so/r/444qZ5): Intake form to start a conversation. Services and product access are invite-led, not self-serve.
+
+## Services
+
+- [SEO / GEO](https://meegrowlabs.com/seo-geo/): Done-for-you visibility engine. We score you across search, AI engines, maps, and links, then close every gap so ChatGPT, Perplexity, and Google AI Overviews cite you — not your competitor.
+
+## Products
+
+- [Antidote](https://meegrowlabs.com/antidote/): A marketing engine that drafts content, publishes blogs and social posts, watches competitors, and briefs you every morning. You approve, it ships.
+- [Antidote Research](https://meegrowlabs.com/research/): An SEO research suite — keywords, backlinks, site audits, rank tracking, local SEO, and schema. Every result turns into a task on your board.
+- [Meegrow Social](https://meegrowlabs.com/social/): Plan, schedule, publish, and measure social content across Facebook, Instagram, Google Business Profiles, LinkedIn, and YouTube from one calendar.
 
 ## Zero to AI Hero (free course)
 
@@ -15,9 +25,10 @@
 
 ## Writing
 
-- [Meegrow Labs Blog](https://blog.meegrowlabs.com): Guides and deep-dives on AI automation and the fundamentals taught in Zero to AI Hero.
+- [Meegrow Labs Blog](https://blog.meegrowlabs.com): Guides and deep-dives on growth, SEO/GEO, and the fundamentals taught in Zero to AI Hero.
 
 ## Notes
 
+- Antidote, Antidote Research, and Meegrow Social are separate products; access is invite-led through the contact form.
 - Course narration is AI-generated; all content is human-reviewed.
 - Canonical host is https://meegrowlabs.com (non-www).
