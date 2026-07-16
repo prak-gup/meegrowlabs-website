@@ -11,11 +11,11 @@ export default function FAQ() {
   return (
     <section className="bg-white px-6 py-20">
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900 text-center">Questions?</h2>
+        <h2 className="text-3xl md:text-4xl font-display text-slate-900 text-center">Questions?</h2>
         <div className="mt-10 space-y-4">
           {FAQS.map(([q, a]) => (
             <div key={q} className="border-l-4 border-green-600 bg-cream-100 rounded-r-xl p-5">
-              <div className="font-display font-bold text-lg text-slate-900">{q}</div>
+              <div className="font-display text-lg text-slate-900">{q}</div>
               <p className="mt-1 text-slate-700">{a}</p>
             </div>
           ))}

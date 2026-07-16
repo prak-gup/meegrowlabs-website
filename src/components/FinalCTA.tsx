@@ -2,7 +2,7 @@ export default function FinalCTA() {
   return (
     <section className="bg-green-600 px-6 py-24">
       <div className="max-w-3xl mx-auto text-center text-white">
-        <h2 className="text-4xl md:text-5xl font-display font-bold leading-tight">
+        <h2 className="text-4xl md:text-5xl font-display leading-tight">
           Your 2-minute head start on AI begins now
         </h2>
         <p className="mt-4 text-lg text-green-50 max-w-xl mx-auto">

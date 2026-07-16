@@ -77,7 +77,7 @@ export default function Industries() {
     <section className="relative py-32 px-6 bg-white" id="industries">
       <div className="max-w-7xl mx-auto">
         <div className="mb-20">
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-slate-900">
+          <h2 className="text-4xl md:text-5xl font-display mb-4 text-slate-900">
             Industries We Serve
           </h2>
           <p className="text-xl text-slate-700 max-w-2xl">
@@ -93,7 +93,7 @@ export default function Industries() {
             >
               <summary className="cursor-pointer p-8 flex items-center justify-between hover:bg-cream-200 transition-colors">
                 <div>
-                  <h3 className="text-2xl font-display font-bold text-slate-900 mb-1">
+                  <h3 className="text-2xl font-display text-slate-900 mb-1">
                     {industry.name}
                   </h3>
                   <p className="text-slate-600">{industry.fullName}</p>

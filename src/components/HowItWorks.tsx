@@ -30,7 +30,7 @@ export default function HowItWorks() {
     <section className="relative py-32 px-6 bg-white" id="how-it-works">
       <div className="max-w-6xl mx-auto">
         <div className="mb-20">
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-slate-900">
+          <h2 className="text-4xl md:text-5xl font-display mb-4 text-slate-900">
             How Our AI Workflow Automation Engagement Runs
           </h2>
           <p className="text-xl text-slate-700 max-w-2xl">

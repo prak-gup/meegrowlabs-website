@@ -68,13 +68,13 @@ export default function CourseApp() {
         || (statusFilter === 'New' ? c.isNew : statusFilter === 'Trending' ? c.trending : cStatus(c) === statusFilter)))
     return (
       <Shell onHome={() => go('/app')} onSignOut={signOut} authed={!!user} right={null}>
-        <h1 className="text-3xl font-display font-bold text-slate-900">Explore courses</h1>
+        <h1 className="text-3xl font-display text-slate-900">Explore courses</h1>
         <p className="text-slate-600">Free, 2-minute video lessons — हिंदी & English.</p>
 
         {/* 🔥 New & Trending */}
         {featured.length > 0 && (
           <section className="mt-6">
-            <h2 className="font-display font-bold text-lg text-slate-900">🔥 New &amp; Trending</h2>
+            <h2 className="font-display text-lg text-slate-900">🔥 New &amp; Trending</h2>
             <div className="mt-3 flex gap-4 overflow-x-auto pb-2 -mx-1 px-1">
               {featured.map((f) => {
                 const p = f.type === 'path' ? pathBySlug[f.slug] : null
@@ -86,7 +86,7 @@ export default function CourseApp() {
                   <button key={f.slug} onClick={() => go(href)}
                     className="flex-none w-72 text-left border-4 border-slate-900 rounded-2xl p-5 shadow-[6px_6px_0_#0F0F0F]" style={{ background: `${item.accent}1a` }}>
                     {badge && <span className="inline-block text-xs font-bold bg-slate-900 text-white px-2 py-1 rounded-full">{badge}</span>}
-                    <div className="mt-2 text-lg font-display font-bold text-slate-900">{p ? p.name : c!.title}</div>
+                    <div className="mt-2 text-lg font-display text-slate-900">{p ? p.name : c!.title}</div>
                     <p className="mt-1 text-sm text-slate-600">{p ? p.blurb : c!.subtitle}</p>
                     <span className="mt-3 inline-block font-semibold text-green-700">Start →</span>
                   </button>
@@ -99,11 +99,11 @@ export default function CourseApp() {
         {/* Continue learning */}
         {inProgress.length > 0 && (
           <section className="mt-8">
-            <h2 className="font-display font-bold text-lg text-slate-900">Continue learning</h2>
+            <h2 className="font-display text-lg text-slate-900">Continue learning</h2>
             <div className="mt-3 grid sm:grid-cols-2 gap-3">
               {inProgress.map((c) => (
                 <button key={c.id} onClick={() => go(`/app/${c.slug}`)} className="text-left border-2 border-slate-900 rounded-xl p-4 bg-white hover:bg-[#F7F3E9]">
-                  <div className="font-display font-bold text-slate-900">{c.title}</div>
+                  <div className="font-display text-slate-900">{c.title}</div>
                   <div className="text-xs text-green-700 font-mono">{courseDone(c.id)}/{lessonCount(c)} done · Continue →</div>
                 </button>
               ))}
@@ -129,7 +129,7 @@ export default function CourseApp() {
           </aside>
           <div>
             <div className="flex items-center justify-between">
-              <h2 className="font-display font-bold text-lg text-slate-900">{shown.length} course{shown.length === 1 ? '' : 's'}</h2>
+              <h2 className="font-display text-lg text-slate-900">{shown.length} course{shown.length === 1 ? '' : 's'}</h2>
               {(expFilter !== 'All' || langFilter !== 'All' || statusFilter !== 'All') &&
                 <button onClick={() => { setExpFilter('All'); setLangFilter('All'); setStatusFilter('All') }} className="text-sm text-green-700 font-semibold">Clear filters</button>}
             </div>
@@ -137,7 +137,7 @@ export default function CourseApp() {
               {shown.map((c) => (
                 <button key={c.id} onClick={() => go(`/app/${c.slug}`)} className="text-left border-2 border-slate-900 rounded-xl p-4 bg-white hover:bg-[#F7F3E9]">
                   <div className="flex items-center gap-2">
-                    <span className="font-display font-bold text-slate-900">{c.title}</span>
+                    <span className="font-display text-slate-900">{c.title}</span>
                     {c.isNew && <span className="text-[10px] font-bold bg-[#D97757] text-white px-1.5 py-0.5 rounded">NEW</span>}
                   </div>
                   <div className="text-xs text-slate-500">{c.experience} · {c.subtitle}{courseDone(c.id) ? ` · ${courseDone(c.id)} done` : ''}</div>
@@ -161,7 +161,7 @@ export default function CourseApp() {
       <Shell onHome={() => go('/app')} onSignOut={signOut} authed={!!user} right={null}>
         <button onClick={() => go('/app')} className="text-green-700 font-semibold">← All paths</button>
         <div className="mt-2 font-mono text-xs uppercase tracking-wider text-slate-500">{p.kind} · {p.difficulty}</div>
-        <h1 className="text-3xl font-display font-bold text-slate-900">{p.name}</h1>
+        <h1 className="text-3xl font-display text-slate-900">{p.name}</h1>
         <p className="text-slate-600">{p.blurb}</p>
         <div className="mt-6 space-y-3">
           {pc.map((c, i) => {
@@ -172,7 +172,7 @@ export default function CourseApp() {
                 className="w-full flex items-center gap-4 text-left border-4 border-slate-900 rounded-xl p-4 bg-[#F7F3E9] hover:bg-white">
                 <span className="font-mono font-bold w-8 h-8 flex items-center justify-center rounded-full border-[3px] border-slate-900" style={{ background: complete ? '#1F8A4C' : '#fff', color: complete ? '#fff' : '#0F0F0F' }}>{complete ? '✓' : i + 1}</span>
                 <span className="flex-1">
-                  <span className="block font-display font-bold text-slate-900">{c.title}</span>
+                  <span className="block font-display text-slate-900">{c.title}</span>
                   <span className="block text-xs text-slate-500">{total} lessons{done ? ` · ${done}/${total} done` : ''}</span>
                 </span>
                 <span className="text-green-700 font-semibold">{done ? (complete ? 'Review' : 'Continue') : 'Start'} →</span>
@@ -202,7 +202,7 @@ export default function CourseApp() {
     return (
       <Shell onHome={() => go('/app')} onSignOut={signOut} authed={!!user} right={<span className="font-mono text-xs text-slate-500">{completed}/{flat.length}</span>}>
         <button onClick={() => go(`/app/${course.slug}`)} className="text-green-700 font-semibold">← {course.title}</button>
-        <h1 className="mt-2 text-2xl md:text-3xl font-display font-bold text-slate-900">{current.title}</h1>
+        <h1 className="mt-2 text-2xl md:text-3xl font-display text-slate-900">{current.title}</h1>
         {course.bilingual && (
           <div className="mt-3 flex gap-2">
             <Tab on={lang === 'en'} onClick={() => setLang('en')}>English</Tab>
@@ -230,7 +230,7 @@ export default function CourseApp() {
       <button onClick={() => go('/app')} className="text-green-700 font-semibold">← All paths</button>
       <div className="mt-2 flex items-end justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-3xl font-display font-bold text-slate-900">{course.title}</h1>
+          <h1 className="text-3xl font-display text-slate-900">{course.title}</h1>
           <p className="text-slate-600">{completed} of {flat.length} complete</p>
         </div>
         <button onClick={() => go(`/app/${course.slug}/lesson/${firstIncomplete.slug}`)} className="bg-green-700 text-white font-bold px-6 py-3 rounded-lg">{completed ? 'Continue →' : 'Start →'}</button>
