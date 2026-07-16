@@ -12,7 +12,7 @@
   gtag('config', 'G-PCZK96MECF');
 </script>
 <title>Privacy Policy — Meegrow Social | Meegrow Labs</title>
-<meta name="description" content="Privacy Policy for Meegrow Social, the social media management tool by Meegrow Labs. Covers how we access and use Google and YouTube user data.">
+<meta name="description" content="Privacy Policy for Meegrow Social, the social media management tool by Meegrow Labs. Covers how we access and use Meta (Facebook &amp; Instagram), Google and YouTube user data.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://meegrowlabs.com/privacy/">
 <link rel="icon" href="/favicon.png">
@@ -47,6 +47,7 @@
   th{background:var(--bg2)}
   code{background:var(--bg2);padding:1px 6px;border-radius:5px;font-size:14px}
   footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+  footer a{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -56,16 +57,16 @@
   </header>
 
   <h1>Privacy Policy</h1>
-  <p class="eff">For <strong>Meegrow Social</strong> &middot; Last updated: 17 June 2026</p>
+  <p class="eff">For <strong>Meegrow Social</strong> &middot; Last updated: 16 July 2026</p>
 
-  <p>This Privacy Policy explains how <strong>Meegrow Labs</strong> ("Meegrow Labs", "we", "us", or "our") collects, uses, stores, and protects information in connection with <strong>Meegrow Social</strong> (the "Service") &mdash; a social media management and scheduling application that lets our team and clients create, schedule, publish, and analyze content across connected social media accounts, including YouTube, LinkedIn, and X.</p>
+  <p>This Privacy Policy explains how <strong>Meegrow Labs</strong> ("Meegrow Labs", "we", "us", or "our") collects, uses, stores, and protects information in connection with <strong>Meegrow Social</strong> (the "Service") &mdash; a social media management and scheduling application that lets our team and clients create, schedule, publish, and analyze content across connected social media accounts, including Facebook Pages, Instagram Business accounts, Google Business Profiles, YouTube, LinkedIn, and X.</p>
 
   <p>By connecting an account to the Service, you agree to the practices described in this policy.</p>
 
   <h2>1. Information We Collect</h2>
   <ul>
     <li><strong>Account &amp; profile data</strong> from the social platforms you connect (e.g. account name, profile ID, channel ID, avatar) so we can show which account is connected and publish on your behalf.</li>
-    <li><strong>Authentication tokens</strong> (OAuth access and refresh tokens) issued by each platform when you authorize a connection. These let the Service post and read on your behalf without storing your password.</li>
+    <li><strong>Authentication tokens</strong> (OAuth access and refresh tokens) issued by each platform when you authorize a connection. These are stored <strong>encrypted at rest</strong> and let the Service post and read on your behalf without storing your password.</li>
     <li><strong>Content you create in the Service</strong> &mdash; posts, captions, media, and schedules you choose to publish.</li>
     <li><strong>Performance &amp; analytics data</strong> returned by the platform APIs about content published through the Service (e.g. views, engagement) so we can display it back to you.</li>
     <li><strong>Basic usage and log data</strong> needed to operate and secure the Service.</li>
@@ -90,7 +91,46 @@
 
   <p>We do <strong>not</strong> use Google user data for any purpose other than providing the features you request, and we do not use it to train generalized machine-learning or AI models.</p>
 
-  <h2>3. How We Use Information</h2>
+  <h2>3. Meta Platform &mdash; Facebook &amp; Instagram</h2>
+  <p>Meegrow Social uses the <strong>Meta Platform</strong> (the Facebook and Instagram Graph APIs). By connecting a Facebook Page or an Instagram Business account, you also agree to the <a href="https://www.facebook.com/terms.php" target="_blank" rel="noopener">Meta Terms of Service</a>. Your use of Meta data is also governed by the <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta Privacy Policy</a>.</p>
+
+  <p>When you connect a Facebook Page or Instagram Business account, we access only the following:</p>
+  <ul>
+    <li><strong>Your Facebook Page list and metadata</strong> &mdash; the Pages you manage, with their name, ID, category, and avatar, so you can pick which Page to connect and see which one is connected.</li>
+    <li><strong>Page posts we publish</strong> &mdash; the posts created through Meegrow Social on your Page, so we can show them in your content calendar and delete them if you ask us to.</li>
+    <li><strong>Page insights</strong> &mdash; analytics for your Page and for content published through the Service, so we can display performance back to you.</li>
+    <li><strong>The linked Instagram Business account</strong> &mdash; its profile details and media, so you can publish to it and see your existing content in the calendar.</li>
+    <li><strong>Instagram insights</strong> &mdash; analytics for the linked Instagram account and its content, shown back to you in the same dashboard.</li>
+  </ul>
+
+  <p>We request the following permissions, used only to operate the features you ask for:</p>
+  <table>
+    <tr><th>Permission</th><th>Why we use it</th></tr>
+    <tr><td><code>pages_show_list</code></td><td>To list the Pages you manage so you can choose which one to connect.</td></tr>
+    <tr><td><code>pages_read_engagement</code></td><td>To read your Page's content and engagement for your content calendar.</td></tr>
+    <tr><td><code>pages_manage_posts</code></td><td>To publish the posts you schedule to your own Page, and to delete them when you ask.</td></tr>
+    <tr><td><code>read_insights</code></td><td>To read your Page analytics and show you performance data.</td></tr>
+    <tr><td><code>instagram_basic</code></td><td>To read the Instagram Business account linked to your Page &mdash; its profile and media.</td></tr>
+    <tr><td><code>instagram_content_publish</code></td><td>To publish the content you schedule to your own Instagram Business account.</td></tr>
+    <tr><td><code>instagram_manage_insights</code></td><td>To read Instagram analytics for your account and content.</td></tr>
+  </table>
+
+  <p>We store the OAuth access tokens issued by Meta <strong>encrypted at rest</strong>, and use them <strong>solely to perform the actions you explicitly schedule or request</strong>. We do not publish, delete, or read anything you have not asked us to.</p>
+
+  <div class="callout">
+    <p style="margin:0"><strong>What we never do with Meta data.</strong> We never sell it. We never use it for advertising, ad targeting, or building user profiles. We never share it with third parties beyond the platform APIs themselves and the infrastructure providers that host the Service on our behalf. We do not use it to train generalized machine-learning or AI models.</p>
+  </div>
+
+  <h3>Revoking access</h3>
+  <ul>
+    <li><strong>Inside Meegrow Social:</strong> remove/disconnect the Page or Instagram account, which deletes the stored tokens for that connection.</li>
+    <li><strong>From Meta's side:</strong> visit <a href="https://www.facebook.com/settings?tab=business_tools" target="_blank" rel="noopener">facebook.com/settings?tab=business_tools</a> and remove "Meegrow Social".</li>
+  </ul>
+
+  <h3>Retention &amp; deletion</h3>
+  <p>Meta data is retained on the same basis as everything else described in <a href="#retention">section 6</a>: we keep connection data and tokens only for as long as your account remains connected, deletion is immediate when you disconnect, and we action verified deletion requests within 30 days. Step-by-step instructions are on our <a href="https://meegrowlabs.com/data-deletion/">Data Deletion</a> page.</p>
+
+  <h2>4. How We Use Information</h2>
   <ul>
     <li>To publish and schedule the content you create, to the accounts you connect.</li>
     <li>To display your connected accounts, content calendar, and analytics inside the Service.</li>
@@ -98,41 +138,47 @@
     <li>To comply with legal obligations.</li>
   </ul>
 
-  <h2>4. How We Share Information</h2>
+  <h2>5. How We Share Information</h2>
   <p>We do not sell your personal information. We share data only:</p>
   <ul>
-    <li>With the social platforms themselves (e.g. YouTube, LinkedIn, X) as required to perform the actions you request;</li>
+    <li>With the social platforms themselves (e.g. Meta/Facebook, Instagram, YouTube, LinkedIn, X) as required to perform the actions you request;</li>
     <li>With infrastructure providers that host the Service on our behalf, under confidentiality obligations;</li>
     <li>When required by law, or to protect the rights, safety, and security of users and the public.</li>
   </ul>
 
-  <h2>5. Data Retention &amp; Deletion</h2>
+  <h2 id="retention">6. Data Retention &amp; Deletion</h2>
   <p>We retain connection data and tokens only for as long as your account remains connected to the Service. You can revoke access at any time, which deletes the stored tokens for that connection:</p>
   <ul>
     <li><strong>Inside Meegrow Social:</strong> remove/disconnect the channel.</li>
+    <li><strong>From Meta's side:</strong> visit <a href="https://www.facebook.com/settings?tab=business_tools" target="_blank" rel="noopener">facebook.com/settings?tab=business_tools</a> and remove "Meegrow Social".</li>
     <li><strong>From Google's side:</strong> visit <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">myaccount.google.com/permissions</a> and remove "Meegrow Social".</li>
     <li><strong>By request:</strong> email us (below) to delete your data. We will action verified requests within 30 days.</li>
   </ul>
+  <p>Step-by-step instructions are on our <a href="https://meegrowlabs.com/data-deletion/">Data Deletion</a> page.</p>
 
-  <h2>6. Security</h2>
-  <p>We protect your data using encryption in transit (HTTPS/TLS), access controls, and restricted storage of authentication tokens. No method of transmission or storage is 100% secure, but we work to protect your information using commercially reasonable safeguards.</p>
+  <h2>7. Security</h2>
+  <p>We protect your data using encryption in transit (HTTPS/TLS), encryption of authentication tokens at rest, access controls, and restricted storage. No method of transmission or storage is 100% secure, but we work to protect your information using commercially reasonable safeguards.</p>
 
-  <h2>7. Your Rights</h2>
+  <h2>8. Your Rights</h2>
   <p>You may request access to, correction of, or deletion of your personal data, and you may withdraw consent (revoke access) at any time. To exercise these rights, contact us using the details below.</p>
 
-  <h2>8. Children</h2>
+  <h2>9. Children</h2>
   <p>The Service is intended for businesses and professionals and is not directed to children under 13 (or the minimum age in your jurisdiction). We do not knowingly collect data from children.</p>
 
-  <h2>9. Changes to This Policy</h2>
+  <h2>10. Changes to This Policy</h2>
   <p>We may update this Privacy Policy from time to time. Material changes will be reflected by updating the "Last updated" date above and, where appropriate, by notifying connected users.</p>
 
-  <h2>10. Contact Us</h2>
+  <h2>11. Contact Us</h2>
   <p>Meegrow Labs<br>
   Email: <a href="mailto:prakhar@meegrowlabs.com">prakhar@meegrowlabs.com</a><br>
   Website: <a href="https://meegrowlabs.com/">https://meegrowlabs.com</a></p>
 
   <footer>
-    &copy; 2026 Meegrow Labs &middot; <a href="https://meegrowlabs.com/">Home</a>
+    &copy; 2026 Meegrow Labs &middot;
+    <a href="https://meegrowlabs.com/">Home</a> &middot;
+    <a href="https://meegrowlabs.com/terms/">Terms of Service</a> &middot;
+    <a href="https://meegrowlabs.com/data-deletion/">Data Deletion</a> &middot;
+    <a href="mailto:prakhar@meegrowlabs.com">prakhar@meegrowlabs.com</a>
   </footer>
 </div>
 </body>
