@@ -1,0 +1,82 @@
+/* Meegrow Labs — shared site styles.
+   Canonical tokens; keep in sync with tailwind.config.js.
+   Used by /seo-geo/, /antidote/, /research/, /social/.
+   NOT used by /privacy/, /terms/, /data-deletion/ — those keep inline
+   styles because they are live evidence in an active Meta App Review. */
+:root{
+  --bg:#F7F3E9; --bg2:#EFE9D9; --ink:#0F0F0F; --muted:#5b5749;
+  --accent:#D97757; --green:#13703A; --line:#e4ddc9; --yellow:#F5C518;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Space Grotesk',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 22px}
+
+/* Nav */
+.site-nav{border-bottom:4px solid var(--ink);background:var(--bg);position:sticky;top:0;z-index:50}
+.site-nav .inner{max-width:1100px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.site-nav a{color:var(--ink);text-decoration:none}
+.site-nav .logo{font-family:'Archivo Black',sans-serif;font-size:19px;letter-spacing:-.5px}
+.site-nav .links{display:flex;align-items:center;gap:20px;font-weight:600;font-size:15px}
+.site-nav .links a:hover{color:var(--green)}
+.site-nav details{position:relative}
+.site-nav summary{cursor:pointer;list-style:none;font-weight:600}
+.site-nav summary::-webkit-details-marker{display:none}
+.site-nav details[open] summary{color:var(--green)}
+.site-nav .menu{position:absolute;top:30px;left:-14px;background:var(--bg);
+  border:3px solid var(--ink);border-radius:12px;box-shadow:5px 5px 0 var(--ink);
+  padding:8px;min-width:190px;display:flex;flex-direction:column;gap:2px}
+.site-nav .menu a{padding:8px 12px;border-radius:8px;font-size:15px}
+.site-nav .menu a:hover{background:var(--bg2)}
+@media(max-width:860px){.site-nav .links{gap:12px;font-size:14px}.site-nav .hide-sm{display:none}}
+
+/* Type */
+.kicker{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.22em;color:var(--green);margin:0 0 14px}
+h1{font-family:'Archivo Black',sans-serif;font-size:clamp(38px,7vw,76px);line-height:.95;
+  letter-spacing:-1.5px;margin:0 0 18px}
+h2{font-family:'Archivo Black',sans-serif;font-size:clamp(26px,3.6vw,40px);line-height:1.05;
+  letter-spacing:-1px;margin:0 0 14px}
+h3{font-size:18px;margin:0 0 6px;font-weight:700}
+p,li{font-size:16.5px;color:#23211c}
+.lede{font-size:clamp(17px,1.6vw,20px);max-width:600px}
+section{padding:clamp(48px,7vw,86px) 0}
+a{color:var(--accent);text-underline-offset:2px}
+
+/* Buttons */
+.btn{display:inline-block;font-weight:700;font-size:16px;padding:14px 26px;border-radius:10px;
+  border:3px solid var(--ink);text-decoration:none;transition:transform .12s,box-shadow .12s}
+.btn-primary{background:var(--green);color:#fff;box-shadow:5px 5px 0 var(--ink)}
+.btn-ghost{background:var(--bg);color:var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+
+/* Surfaces */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{background:var(--bg2);border:3px solid var(--ink);border-radius:14px;padding:20px 22px;
+  box-shadow:5px 5px 0 var(--ink)}
+.card p{margin:0;font-size:15px;color:var(--muted)}
+.badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;padding:3px 9px;border-radius:999px;
+  border:2px solid var(--ink);background:var(--yellow)}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;position:relative;padding-left:46px;margin-bottom:16px}
+.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:0;
+  font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--green);
+  border:2px solid var(--ink);border-radius:50%;width:30px;height:30px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;background:var(--bg)}
+.cta{background:var(--ink);color:var(--bg);border-radius:20px;padding:clamp(32px,5vw,56px);text-align:center}
+.cta h2{color:var(--bg)}
+.cta p{color:#c9c4b6}
+
+/* Footer */
+.site-footer{border-top:4px solid var(--ink);background:var(--bg2);margin-top:40px}
+.site-footer .inner{max-width:1100px;margin:0 auto;padding:44px 22px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:28px}
+.site-footer h4{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--muted);margin:0 0 10px}
+.site-footer a{display:block;color:var(--ink);text-decoration:none;font-size:15px;padding:3px 0}
+.site-footer a:hover{color:var(--green)}
+.site-footer .base{border-top:2px solid var(--line);padding:16px 22px;max-width:1100px;margin:0 auto;
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
