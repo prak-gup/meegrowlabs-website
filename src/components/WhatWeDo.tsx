@@ -2,7 +2,7 @@ export default function WhatWeDo() {
   return (
     <section className="relative py-32 px-6 bg-white" id="what-we-do">
       <div className="max-w-5xl mx-auto text-center space-y-6">
-        <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900">
+        <h2 className="text-4xl md:text-5xl font-display text-slate-900">
           AI Automation Studio Built for Real Workflow Ops
         </h2>
         <p className="text-2xl md:text-3xl lg:text-4xl text-slate-800 leading-relaxed font-light">

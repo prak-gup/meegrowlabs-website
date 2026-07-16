@@ -33,7 +33,7 @@ export default function Platforms() {
           <p className="text-sm font-semibold tracking-[0.3em] text-slate-500">
             PLATFORMS & STACKS
           </p>
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900">
+          <h2 className="text-4xl md:text-5xl font-display text-slate-900">
             Platform Integrations for AI Workflow Automation
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
@@ -62,4 +62,5 @@ export default function Platforms() {
     </section>
   )
 }
+
 

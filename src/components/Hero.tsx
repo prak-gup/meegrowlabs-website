@@ -1,4 +1,4 @@
-const CONTACT_FORM_LINK = "https://tally.so/r/444qZ5"
+import { TALLY as CONTACT_FORM_LINK } from '../lib/site'
 
 export default function Hero() {
   return (
@@ -11,7 +11,7 @@ export default function Hero() {
             हिंदी &amp; English · 2-minute lessons
           </span>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-slate-900 leading-[1.02]">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display text-slate-900 leading-[1.02]">
             Go from <span className="text-green-600">zero to AI hero</span>
           </h1>
 

@@ -7,36 +7,48 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['DM Sans', 'system-ui', 'sans-serif'],
-        body: ['DM Sans', 'system-ui', 'sans-serif'],
+        display: ['Archivo Black', 'system-ui', 'sans-serif'],
+        body: ['Space Grotesk', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
+        // Canonical static-system palette. Keep in sync with public/assets/site.css.
+        cream: {
+          50:  '#FDFCF8',
+          100: '#F7F3E9', // --bg
+          200: '#EFE9D9', // --bg2
+          300: '#e4ddc9', // --line
+        },
+        green: {
+          50:  '#E8F3EC',
+          100: '#C9E3D3',
+          600: '#13703A', // --green
+          700: '#0E5429', // darker than 600 — hover states depend on this
+          800: '#0A3D1E',
+        },
+        slate: {
+          200: '#e4ddc9', // --line (borders)
+          400: '#8a8577',
+          500: '#6f6a5c',
+          600: '#5b5749', // --muted
+          700: '#3a372f',
+          800: '#23211c',
+          900: '#0F0F0F', // --ink
+        },
         sage: {
-          50: '#f7f9f8',
-          100: '#e8f0ed',
-          200: '#c7ddd5',
-          300: '#a0c4b5',
+          200: '#e4ddc9',
           400: '#7aab96',
           500: '#5a9178',
         },
-        cream: {
-          50: '#fdfcfb',
-          100: '#f9f7f4',
-          200: '#f2ede7',
-          300: '#e8dfd5',
-        },
         mustard: {
-          400: '#e6c67a',
-          500: '#d4af5e',
+          400: '#F5C518',
+          500: '#D9A400',
         },
-        slate: {
-          800: '#2d3748',
-          900: '#1a202c',
-        }
+        accent: {
+          500: '#D97757', // --accent
+        },
       },
-      animation: {
-        'fade-in': 'fadeIn 0.6s ease-out',
-      },
+      animation: { 'fade-in': 'fadeIn 0.6s ease-out' },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0', transform: 'translateY(10px)' },

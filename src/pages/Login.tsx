@@ -41,7 +41,7 @@ export default function Login() {
     <div className="min-h-screen bg-cream-100 flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md bg-white border-4 border-slate-900 rounded-2xl shadow-[8px_8px_0_#0F0F0F] p-8">
         <a href="/" className="font-mono font-bold tracking-widest text-slate-900">&gt;_ MEEGROW <span className="text-green-700">LABS</span></a>
-        <h1 className="mt-6 text-3xl font-display font-bold text-slate-900">{mode === 'signup' ? 'Create your free account' : 'Welcome back'}</h1>
+        <h1 className="mt-6 text-3xl font-display text-slate-900">{mode === 'signup' ? 'Create your free account' : 'Welcome back'}</h1>
         <p className="mt-2 text-slate-600">Track your progress and resume any lesson — free, हिंदी &amp; English.</p>
 
         {!configured && <p className="mt-4 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">Sign-in isn’t switched on yet.</p>}

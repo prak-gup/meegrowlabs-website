@@ -9,9 +9,9 @@
 }
 
 body {
-  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
-  background-color: #f7f9f8;
-  color: #2d3748;
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  background-color: #F7F3E9;
+  color: #0F0F0F;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -19,10 +19,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-weight: 700;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
   line-height: 1.2;
-  color: #1a202c;
+  color: #0F0F0F;
 }
 
 /* Smooth scroll */
