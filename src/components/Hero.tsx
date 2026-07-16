@@ -1,4 +1,4 @@
-const CONTACT_FORM_LINK = "https://tally.so/r/444qZ5"
+import { TALLY as CONTACT_FORM_LINK } from '../lib/site'
 
 export default function Hero() {
   return (

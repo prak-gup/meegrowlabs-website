@@ -1,7 +1,6 @@
 import SiteNav from './SiteNav'
 import SiteFooter from './SiteFooter'
-
-const TALLY = 'https://tally.so/r/444qZ5'
+import { TALLY } from '../lib/site'
 
 const ROUTES = [
   {
@@ -69,14 +68,17 @@ export default function CompanyHome() {
                 <span className="font-mono text-[11px] uppercase tracking-[.18em] text-slate-600">{group.tag}</span>
               </div>
               <div className="mt-5 grid gap-4 md:grid-cols-3">
-                {group.items.map((it) => (
-                  <a key={it.name} href={it.href}
-                     className="block rounded-2xl border-[3px] border-slate-900 bg-cream-200 p-5 shadow-[5px_5px_0_#0F0F0F] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_#0F0F0F]">
-                    <div className="font-display text-lg text-slate-900">{it.name}</div>
-                    <p className="mt-2 text-[15px] text-slate-600">{it.blurb}</p>
-                    <span className="mt-3 inline-block font-semibold text-green-600">Learn more →</span>
-                  </a>
-                ))}
+                {group.items.map((it) => {
+                  const isFullWidth = group.items.length === 1
+                  return (
+                    <a key={it.name} href={it.href}
+                       className={`block rounded-2xl border-[3px] border-slate-900 bg-cream-200 p-5 shadow-[5px_5px_0_#0F0F0F] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_#0F0F0F] ${isFullWidth ? 'md:col-span-3' : ''}`}>
+                      <div className="font-display text-lg text-slate-900">{it.name}</div>
+                      <p className={`mt-2 text-[15px] text-slate-600 ${isFullWidth ? 'max-w-2xl' : ''}`}>{it.blurb}</p>
+                      <span className="mt-3 inline-block font-semibold text-green-600">Learn more →</span>
+                    </a>
+                  )
+                })}
               </div>
             </div>
           ))}

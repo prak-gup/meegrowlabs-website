@@ -1,4 +1,4 @@
-const TALLY = 'https://tally.so/r/444qZ5'
+import { TALLY } from '../lib/site'
 
 const COLS = [
   { head: 'Services', links: [['SEO / GEO', '/seo-geo/']] },
@@ -22,7 +22,7 @@ export default function SiteFooter() {
       </div>
       <div className="border-t-2 border-cream-300">
         <div className="max-w-6xl mx-auto px-5 py-4 font-mono text-xs text-slate-600">
-          © 2026 Meegrow Labs · Growth, engineered. · prakhar@meegrowlabs.com
+          © 2026 <span className="text-slate-900">&gt;_ MEEGROW <span className="text-green-600">LABS</span></span> · Growth, engineered. · prakhar@meegrowlabs.com
         </div>
       </div>
     </footer>

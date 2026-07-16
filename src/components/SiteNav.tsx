@@ -1,10 +1,10 @@
-const TALLY = 'https://tally.so/r/444qZ5'
+import { TALLY } from '../lib/site'
 
 export default function SiteNav() {
   return (
     <nav className="sticky top-0 z-50 border-b-4 border-slate-900 bg-cream-100">
       <div className="max-w-6xl mx-auto px-5 py-3.5 flex items-center justify-between gap-4">
-        <a href="/" className="font-display text-lg text-slate-900">Meegrow Labs</a>
+        <a href="/" className="font-mono font-bold text-lg tracking-widest text-slate-900">&gt;_ MEEGROW <span className="text-green-600">LABS</span></a>
         <div className="flex items-center gap-5 text-[15px] font-semibold">
           <a href="/seo-geo/" className="hidden sm:inline text-slate-900 hover:text-green-600">SEO/GEO</a>
           <details className="relative group">
