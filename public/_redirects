@@ -1,6 +1,20 @@
 # Netlify redirects file
-# Fallback to index.html for React SPA routing
-# This ensures all routes (except actual files) are handled by the React app
+# Rules are evaluated top to bottom, first match wins. Netlify serves a real
+# static file if one exists at the path BEFORE consulting these rules, so
+# /privacy/, /learn/<slug>/, /client/<slug>/ etc. match their own index.html
+# and never reach the catch-all below.
 /postiz/*  /social/:splat  301
-/* /index.html 200
 
+# Client-rendered routes. No static file exists for these — src/App.tsx picks
+# them off window.location.pathname, so they must fall back to index.html.
+# Keep in sync with the routing in src/App.tsx and src/app/CourseApp.tsx.
+/app       /index.html  200
+/app/      /index.html  200
+/app/*     /index.html  200
+/login     /index.html  200
+/login/    /index.html  200
+
+# Anything else is genuinely not a page: serve a real 404, not a soft one.
+# (Was /* /index.html 200, which returned the homepage under a 200 for every
+# unknown URL — bad for SEO, and it hid the fact that /terms/ didn't exist.)
+/*         /404.html    404
