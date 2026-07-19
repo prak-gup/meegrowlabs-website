@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Orchestra — Multi-Model AI Coding System</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#111823; --panel2:#0e141d; --line:#1e2a38;
+    --ink:#e6edf3; --muted:#8aa0b4; --dim:#5f7488;
+    --teal:#2dd4bf; --cyan:#38bdf8; --amber:#f5b301; --red:#f87171; --green:#4ade80; --violet:#a78bfa;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#12202b 0%,var(--bg) 55%);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:56px 24px 80px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal)}
+  h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:.4em 0 .2em;letter-spacing:-.02em}
+  h1 .grad{background:linear-gradient(92deg,var(--teal),var(--cyan) 60%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:clamp(17px,2.4vw,20px);color:var(--muted);max-width:70ch}
+  h2{font-size:22px;margin:52px 0 6px;letter-spacing:-.01em}
+  h2 .n{font-family:var(--mono);color:var(--dim);font-size:15px;margin-right:10px}
+  p{color:var(--muted)}
+  .sub{color:var(--dim);font-size:14px;margin-top:2px}
+  .grid{display:grid;gap:14px}
+  @media(min-width:680px){.g2{grid-template-columns:1fr 1fr}.g4{grid-template-columns:repeat(2,1fr)}}
+  .card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:14px;padding:18px 18px}
+  .card h3{margin:0 0 4px;font-size:15px;font-family:var(--mono)}
+  .card p{margin:0;font-size:14px}
+  .chip{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin-right:6px}
+  .tag-hard{color:var(--violet);border-color:#3b2f5e}
+  .tag-work{color:var(--teal);border-color:#1c4a45}
+  .tag-qa{color:var(--cyan);border-color:#1d3f56}
+  .tag-free{color:var(--green);border-color:#204a30}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+  td code,.mono{font-family:var(--mono)}
+  td code{color:var(--cyan);font-size:13px}
+  pre{background:#080c11;border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;font-family:var(--mono);font-size:13px;color:#cbd5e1;line-height:1.7}
+  pre .c{color:var(--dim)}
+  pre .k{color:var(--teal)}
+  pre .v{color:var(--amber)}
+  .flow{font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:pre;overflow-x:auto;display:block;background:#080c11;border:1px solid var(--line);border-radius:12px;padding:18px}
+  .ladder{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--mono);font-size:13px;margin-top:8px}
+  .ladder b{padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel)}
+  .arrow{color:var(--dim)}
+  .foot{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .kpi{display:flex;gap:26px;flex-wrap:wrap;margin:22px 0 4px}
+  .kpi div{min-width:120px}
+  .kpi .big{font-size:28px;font-weight:600;color:var(--ink);font-family:var(--mono)}
+  .kpi .lbl{font-size:12px;color:var(--dim)}
+  a{color:var(--cyan)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Meegrow Labs · Internal System</div>
+  <h1>The <span class="grad">Orchestra</span><br>Multi-Model AI Coding System</h1>
+  <p class="lede">One orchestrator you talk to. It breaks a goal into slices, routes each to the
+  cheapest capable model, runs them in parallel in isolated git worktrees, quality-gates every one,
+  and never merges without you.</p>
+
+  <div class="kpi">
+    <div><div class="big">4</div><div class="lbl">model backends</div></div>
+    <div><div class="big">1</div><div class="lbl">place you talk to</div></div>
+    <div><div class="big">$0</div><div class="lbl">for bulk work (local)</div></div>
+    <div><div class="big">0</div><div class="lbl">auto-merges — you gate</div></div>
+  </div>
+
+  <h2><span class="n">01</span>The four workers</h2>
+  <p class="sub">Each slice goes to the cheapest engine that can do it well. Your flat-rate plans stay flat-rate — no per-token gateway.</p>
+  <table>
+    <tr><th>Worker</th><th>Engine</th><th>Best for</th></tr>
+    <tr><td><span class="chip tag-hard">claude</span></td><td>Claude Max</td><td>Architecture, hard logic, security — the premium seat, used sparingly.</td></tr>
+    <tr><td><span class="chip tag-work">glm</span></td><td>GLM-5.2 (z.ai)</td><td>The everyday workhorse. Strong + flat-rate; doesn't burn the Max seat.</td></tr>
+    <tr><td><span class="chip tag-qa">codex</span></td><td>Codex</td><td>Code QA, review, refactor — a strict second set of eyes.</td></tr>
+    <tr><td><span class="chip tag-free">local</span></td><td>Qwen3-Coder · LM Studio</td><td>Tests, boilerplate, bulk, anything offline. Free, on-device.</td></tr>
+  </table>
+
+  <h2><span class="n">02</span>Routing is automatic — and editable</h2>
+  <p>You describe the task; a version-controlled <span class="mono">policy.yaml</span> decides the route.
+  Change a keyword or a chain there and every future run picks it up. No more hand-writing routes.</p>
+  <pre><span class="c"># policy.yaml — the rules, in one editable file</span>
+buckets:
+  <span class="k">hard</span>:   chain: <span class="v">claude,glm,local</span>   qa: true    <span class="c"># architecture, security, migrations</span>
+  <span class="k">bulk</span>:   chain: <span class="v">local</span>              <span class="c"># typos, renames, docstrings, formatting</span>
+defaults: chain: <span class="v">glm,local</span>                    <span class="c"># everyday work</span></pre>
+
+  <h2><span class="n">03</span>Reactive failover, built in</h2>
+  <p>A route is a <b>chain</b>. If Claude hits its usage cap, the same slice auto-falls to GLM, then to
+  free local — no prediction, no babysitting. The dashboard shows which engine actually ran.</p>
+  <div class="ladder">
+    <b style="color:var(--violet)">claude</b><span class="arrow">→ capped? →</span>
+    <b style="color:var(--teal)">glm</b><span class="arrow">→ down? →</span>
+    <b style="color:var(--green)">local</b>
+  </div>
+
+  <h2><span class="n">04</span>Every slice is isolated &amp; gated</h2>
+  <div class="grid g4" style="margin-top:12px">
+    <div class="card"><h3>Own worktree</h3><p>Each slice runs on its own <span class="mono">orch/&lt;slug&gt;</span> branch in a separate git worktree — parallel agents never stomp each other.</p></div>
+    <div class="card"><h3>Deps linked in</h3><p>Your <span class="mono">.venv</span> / <span class="mono">node_modules</span> are symlinked into every worktree, so tests actually run on existing projects.</p></div>
+    <div class="card"><h3>QA pass</h3><p><span class="mono">--qa</span> runs a Codex review + refactor over the output before the gate — fix bugs, tighten edges, add types.</p></div>
+    <div class="card"><h3>You merge</h3><p>Tests run, a PR is offered — but nothing merges into your branch without your eyes on the diff.</p></div>
+  </div>
+
+  <h2><span class="n">05</span>The pipeline — plan, then execute</h2>
+  <p class="sub">e2e-dev (Matt Pocock method) decomposes the work; the Orchestra executes it.</p>
+  <span class="flow">  YOU ─ "build X" ─▶  ORCHESTRATOR  (one session you talk to)
+                          │  /e2e-dev  →  grill → PRD → tracer-bullet issues (HITL / AFK)
+                          ▼
+                     /orchestrate  →  fan AFK slices in parallel:
+        ┌───────────────┬───────────────┬───────────────┐
+     claude,glm,local   glm,local        local           +--qa (Codex)
+     (hard)             (everyday)       (bulk/tests)
+        └──── each in its own worktree → test gate → you review → merge ────┘
+                          │
+                     herdr panes (live, persistent, ssh-reattach) + `orch` dashboard</span>
+
+  <h2><span class="n">06</span>Watch it work</h2>
+  <p>A terminal dashboard reads the run ledger and live panes — status, which engine ran, whether it
+  failed over, QA, tests, files, branch.</p>
+  <pre><span class="c">$ orch status</span>
+<span class="k">✓</span>  add-auth      <span class="v">glm(claude,glm,local)⇢</span>  qa:done  tests:pass   6  orch/add-auth
+<span class="k">✓</span>  list-endpoint <span class="v">glm(glm,local)</span>        qa:none  tests:pass   3  orch/list-endpoint
+<span class="k">✓</span>  fix-typo      <span class="v">local(local)</span>          qa:none  tests:skip   1  orch/fix-typo
+<span class="c">   ⇢ = Claude was capped, GLM took over automatically</span></pre>
+
+  <h2><span class="n">07</span>Cost posture</h2>
+  <p>Push work down the ladder as far as quality allows. Nothing routes through a paid API gateway —
+  subscriptions stay flat-rate, and the bulk runs free on-device.</p>
+  <div class="ladder">
+    <b style="color:var(--green)">local · $0</b><span class="arrow">→</span>
+    <b style="color:var(--teal)">glm / codex · flat-rate</b><span class="arrow">→</span>
+    <b style="color:var(--violet)">claude · premium seat</b>
+  </div>
+
+  <div class="foot">
+    <span>Meegrow Labs — internal engineering</span>
+    <span>The Orchestra · v1 · 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
