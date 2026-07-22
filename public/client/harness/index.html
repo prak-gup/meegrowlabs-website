@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Harness Engineering — A Working Tutorial + Audit of Prakhar's Setup</title>
+<style>
+  :root{
+    --bg:#0d0e12; --bg2:#14161d; --bg3:#1b1e27; --fg:#e6e8ee; --fg2:#a9aebd;
+    --fg3:#767c8e; --line:#262a35; --accent:#7fd1ff; --accent2:#ffd479;
+    --good:#5fd39a; --warn:#ffc357; --bad:#ff7a7a; --mid:#9aa6ff;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#fbfaf8; --bg2:#ffffff; --bg3:#f2f1ed; --fg:#1a1c22; --fg2:#4d525f;
+      --fg3:#787e8d; --line:#e2e0da; --accent:#0a6f9e; --accent2:#9a6a00;
+      --good:#1a7f4f; --warn:#96660a; --bad:#b3352f; --mid:#4a52b8;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);
+    font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+  a:hover{border-bottom-color:currentColor}
+  code{font-family:var(--mono);font-size:.87em;background:var(--bg3);
+    padding:.13em .4em;border-radius:4px;border:1px solid var(--line)}
+  pre{background:var(--bg2);border:1px solid var(--line);border-radius:10px;
+    padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;
+    line-height:1.6;margin:18px 0}
+  pre code{background:none;border:none;padding:0;font-size:inherit}
+
+  /* HERO */
+  header.hero{border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,var(--bg2),var(--bg));padding:64px 0 52px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+  h1{font-family:var(--serif);font-size:clamp(34px,5.5vw,58px);line-height:1.08;
+    margin:0 0 20px;font-weight:600;letter-spacing:-.01em;max-width:20ch}
+  .lede{font-size:clamp(17px,2.1vw,20px);color:var(--fg2);max-width:66ch;margin:0}
+  .meta{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px}
+  .pill{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;
+    border:1px solid var(--line);background:var(--bg3);color:var(--fg2);
+    padding:6px 11px;border-radius:100px}
+
+  /* LAYOUT */
+  .cols{display:grid;grid-template-columns:228px 1fr;gap:56px;
+    align-items:start;padding:52px 0 100px}
+  nav.toc{position:sticky;top:24px;font-size:13.5px;line-height:1.5}
+  nav.toc .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--fg3);margin-bottom:14px}
+  nav.toc a{display:block;color:var(--fg2);padding:5px 0 5px 12px;
+    border-left:2px solid var(--line);border-bottom:none}
+  nav.toc a:hover{color:var(--fg);border-left-color:var(--accent)}
+  nav.toc .sub{padding-left:24px;font-size:12.5px;color:var(--fg3)}
+  main{min-width:0}
+
+  /* SECTIONS */
+  section{margin-bottom:76px;scroll-margin-top:24px}
+  .num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+    color:var(--accent);text-transform:uppercase;margin-bottom:10px}
+  h2{font-family:var(--serif);font-size:clamp(27px,3.6vw,38px);line-height:1.15;
+    margin:0 0 8px;font-weight:600;letter-spacing:-.01em}
+  h2 + .sub2{color:var(--fg3);font-size:15.5px;margin:0 0 30px;max-width:62ch}
+  h3{font-size:20px;margin:38px 0 12px;font-weight:650;letter-spacing:-.005em}
+  h4{font-size:16px;margin:26px 0 8px;font-weight:650;color:var(--fg)}
+  p{margin:0 0 16px;max-width:70ch}
+  ul,ol{max-width:70ch;padding-left:22px;margin:0 0 16px}
+  li{margin-bottom:7px}
+  hr{border:none;border-top:1px solid var(--line);margin:44px 0}
+
+  /* CALLOUTS */
+  .callout{border:1px solid var(--line);border-left:3px solid var(--accent);
+    background:var(--bg2);border-radius:0 10px 10px 0;padding:18px 22px;margin:22px 0}
+  .callout.warn{border-left-color:var(--warn)}
+  .callout.bad{border-left-color:var(--bad)}
+  .callout.good{border-left-color:var(--good)}
+  .callout p:last-child{margin-bottom:0}
+  .callout .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--fg3);margin-bottom:8px}
+
+  .quote{font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--fg);
+    border-left:3px solid var(--accent2);padding:4px 0 4px 22px;margin:26px 0;max-width:64ch}
+  .quote cite{display:block;font-family:var(--sans);font-size:13px;font-style:normal;
+    color:var(--fg3);margin-top:10px}
+
+  /* TABLES */
+  .scroll{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:10px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:600px}
+  th,td{text-align:left;padding:11px 15px;border-bottom:1px solid var(--line);
+    vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--fg3);background:var(--bg3);font-weight:500;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  td strong{font-weight:650}
+
+  /* STATUS TAGS */
+  .s{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;font-weight:600;
+    padding:3px 8px;border-radius:4px;white-space:nowrap;text-transform:uppercase;
+    border:1px solid}
+  .s.strong{color:var(--good);border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)}
+  .s.part{color:var(--warn);border-color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent)}
+  .s.weak{color:var(--bad);border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+  .s.na{color:var(--fg3);border-color:var(--line);background:var(--bg3)}
+
+  /* THESIS CARDS */
+  .thesis{border:1px solid var(--line);background:var(--bg2);border-radius:12px;
+    padding:22px 24px;margin:18px 0}
+  .thesis .top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .thesis .n{font-family:var(--mono);font-size:12px;color:var(--fg3)}
+  .thesis h3{margin:0;font-size:19px;flex:1;min-width:200px}
+  .thesis .body{color:var(--fg2);font-size:15.5px}
+  .thesis .body p{margin-bottom:12px}
+  .thesis dl{margin:14px 0 0;font-size:14.5px}
+  .thesis dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--fg3);margin-top:12px}
+  .thesis dd{margin:4px 0 0;color:var(--fg2)}
+  .thesis dd.you{color:var(--fg)}
+
+  /* FINDINGS */
+  .finding{border:1px solid var(--line);border-radius:12px;background:var(--bg2);
+    margin:20px 0;overflow:hidden}
+  .finding .hd{display:flex;align-items:center;gap:14px;padding:16px 22px;
+    background:var(--bg3);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .finding .rank{font-family:var(--mono);font-size:22px;font-weight:700;
+    color:var(--accent);line-height:1}
+  .finding .hd h3{margin:0;font-size:18px;flex:1;min-width:220px}
+  .finding .bd{padding:20px 22px}
+  .finding .bd p:last-child{margin-bottom:0}
+
+  /* STEPS */
+  .step{display:grid;grid-template-columns:44px 1fr;gap:20px;margin:30px 0;
+    padding-bottom:30px;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:none}
+  .step .k{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--bg);
+    background:var(--accent);width:32px;height:32px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center}
+  .step .c h3{margin-top:0}
+  .step .c > :last-child{margin-bottom:0}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;
+    overflow:hidden;margin:24px 0}
+  .stat{background:var(--bg2);padding:18px 20px}
+  .stat .v{font-family:var(--mono);font-size:26px;font-weight:700;
+    color:var(--accent);line-height:1.1}
+  .stat .l{font-size:12.5px;color:var(--fg3);margin-top:6px;line-height:1.35}
+
+  footer{border-top:1px solid var(--line);padding:34px 0 60px;color:var(--fg3);
+    font-size:13.5px}
+  footer p{max-width:70ch}
+
+  @media (max-width:900px){
+    .cols{grid-template-columns:1fr;gap:0;padding-top:34px}
+    nav.toc{display:none}
+    body{font-size:16.5px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Tutorial &amp; System Audit · July 2026</div>
+    <h1>Harness Engineering</h1>
+    <p class="lede">Ryan Lopopolo's thesis is that you stop tuning the model and start engineering the
+    environment around it. This is the practice explained in plain language — plus an
+    evidence-based audit of what Prakhar is already running, what he's accidentally
+    doing right, and the five things that are actively costing him output.</p>
+    <div class="meta">
+      <span class="pill">Source: github.com/lopopolo/harness-engineering</span>
+      <span class="pill">12 theses · 3 playbooks</span>
+      <span class="pill">Audited: ~/.claude + 7 repos</span>
+      <span class="pill">~30 min read</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<div class="cols">
+
+<nav class="toc">
+  <div class="t">Contents</div>
+  <a href="#tldr">The 60-second version</a>
+  <a href="#what">1 · What it actually is</a>
+  <a href="#theses">2 · The twelve theses</a>
+  <a href="#audit">3 · Your system, scored</a>
+  <a href="#findings">4 · The five findings</a>
+  <a href="#roadmap">5 · What to build, in order</a>
+  <a href="#loop">6 · The loop to run forever</a>
+  <a href="#dont">7 · What NOT to add</a>
+  <a href="#map">8 · Reading the repo</a>
+</nav>
+
+<main>
+
+<!-- ============ TLDR ============ -->
+<section id="tldr">
+  <div class="num">Start here</div>
+  <h2>The 60-second version</h2>
+
+  <p><strong>The claim:</strong> treat your model and coding agent as a fixed black box. Don't
+  chase them. Instead improve the only two levers you actually control — <strong>context</strong> and
+  <strong>tools</strong> — and curate the environment around them.</p>
+
+  <p><strong>Why it works:</strong> general model weights contain the visible tip of an
+  organisation's iceberg. Below the waterline sit your current operational state, your
+  local vocabulary, your quality bar, your procedures, your exception history, your
+  authority relationships. No model will intuit those. Harness engineering is the
+  last-mile work of making them <em>available</em> to a capable worker.</p>
+
+  <div class="quote">
+    "Most people do not know that they can just point their agents at my writing, tweets,
+    podcasts, and talks and improve the output of their agents by 100x."
+    <cite>— Ryan Lopopolo</cite>
+  </div>
+
+  <p><strong>Where you stand:</strong> you have built an enormous amount of harness. The problem
+  is not that you're missing pieces — it's that you have <em>too many undifferentiated
+  pieces with no routing layer, no authority boundary, and no proof loop</em>. In this
+  framework's own language: your <em>context store</em> is world-class and your
+  <em>retrieval</em> is broken.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="v">963</div><div class="l">SKILL.md files in ~/.claude/skills</div></div>
+    <div class="stat"><div class="v">937k</div><div class="l">lines of markdown in that directory</div></div>
+    <div class="stat"><div class="v">93</div><div class="l">subagent definitions</div></div>
+    <div class="stat"><div class="v">838</div><div class="l">bytes in your global CLAUDE.md</div></div>
+    <div class="stat"><div class="v">2</div><div class="l">of 391 skills your CLAUDE.md routes to</div></div>
+    <div class="stat"><div class="v">0</div><div class="l">deny rules in your permission config</div></div>
+  </div>
+
+  <p>That last row is the whole story. You have a 937,000-line library and a 838-byte
+  card catalogue. Everything below is how to fix that, in priority order.</p>
+</section>
+
+<!-- ============ WHAT ============ -->
+<section id="what">
+  <div class="num">Part one</div>
+  <h2>What harness engineering actually is</h2>
+  <p class="sub2">The mental model, and why it's different from prompt engineering, context
+  engineering, and agent frameworks.</p>
+
+  <h3>The black box move</h3>
+  <p>Most people optimising AI output reach for the model: better prompts, newer weights,
+  a bigger context window, a fancier framework. Harness engineering deliberately
+  <strong>freezes</strong> that. You pick a model and a coding agent, declare it constant for an
+  "adoption epoch," and stop treating it as the variable.</p>
+
+  <p>What's left to improve? Two external levers and one surrounding practice:</p>
+
+  <div class="scroll">
+  <table>
+    <tr><th>Lever</th><th>What it means</th><th>Concrete form</th></tr>
+    <tr>
+      <td><strong>Context</strong></td>
+      <td>What the worker can recover about intent, state, constraints, and quality bar</td>
+      <td>Routing files, repo structure, types, examples, runbooks, failing checks, mounted corpora</td>
+    </tr>
+    <tr>
+      <td><strong>Tools</strong></td>
+      <td>What the worker can actually <em>do</em> to the real system, and whether it can tell what happened</td>
+      <td>CLIs, MCP servers, domain commands, diagnostics that name the violated invariant</td>
+    </tr>
+    <tr>
+      <td><strong>Environment</strong></td>
+      <td>Everything around those: authority, proof, feedback, lifecycle</td>
+      <td>Permission contracts, real-system tests, review loops, maintenance schedules</td>
+    </tr>
+  </table>
+  </div>
+
+  <h3>The five-part promise</h3>
+  <p>The README states the goal precisely. A well-harnessed worker should be able to:</p>
+  <ol>
+    <li><strong>Recover intent</strong> — figure out the real outcome behind a sparse prompt</li>
+    <li><strong>Operate the real system</strong> — not a mock, not a description of it</li>
+    <li><strong>Respect authority</strong> — know what it may and may not consequentially change</li>
+    <li><strong>Prove the outcome</strong> — with evidence matched to the actual claim</li>
+    <li><strong>Leave the next run better equipped</strong> — the loop compounds</li>
+  </ol>
+  <p>Read those as a diagnostic. When an agent session goes badly, exactly one of those
+  five broke first. Finding <em>which</em>, and <em>where it should have been owned</em>, is the entire
+  practice.</p>
+
+  <h3>Why this is not "context engineering"</h3>
+  <p>Context engineering is one lever of three. Harness engineering adds the parts people
+  skip: the tools loop (discover → select → invoke → interpret → repair → verify), the
+  authority contract (capability ≠ permission), the proof boundary (a green check proves
+  only its own assertion), and the feedback machinery that turns yesterday's correction
+  into today's constraint.</p>
+
+  <div class="callout">
+    <div class="lbl">The one-line test</div>
+    <p>The repo states its own success criterion bluntly: <em>"The bundle succeeds when it
+    changes engineering decisions, not when an agent repeats its terminology."</em> Apply
+    the same bar to your own harness. A skill that never fires changed nothing.</p>
+  </div>
+
+  <h3>How the repo is built (and why that itself is the lesson)</h3>
+  <p>The repository is not a library. It is a <strong>retrieval-optimised context bundle</strong> —
+  a worked example of its own thesis. Five layers, each pointing one level deeper without
+  repeating the layer above:</p>
+  <pre><code>README.md          → the practice, the promise, entry points
+AGENTS.md          → routing: "unresolved decision X? read thesis Y"
+ARCHITECTURE.md    → who owns which file; the routing invariants
+docs/README.md     → index of the twelve developed arguments
+docs/&lt;thesis&gt;/     → the argument, the cases, the applications
+playbooks/         → procedures you can actually run
+sources/           → preserved evidence + provenance</code></pre>
+  <p>The critical design choice: <strong>the raw corpus is not part of the default working
+  set.</strong> An agent loads <code>AGENTS.md</code>, reads your target system, names the one
+  decision local evidence can't resolve, and pulls exactly one thesis. That's it. This is
+  the thing your own setup is missing most.</p>
+</section>
+
+<!-- ============ THESES ============ -->
+<section id="theses">
+  <div class="num">Part two</div>
+  <h2>The twelve theses</h2>
+  <p class="sub2">Each in plain language, with the question it answers, the failure signature
+  when it's missing, and where you currently stand.</p>
+
+  <div class="thesis">
+    <div class="top"><span class="n">01</span><h3>Hold the worker constant</h3><span class="s part">Partial</span></div>
+    <div class="body">
+      <p>Treat your chosen model + coding agent as a black box for one "adoption epoch."
+      Stop attributing failures to the model until the environment is clean. When you
+      <em>do</em> upgrade the worker, requalify everything: your priors about task size,
+      your ambition level, your instruction-following assumptions, your inner-loop latency.
+      Also: retire scaffolding the new worker has absorbed.</p>
+      <dl>
+        <dt>Answers</dt><dd>"Is this the model's fault or my environment's fault?"</dd>
+        <dt>Broken looks like</dt><dd>Model-hopping after every bad session. Scaffolding from 2024 still firing in 2026.</dd>
+        <dt>Your status</dt><dd class="you">You pin <code>opus[1m]</code>, <code>effortLevel: high</code>,
+        <code>alwaysThinkingEnabled</code> — genuinely good epoch hygiene. But <code>~/orchestra</code>
+        deliberately routes across six workers (Opus/Sonnet/Fable/Haiku/GLM/local Qwen). That's a
+        legitimate cost strategy, <em>not</em> a violation — but it means you can never attribute a
+        result to a harness change, because the worker moved too. Fix: hold the worker constant
+        while <em>diagnosing</em>; vary it only when <em>producing</em>.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">02</span><h3>Deploy into the private process-data iceberg</h3><span class="s strong">Strong</span></div>
+    <div class="body">
+      <p>The real applied-AI opportunity is institutional work that depends on private,
+      <em>changing</em> process data — current records, local ontology, quality bar,
+      procedures, exception history, authority relationships. Keep each kind of truth with
+      its authoritative owner. Compose retrievable projections for a task; don't fork the
+      source.</p>
+      <dl>
+        <dt>Answers</dt><dd>"What does this agent need to know that no model could ever contain?"</dd>
+        <dt>Broken looks like</dt><dd>Agents that write generically correct, locally useless output.</dd>
+        <dt>Your status</dt><dd class="you">This is your <strong>strongest</strong> area and you may not
+        realise it. <code>~/second-brain</code> with <code>clients/</code>, <code>daily/</code>,
+        <code>content/</code>, <code>research/</code> — plus <code>~/meegrow-brain</code> — is a
+        textbook process-data iceberg. Your context rules ("when I mention a client → look in
+        clients/[name]/") are exactly the composition move. Keep going.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">03</span><h3>Give one agent the whole job</h3><span class="s part">Partial</span></div>
+    <div class="body">
+      <p>Humans supply direction, judgment, and consequential authority. The agent recovers
+      the outcome behind a sparse prompt. <strong>One primary trajectory</strong> owns
+      decomposition, execution, integration, proof, and safe closure. Subagents exist to
+      isolate context, not to fragment ownership. And: let the outcome choose the artifact —
+      sometimes the answer is a script, not a PR.</p>
+      <dl>
+        <dt>Answers</dt><dd>"Should I split this across agents, and who owns the result?"</dd>
+        <dt>Broken looks like</dt><dd>Five subagents each doing 80% of their piece; nobody integrating; the human becomes the integration layer.</dd>
+        <dt>Your status</dt><dd class="you">93 subagent definitions, a Workflow tool, and
+        <code>/orchestrate</code> fanning across worktrees. The orchestrate design is sound —
+        isolated worktrees, test gate, <em>never auto-merge</em>. But the default reflex should
+        be one trajectory. Reach for fan-out when the work is genuinely parallel and each shard
+        is independently verifiable, not because parallelism feels productive.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">04</span><h3>Route context just in time</h3><span class="s weak">Weak</span></div>
+    <div class="body">
+      <p>Keep a large navigable store and a <em>small active working set</em>. Root guidance
+      routes across authoritative sources. Runbooks preserve workflows. Skills teach an
+      approach. Failing checks surface constraints exactly when they become relevant. Four
+      layers: authoritative systems → shared context stores → target repository → active
+      context.</p>
+      <p>The repo is explicit that <strong>deterministic context stuffing fails</strong> once work
+      crosses compaction boundaries — the worker must be able to <em>re-derive the route</em>,
+      not rely on something loaded once at session start.</p>
+      <dl>
+        <dt>Answers</dt><dd>"Should this be a skill, a runbook, progressive disclosure, or a check?"</dd>
+        <dt>Broken looks like</dt><dd>A huge catalogue nothing retrieves from. Guidance loaded at session start that's gone by turn 40.</dd>
+        <dt>Your status</dt><dd class="you"><strong>This is your biggest gap.</strong> 963 SKILL.md
+        files / 937k lines, and a global CLAUDE.md that routes to exactly two of them. Your
+        second-brain is loaded via "read this at the start of every session" — that's
+        deterministic stuffing, the exact anti-pattern. See Finding #1.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">05</span><h3>Make capabilities legible and operable</h3><span class="s part">Partial</span></div>
+    <div class="body">
+      <p>A tool is only usable if the worker can complete the whole loop:
+      <strong>discover → select → invoke → interpret → repair → verify</strong>. Two separate
+      axes: <em>discoverability</em> (does the worker know it exists?) and <em>familiarity</em>
+      (does the worker already know how to use it?). A POSIX CLI has huge learned priors but
+      is invisible until announced. An MCP server advertises itself but every call shape is novel.</p>
+      <p>Design every tool result as context: quiet success; on failure, name the violated
+      invariant, the affected target, and a known recovery action. Never let the agent pipe an
+      expensive test command through <code>head</code> — own that at the tool boundary instead.</p>
+      <dl>
+        <dt>Answers</dt><dd>"Is the capability missing, or just hard to find / hard to interpret?"</dd>
+        <dt>Broken looks like</dt><dd>Agent reinvents a helper you already wrote. Tool errors that say "failed" and nothing else.</dd>
+        <dt>Your status</dt><dd class="you">Mixed, leaning good. <code>~/orchestra</code>
+        (<code>dispatch</code>/<code>fan</code>/<code>orch</code> + <code>policy.yaml</code> +
+        <code>routing.md</code>) is a proper thin CLI over an owned domain model — exactly what
+        the thesis argues for over an MCP wrapper. Against that: you run a very large MCP surface
+        (Asana ×2, DataForSEO, Firecrawl, Notion, Gamma, Canva, four Antidote servers, Windsor,
+        Apify, Stitch, Chrome…). Most are discoverable but unfamiliar. Prune to what fires.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">06</span><h3>Make the repository teach the agent</h3><span class="s weak">Weak</span></div>
+    <div class="body">
+      <p>Code the agent reads becomes prompt material. Your nonfunctional requirements —
+      reliability, security, compat, maintainability, performance, operability, risk posture,
+      polish — become recoverable through canonical owners, repeated structures, completed
+      migrations, examples, types, and executable constraints. One concept, one authoritative
+      owner. Finish migrations and install the ratchet so the old pattern can't come back.</p>
+      <dl>
+        <dt>Answers</dt><dd>"Where should this rule live so the agent can't miss it?"</dd>
+        <dt>Broken looks like</dt><dd>Three ways of doing the same thing in one repo, so the agent picks the wrong precedent. Rules in your head, not the code.</dd>
+        <dt>Your status</dt><dd class="you">Across 7 real repos: 5 have <code>CLAUDE.md</code>,
+        3 have <code>AGENTS.md</code>, <strong>0 have <code>ARCHITECTURE.md</code></strong>,
+        2 have CI, 3 have tests. <code>vision-eye-hospital</code> and <code>sakhi</code> have
+        no agent guidance at all. The missing ARCHITECTURE.md is the notable one — that's the
+        file that tells an agent who owns what, which is what stops it inventing a fourth
+        pattern.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">07</span><h3>Maximize autonomy inside explicit authority</h3><span class="s weak">Weak</span></div>
+    <div class="body">
+      <p>Keep <strong>capability</strong> and <strong>authority</strong> as two separate contracts.
+      Give reversible work a deliberately broad envelope — the agent should move fast in a
+      worktree. Make consequential grants scoped, revocable, auditable, recoverable. Keep
+      credential custody <em>outside</em> the trajectory. Stage consequential effects behind a
+      dry-run or approval. Encode settled boundaries mechanically so they don't depend on the
+      agent remembering.</p>
+      <dl>
+        <dt>Answers</dt><dd>"What may this run irreversibly change, and who approved that?"</dd>
+        <dt>Broken looks like</dt><dd>Blanket "yes to everything" because per-call prompts are annoying. No difference between editing a scratch file and pushing to main.</dd>
+        <dt>Your status</dt><dd class="you"><strong>The riskiest area.</strong>
+        <code>defaultMode: "auto"</code>, <code>skipDangerousModePermissionPrompt: true</code>,
+        <code>skipAutoPermissionPrompt: true</code>, and <code>"deny": []</code> — completely
+        empty. Your allowlist includes <code>Bash(bash)</code>, <code>Bash(sudo npm *)</code>,
+        <code>Bash(brew install *)</code>, <code>Bash(cargo install *)</code>. You have
+        maximised autonomy and skipped the "inside explicit authority" half entirely. See
+        Finding #2.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">08</span><h3>Prove the outcome in the real environment</h3><span class="s weak">Weak</span></div>
+    <div class="body">
+      <p>Match the evidence to the claim. A green unit test proves only its own assertion.
+      Browser journeys, real corpora, traces, canaries, and deployed health checks each close
+      a <em>different</em> loop. Give the agent access to the real system and real ground truth
+      it can test against. Preserve artifact identity across build → test → release. And say
+      out loud what the evidence <em>didn't</em> establish.</p>
+      <dl>
+        <dt>Answers</dt><dd>"What would actually convince me this worked?"</dd>
+        <dt>Broken looks like</dt><dd>"All tests pass" on a feature no test exercises. Agent declares done; you find it broken in the browser.</dd>
+        <dt>Your status</dt><dd class="you">Only 2 of 7 repos have CI, 3 have tests.
+        <code>/orchestrate</code>'s test gate is a real proof boundary and it's the right shape.
+        You <em>have</em> the ingredients — Playwright is installed, you have a Chrome MCP, you
+        have <code>super-qa</code> and <code>verification-before-completion</code> skills. They're
+        just not wired into a default path. See Finding #4.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">09</span><h3>Turn feedback into infrastructure</h3><span class="s part">Partial — and inverted</span></div>
+    <div class="body">
+      <p>Trajectory evidence, review comments, and incidents expose missing harness
+      capabilities. Stable lessons move into their <strong>earliest durable owner</strong> — the
+      place that stops the problem recurring, which is often a type or a check, not a document.</p>
+      <p>Critical caveat the repo states twice: agent self-reports (<code>MISTAKES.md</code>,
+      <code>LEARNINGS.md</code>) are <em>telemetry</em>, not truth. <strong>"Corroborate those
+      self-reports before publishing them as context."</strong> And from the playbook: <em>"do
+      not promote uncorroborated self-report into policy."</em> Candidate material stays
+      isolated from the retrieval path until a human owner approves it.</p>
+      <dl>
+        <dt>Answers</dt><dd>"Where does this lesson go so it never has to be learned again?"</dd>
+        <dt>Broken looks like</dt><dd>Unbounded skill growth. Every session mints a document nothing ever reads.</dd>
+        <dt>Your status</dt><dd class="you">You have the loop — and no review boundary. The
+        <code>claudeception-activator</code> hook fires "MANDATORY SKILL EVALUATION REQUIRED
+        (NON-NEGOTIABLE)" on <em>every single prompt</em>, and the agent's own self-assessment
+        decides whether to publish. That's an uncorroborated self-report going straight into the
+        retrieval path — the exact thing the thesis warns against. It's why you have 963 skill
+        files. See Finding #3.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">10</span><h3>Preserve coherence and own lifetime risk</h3><span class="s weak">Weak</span></div>
+    <div class="body">
+      <p>When implementation becomes abundant, the scarce things are future coherence and
+      lifetime ownership. Optimise for the next 5,000 changes, not this one. Decide what must
+      survive a rewrite. Treat every dependency as an ownership decision. Keep policy
+      authoritative and controls proportional. Preserve release identity.</p>
+      <dl>
+        <dt>Answers</dt><dd>"Will this still make sense after 200 agent sessions touch it?"</dd>
+        <dt>Broken looks like</dt><dd>Copies of the same artifact drifting apart. No garbage collection, ever.</dd>
+        <dt>Your status</dt><dd class="you">Concrete evidence of drift: <code>gstack-ship</code>
+        exists in <strong>11 copies</strong> across <code>.factory/</code>, <code>.slate/</code>,
+        <code>.opencode/</code>, <code>.kiro/</code>, <code>.cursor/</code>,
+        <code>.gbrain/</code>, <code>.hermes/</code>, <code>.openclaw/</code>,
+        <code>.agents/</code> — already at 3056 / 3047 / 3045 / 2786 / 2781 / 2720 / 2669 lines.
+        They have <em>already diverged</em>. <code>gstack-upgrade</code>: 11 copies.
+        <code>gstack</code>: 10. That's ~30k lines of near-duplicate guidance an agent might
+        retrieve any version of.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">11</span><h3>Run known work as a continuous loop</h3><span class="s part">Partial</span></div>
+    <div class="body">
+      <p>Once an outcome is settled and has signal, proof, and authority, it can move into a
+      repository-owned loop with durable state, a current world model carried across runs,
+      per-iteration proof, and an explicit <strong>retirement condition</strong>. Unresolved
+      product invention stays in the foreground. Maintain the harness with the same loop.</p>
+      <dl>
+        <dt>Answers</dt><dd>"Should this be scheduled, or does it still need me in the room?"</dd>
+        <dt>Broken looks like</dt><dd>Loops that run forever after they stopped being useful. Or: everything manual because nothing was ever declared settled.</dd>
+        <dt>Your status</dt><dd class="you">You have the machinery — <code>/loop</code>,
+        <code>/schedule</code>, cron routines, ralph-wiggum, orchestra's <code>runs/</code>.
+        What's missing is the <em>contract</em>: owned state, per-run proof, and a retirement
+        condition. A loop without a retirement condition is a liability.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <div class="top"><span class="n">12</span><h3>Optimize for measured effectiveness</h3><span class="s weak">Missing</span></div>
+    <div class="body">
+      <p>Tokens, lines of code, number of agents, and number of checks are <strong>inputs</strong>.
+      The output that matters is <em>useful outcomes per unit of scarce human attention</em>, at
+      acceptable latency, risk, and maintenance cost. Count fully-loaded human attention —
+      including the review you had to do. Separate exploration from rework from waste. Price
+      the lifetime, not the build.</p>
+      <dl>
+        <dt>Answers</dt><dd>"Is this harness component paying for itself?"</dd>
+        <dt>Broken looks like</dt><dd>Pride in agent count and skill count. No idea which of your 391 skills has ever fired.</dd>
+        <dt>Your status</dt><dd class="you">No measurement anywhere — no <code>evals/</code>, no
+        firing counts, no before/after. This is why the other gaps persisted: nothing tells you
+        which of the 963 files earns its keep. See Finding #5.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AUDIT ============ -->
+<section id="audit">
+  <div class="num">Part three</div>
+  <h2>Your system, scored</h2>
+  <p class="sub2">Every claim below is from a direct read of <code>~/.claude</code>,
+  <code>~/orchestra</code>, and seven of your repos on 22 July 2026.</p>
+
+  <div class="scroll">
+  <table>
+    <tr><th>#</th><th>Thesis</th><th>Status</th><th>Evidence in your setup</th></tr>
+    <tr><td>01</td><td>Hold the worker constant</td><td><span class="s part">Partial</span></td><td>Model pinned <code>opus[1m]</code>, high effort, always-thinking. But orchestra routes 6 workers — fine for production, fatal for diagnosis.</td></tr>
+    <tr><td>02</td><td>Private process-data iceberg</td><td><span class="s strong">Strong</span></td><td><code>~/second-brain</code> + <code>~/meegrow-brain</code>; client separation; voice-matching rules. Best part of your system.</td></tr>
+    <tr><td>03</td><td>One agent, whole job</td><td><span class="s part">Partial</span></td><td>93 subagents + Workflow + orchestrate. Orchestra's never-auto-merge is correct. Fan-out is over-reached for.</td></tr>
+    <tr><td>04</td><td>Route context just in time</td><td><span class="s weak">Weak</span></td><td>963 SKILL.md / 937k lines; CLAUDE.md is 838 bytes routing 2 skills. Second-brain loaded by session-start stuffing.</td></tr>
+    <tr><td>05</td><td>Tool legibility</td><td><span class="s part">Partial</span></td><td>Orchestra CLI is exemplary. ~20 MCP servers is a large unfamiliar surface.</td></tr>
+    <tr><td>06</td><td>Repository teaches the agent</td><td><span class="s weak">Weak</span></td><td>5/7 repos have CLAUDE.md, 3/7 AGENTS.md, <strong>0/7 ARCHITECTURE.md</strong>, 2/7 CI.</td></tr>
+    <tr><td>07</td><td>Autonomy inside authority</td><td><span class="s weak">Weak</span></td><td><code>deny: []</code>; both permission-prompt skips on; <code>Bash(bash)</code> and <code>Bash(sudo npm *)</code> allowlisted.</td></tr>
+    <tr><td>08</td><td>Prove in the real environment</td><td><span class="s weak">Weak</span></td><td>Orchestra test gate exists. Otherwise 2/7 CI, 3/7 tests, no default proof path.</td></tr>
+    <tr><td>09</td><td>Feedback → infrastructure</td><td><span class="s part">Inverted</span></td><td>Mandatory skill-extraction on every prompt, self-graded, no review gate. Loop present, boundary absent.</td></tr>
+    <tr><td>10</td><td>Coherence &amp; lifetime risk</td><td><span class="s weak">Weak</span></td><td>gstack-ship in 11 already-diverged copies; gstack-upgrade in 11; no GC pass ever run.</td></tr>
+    <tr><td>11</td><td>Continuous maintenance loops</td><td><span class="s part">Partial</span></td><td>Loop/cron/ralph machinery present; no owned state, per-run proof, or retirement conditions.</td></tr>
+    <tr><td>12</td><td>Measured effectiveness</td><td><span class="s weak">Missing</span></td><td>No evals, no firing counts, no baseline/rerun comparisons anywhere.</td></tr>
+  </table>
+  </div>
+
+  <div class="callout good">
+    <div class="lbl">Read this before you feel bad</div>
+    <p>You score Strong or Partial on 7 of 12, and your two genuinely excellent assets
+    — the second-brain corpus and the orchestra CLI — are the <em>hard</em> ones to build.
+    Routing, authority, and measurement are comparatively cheap fixes. You are not behind;
+    you're unbalanced. The next five moves rebalance you.</p>
+  </div>
+</section>
+
+<!-- ============ FINDINGS ============ -->
+<section id="findings">
+  <div class="num">Part four</div>
+  <h2>The five findings that matter</h2>
+  <p class="sub2">Ranked by output gained per hour spent. Each names the earliest owner —
+  the place a fix stops the problem recurring.</p>
+
+  <div class="finding">
+    <div class="hd"><span class="rank">1</span><h3>You have a library with no card catalogue</h3><span class="s weak">Highest impact</span></div>
+    <div class="bd">
+      <p><strong>Evidence.</strong> 963 <code>SKILL.md</code> files totalling 937,695 lines in
+      <code>~/.claude/skills</code>. 391 top-level skills, 93 agents, 10 plugins. Your global
+      <code>CLAUDE.md</code> is 838 bytes and explicitly routes to exactly two of them
+      (<code>graphify</code>, <code>orchestrate</code>).</p>
+      <p><strong>Why it hurts.</strong> Every one of those skills has to be surfaced by name-and-
+      description matching against your prompt. With 391 candidates the signal-to-noise is
+      terrible: near-duplicates compete, the right skill loses to a plausible neighbour, and you
+      get "why didn't it use X?" You paid the build cost and aren't collecting the return.</p>
+      <p><strong>Earliest owner.</strong> A real routing file — the <code>AGENTS.md</code> pattern.
+      Not a list of skills; a list of <em>unresolved decisions</em> mapped to destinations. The
+      harness repo's own <code>AGENTS.md</code> is the model: "Deciding whether the worker lacks a
+      capability or whether an existing tool is hard to discover → read
+      <code>docs/tool-legibility/</code>."</p>
+      <p><strong>Also.</strong> Your second-brain is loaded via "read <code>/Users/prakhar/second-brain/CLAUDE.md</code>
+      at the start of every session." That's deterministic stuffing. By turn 40, post-compaction,
+      it's gone — and nothing tells the agent how to get it back. Replace with a route the agent
+      can re-derive at any point.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="hd"><span class="rank">2</span><h3>Capability and authority are fully conflated</h3><span class="s weak">Highest risk</span></div>
+    <div class="bd">
+      <p><strong>Evidence.</strong> <code>"defaultMode": "auto"</code>,
+      <code>"skipDangerousModePermissionPrompt": true</code>,
+      <code>"skipAutoPermissionPrompt": true</code>, <code>"deny": []</code>. The allowlist
+      includes <code>Bash(bash)</code> — arbitrary shell — plus <code>Bash(sudo npm *)</code>,
+      <code>Bash(brew install *)</code>, <code>Bash(cargo install *)</code>,
+      <code>Bash(npx:*)</code>.</p>
+      <p><strong>Why it hurts.</strong> The thesis is <em>maximize autonomy inside explicit
+      authority</em>, and you've implemented the first half only. Right now an agent working on a
+      throwaway script has identical power to one touching client data. There is no signal
+      distinguishing reversible from irreversible, and no recovery boundary.</p>
+      <p><strong>Earliest owner.</strong> The <code>deny</code> list — mechanically enforced,
+      never depends on the agent remembering. This is the cheapest fix in this document: about
+      ten minutes. You are not giving up speed; a deny list of 6–8 genuinely irreversible
+      operations leaves your broad envelope completely intact for the reversible 99%.</p>
+      <div class="callout warn">
+        <div class="lbl">The specific exposure</div>
+        <p>You handle client work for SYNC, AIBS, and Meegrow, with live MCP write access to
+        Asana, Notion, WordPress (<code>publish_wordpress</code>), social posting
+        (<code>post_social</code>), and Windsor ad-platform mutations that can change real ad
+        budgets. Those are consequential, externally-visible, and in several cases
+        irreversible — currently reachable with no gate.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="hd"><span class="rank">3</span><h3>Your feedback loop has no review boundary</h3><span class="s weak">Root cause of #1</span></div>
+    <div class="bd">
+      <p><strong>Evidence.</strong> <code>claudeception-activator.sh</code> fires on
+      <em>every</em> <code>UserPromptSubmit</code> with "MANDATORY … NON-NEGOTIABLE … you MUST
+      evaluate". The agent then self-assesses whether its own work was novel, and writes a skill
+      into the live retrieval path if it decides yes.</p>
+      <p><strong>Why it hurts.</strong> This is the mechanism that produced 963 files, and the
+      harness repo warns about it in almost these words:</p>
+      <div class="quote">"Candidate material remains untrusted and excluded from the parent's
+      retrieval path. It cannot trigger publication directly… Corroborate those self-reports
+      before publishing them as context."
+      <cite>— docs/just-in-time-context/</cite></div>
+      <p>An agent grading its own novelty is not corroboration. Worse, the hook fires on trivial
+      prompts too, spending attention on extraction that should have gone to the task.</p>
+      <p><strong>Earliest owner.</strong> A staging directory outside the retrieval tree.
+      Candidates land in <code>~/.claude/candidates/</code>. You promote weekly, by hand, only
+      what recurred. The instinct is right — <em>lessons should become infrastructure</em> — you
+      just need the gate that makes the lesson durable instead of noisy.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="hd"><span class="rank">4</span><h3>No default proof path</h3><span class="s part">Medium</span></div>
+    <div class="bd">
+      <p><strong>Evidence.</strong> 2/7 repos have CI, 3/7 have any tests, 0/7 have
+      ARCHITECTURE.md. Orchestra has a genuine test gate, but it only applies to orchestrated
+      builds — the majority of your sessions bypass it.</p>
+      <p><strong>Why it hurts.</strong> "Match evidence to the claim." Most of your output is
+      client-visible: sites, ads, content, SEO deliverables. The claim is <em>"this renders
+      correctly and says the right thing to a real user"</em> — and a passing build proves
+      nothing about that. Your review attention is currently the proof mechanism, which is the
+      most expensive possible option.</p>
+      <p><strong>Earliest owner.</strong> A per-repo <code>ARCHITECTURE.md</code> naming the
+      journey that must hold, plus one real check per repo — a Playwright journey, a link check,
+      a schema validation. You already have Playwright installed and a Chrome MCP connected.
+      The capability exists; the default path doesn't.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="hd"><span class="rank">5</span><h3>Nothing is measured, so nothing gets retired</h3><span class="s part">Compounding</span></div>
+    <div class="bd">
+      <p><strong>Evidence.</strong> No <code>evals/</code> anywhere. No record of which skills
+      fire. <code>gstack-ship</code> exists in 11 copies at 3056/3047/3045/2786/2781/2720/2669
+      lines — <em>already diverged</em>. <code>gstack-upgrade</code>: 11 copies.
+      <code>gstack</code>: 10.</p>
+      <p><strong>Why it hurts.</strong> Thesis 12: tokens, skills, and agents are inputs. Without
+      measurement you can only ever add. That's precisely how a system reaches 937k lines of
+      guidance and gets <em>worse</em> at retrieval — every addition dilutes the rest.</p>
+      <p><strong>Earliest owner.</strong> A one-line-per-session record and a quarterly GC pass.
+      The bar from the repo: <em>"Remove it when it adds noise, duplicates a better owner, or
+      repeatedly fails to improve the job."</em> Removal is a first-class harness operation, not
+      an admission of failure.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section id="roadmap">
+  <div class="num">Part five</div>
+  <h2>What to build, in order</h2>
+  <p class="sub2">Five moves. Roughly a weekend total. Ordered so each one makes the next
+  cheaper — do not skip ahead.</p>
+
+  <div class="step">
+    <div class="k">1</div>
+    <div class="c">
+      <h3>The deny list <span style="color:var(--fg3);font-weight:400;font-size:15px">— 10 minutes, highest risk removed</span></h3>
+      <p>Add to <code>~/.claude/settings.json</code>. Keep <code>defaultMode: "auto"</code> —
+      you're not giving up speed, you're drawing the irreversible boundary the framework
+      requires.</p>
+      <pre><code>"permissions": {
+  "defaultMode": "auto",
+  "deny": [
+    "Bash(rm -rf /*)",
+    "Bash(rm -rf ~/*)",
+    "Bash(git push --force*)",
+    "Bash(sudo*)",
+    "Read(./.env)",
+    "Read(**/.env*)",
+    "Read(~/.claude/.credentials.json)",
+    "Read(~/.ssh/**)"
+  ],
+  "ask": [
+    "Bash(git push*)",
+    "mcp__antidote-*__publish_wordpress",
+    "mcp__antidote-*__post_social",
+    "mcp__claude_ai_Windsor_ai__execute_action",
+    "mcp__claude_ai_Gmail__create_draft"
+  ]
+}</code></pre>
+      <p>Then remove <code>Bash(bash)</code>, <code>Bash(sudo npm *)</code> and
+      <code>Bash(brew install *)</code> from <code>settings.local.json</code>'s allow list —
+      installs are exactly the class that should surface, and they're rare enough that the
+      prompt costs you nothing.</p>
+      <p class="lbl" style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg3)">Thesis 07 · Authority</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="k">2</div>
+    <div class="c">
+      <h3>Rewrite your global CLAUDE.md as a router <span style="color:var(--fg3);font-weight:400;font-size:15px">— 1 hour, biggest daily gain</span></h3>
+      <p>Stop listing skills. List <strong>unresolved decisions</strong> and where they resolve.
+      This is the single highest-leverage artifact in the whole framework. Structure:</p>
+      <pre><code># Prakhar — Routing
+
+## Working loop
+1. Read the target repo's own CLAUDE.md / AGENTS.md first. Local truth wins.
+2. Inspect the actual code, manifests, tests, and neighbouring patterns.
+3. Name the ONE decision local evidence leaves unresolved.
+4. Route below. Load one destination. Add a second only for a
+   genuinely separate open decision.
+5. Verify through the target's own checks and the real user journey.
+
+## Where truth lives
+| Kind of truth              | Owner                          |
+|----------------------------|--------------------------------|
+| Who I am, voice, clients   | ~/second-brain/CLAUDE.md       |
+| Client-specific context    | ~/second-brain/clients/&lt;name&gt;/ |
+| Meegrow org knowledge      | ~/meegrow-brain/               |
+| Multi-model build routing  | ~/orchestra/routing.md         |
+| Per-repo architecture      | &lt;repo&gt;/ARCHITECTURE.md        |
+
+## Unresolved-decision routing
+- Need client voice, positioning, or past decisions → read
+  ~/second-brain/clients/&lt;client&gt;/ BEFORE writing anything.
+- Building/shipping a multi-part codebase → /orchestrate
+- SEO or GEO deliverable → /seo-audit or /geo-audit; never freehand it
+- Paid-ads deliverable → /ads-plan then /ads-audit
+- Publishing a client-facing doc → /client-share
+- Debugging anything → superpowers:systematic-debugging first
+- New feature or component → superpowers:brainstorming first
+- Turning a session lesson into a skill → write to ~/.claude/candidates/,
+  never directly to ~/.claude/skills/
+
+## Standing constraints
+- Never publish, post, or push to a client system without explicit
+  confirmation in this session.
+- Never claim done without stating what the evidence did NOT establish.</code></pre>
+      <p>Note what changed: the second-brain is now a <em>route the agent can re-derive
+      after compaction</em>, not a session-start dump. That distinction is the whole of thesis 04.</p>
+      <p class="lbl" style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg3)">Thesis 04 · Just-in-time context</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="k">3</div>
+    <div class="c">
+      <h3>Add the review boundary to claudeception <span style="color:var(--fg3);font-weight:400;font-size:15px">— 20 minutes</span></h3>
+      <p>Two changes. First, redirect output: candidates go to
+      <code>~/.claude/candidates/YYYY-MM-DD-&lt;slug&gt;.md</code>, which is <em>outside</em> the
+      skills retrieval tree. Second, soften the hook from every-prompt-mandatory to a
+      condition — extraction is worth attention when something non-obvious actually broke, not
+      when you asked for a file listing.</p>
+      <p>Then a weekly 15-minute pass: anything in <code>candidates/</code> that shows up
+      <strong>twice</strong> gets promoted to a real skill. Everything else gets deleted. Recurrence
+      is your corroboration signal — it's cheap and it's real, which beats an agent's opinion of
+      its own novelty.</p>
+      <p class="lbl" style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg3)">Thesis 09 · Feedback → infrastructure</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="k">4</div>
+    <div class="c">
+      <h3>ARCHITECTURE.md in your two or three live repos <span style="color:var(--fg3);font-weight:400;font-size:15px">— 30 min each</span></h3>
+      <p>Not documentation. A short ownership contract, following the harness repo's own model.
+      Three sections and nothing else:</p>
+      <pre><code># Architecture
+
+## Ownership
+| Path            | Owns                                    |
+|-----------------|-----------------------------------------|
+| src/api/        | All external HTTP boundaries            |
+| src/domain/     | Business rules — no framework imports   |
+| ...             | ...                                     |
+
+## Invariants
+1. &lt;the rule an agent must not break&gt;
+2. &lt;the pattern it must follow instead of inventing a new one&gt;
+
+## The journey that must hold
+&lt;the one user path that, if broken, means this is broken —
+ and the exact command that proves it&gt;</code></pre>
+      <p>Start with <code>vision-eye-hospital</code> and <code>sakhi</code> — they have zero agent
+      guidance today, so they're where an agent is most likely to invent a fourth pattern. That
+      last section is also your proof boundary (thesis 08): it names the claim <em>and</em> the
+      evidence that settles it.</p>
+      <p class="lbl" style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg3)">Theses 06 &amp; 08 · Domain modeling, proof</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="k">5</div>
+    <div class="c">
+      <h3>The garbage-collection pass <span style="color:var(--fg3);font-weight:400;font-size:15px">— 2 hours, then quarterly</span></h3>
+      <p>Delete, in this order:</p>
+      <ol>
+        <li>The 8 non-Claude mirror directories under <code>~/.claude/skills/gstack/</code>
+        (<code>.factory/</code>, <code>.slate/</code>, <code>.opencode/</code>,
+        <code>.kiro/</code>, <code>.cursor/</code>, <code>.gbrain/</code>,
+        <code>.hermes/</code>, <code>.openclaw/</code>, <code>.agents/</code>). Claude Code
+        never reads them; they only add near-duplicate retrieval noise. ~30k lines gone.</li>
+        <li>Any skill you cannot remember using in three months. Keep a <code>~/.claude/attic/</code>
+        if deleting feels final — but get it out of the retrieval path.</li>
+        <li>Subagents from the 93 that overlap the built-ins. You have <code>copy-writer</code>
+        and <code>copywriter</code> as separate definitions; that ambiguity costs you a correct
+        selection every time it comes up.</li>
+        <li>MCP servers you haven't invoked this quarter. Each one is permanent surface area.</li>
+      </ol>
+      <p>Removal is a first-class harness operation. The repo's own criterion:
+      <em>"Remove it when it adds noise, duplicates a better owner, or repeatedly fails to
+      improve the job."</em></p>
+      <p class="lbl" style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg3)">Theses 10 &amp; 12 · Coherence, effectiveness</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOOP ============ -->
+<section id="loop">
+  <div class="num">Part six</div>
+  <h2>The loop to run forever</h2>
+  <p class="sub2">Once the five moves are done, this is the practice itself — the
+  <code>improve-harness</code> playbook, adapted to how you work.</p>
+
+  <p>The repo's core operational loop, verbatim:</p>
+  <div class="quote">baseline → earliest gap → smallest owning intervention → native
+  verification → fresh rerun → retain, revise, or remove</div>
+
+  <p>Run it on <strong>one real job</strong> — small enough to rerun, important enough to
+  exercise the gap. Not "make agents better." Something like <em>"produce a client SEO
+  audit for AIBS."</em></p>
+
+  <div class="scroll">
+  <table>
+    <tr><th>Step</th><th>What you do</th><th>What you're looking for</th></tr>
+    <tr><td><strong>1. Baseline</strong></td><td>Run the job in a fresh session. Don't help.</td><td>Where did <em>you</em> have to intervene? Every relay is a harness gap.</td></tr>
+    <tr><td><strong>2. Earliest failed handoff</strong></td><td>Trace the symptom upstream to the first missing thing.</td><td>Classify: context / capability / domain ownership / authority / proof / feedback. Fix the earliest, not the loudest.</td></tr>
+    <tr><td><strong>3. Hypothesis</strong></td><td>Write it before implementing: "If &lt;X&gt; is added at &lt;owner&gt;, the worker will &lt;observable change&gt; because &lt;mechanism&gt;."</td><td>Also write what would <em>weaken</em> it, and its carrying cost.</td></tr>
+    <tr><td><strong>4. Implement + verify</strong></td><td>Smallest reversible change at the earliest owner.</td><td>Verify twice: internal checks, then the actual user journey.</td></tr>
+    <tr><td><strong>5. Fresh rerun</strong></td><td>Same worker, same authority, <strong>brand new session.</strong></td><td>Confirm the intervention was actually <em>retrieved</em>. A win from something never used proves nothing.</td></tr>
+    <tr><td><strong>6. Decide</strong></td><td>Retain / revise / remove.</td><td>If unsure it helped: temporarily <em>remove</em> it and rerun. Test-without is the strongest cheap evidence you can get.</td></tr>
+  </table>
+  </div>
+
+  <div class="callout">
+    <div class="lbl">The discipline that makes it work</div>
+    <p>Step 5 is where almost everyone cheats. If you evaluate in the same session where you
+    built the fix, the conversation itself is carrying the context — you're measuring the
+    conversation, not the harness. Fresh session, or the result is worthless.</p>
+  </div>
+
+  <p>Two constraints the playbook is emphatic about, both of which are easy to violate when
+  you're the one who built the thing:</p>
+  <ul>
+    <li><strong>Never weaken the grader to make a run pass.</strong> If the check is too strict,
+    that's a separate decision made separately.</li>
+    <li><strong>One failed trajectory is not a model limitation.</strong> Leave it as an open
+    candidate until repeated evidence separates it from randomness and from environment gaps
+    you haven't found yet.</li>
+  </ul>
+
+  <h3>Where to point it first</h3>
+  <p>Run the loop on your highest-frequency job. For you that's almost certainly a client
+  deliverable — an SEO audit, an ads plan, or a content piece. Highest frequency means the
+  fastest feedback and the biggest compounding return, and it exercises the second-brain
+  routing you just rebuilt in move 2.</p>
+</section>
+
+<!-- ============ DONT ============ -->
+<section id="dont">
+  <div class="num">Part seven</div>
+  <h2>What NOT to add</h2>
+  <p class="sub2">Given your specific failure mode — accumulation without retrieval — these
+  are the traps.</p>
+
+  <div class="scroll">
+  <table>
+    <tr><th>Don't</th><th>Because</th></tr>
+    <tr><td><strong>Don't add more skills right now.</strong></td><td>You have 391. Adding a 392nd dilutes retrieval for the other 391. Build the router first; only then does a new skill pay off.</td></tr>
+    <tr><td><strong>Don't clone this repo into every project.</strong></td><td>Its own <code>AGENTS.md</code> says: adapt the ideas, don't copy the layout, fixtures, or pins. Your <code>ARCHITECTURE.md</code> should describe <em>your</em> ownership, not mirror theirs.</td></tr>
+    <tr><td><strong>Don't build an eval harness yet.</strong></td><td>Thesis 12 is last for a reason. Measure after you have something stable to measure. A baseline/rerun pair on one real job beats an eval suite you'll never run.</td></tr>
+    <tr><td><strong>Don't fan out by default.</strong></td><td>One trajectory owns the whole job. Multi-agent is for genuinely parallel, independently verifiable work — not because parallelism feels like progress.</td></tr>
+    <tr><td><strong>Don't let the agent write to its own retrieval path.</strong></td><td>The single most important line in the repo, and the one your current setup violates. Candidates stage; humans promote.</td></tr>
+    <tr><td><strong>Don't add an MCP server where a CLI would do.</strong></td><td>Your orchestra CLI is the better pattern — strong learned priors, cheap context, easy to verify. Add MCP only for state a CLI genuinely can't reach.</td></tr>
+  </table>
+  </div>
+</section>
+
+<!-- ============ MAP ============ -->
+<section id="map">
+  <div class="num">Part eight</div>
+  <h2>Reading the repo yourself</h2>
+  <p class="sub2">Where to go for what, and how to actually point an agent at it.</p>
+
+  <h3>Reading order for a human</h3>
+  <ol>
+    <li><code>README.md</code> — the practice, ~5 min. Read it twice.</li>
+    <li><code>docs/README.md</code> — one paragraph per thesis. Your index.</li>
+    <li><code>playbooks/improve-harness.md</code> — the one procedure to actually run.</li>
+    <li>Then, only when a real decision is stuck, the one relevant <code>docs/&lt;thesis&gt;/</code>.</li>
+  </ol>
+  <p>Skip <code>sources/</code> entirely unless you're tracing a claim. It's the evidence
+  layer, deliberately not part of the working set.</p>
+
+  <h3>The four theses to read first, given your gaps</h3>
+  <div class="scroll">
+  <table>
+    <tr><th>Read</th><th>Because</th></tr>
+    <tr><td><code>docs/just-in-time-context/</code></td><td>Your #1 gap. The four-layer table and the "context sidecar" idea map directly onto your second-brain.</td></tr>
+    <tr><td><code>docs/authority/</code></td><td>Your #2 gap. "Stage consequential effects" and "keep credential custody outside the trajectory" are immediately actionable for your MCP write access.</td></tr>
+    <tr><td><code>docs/feedback/</code></td><td>Fixes claudeception. "Promote the lesson into the smallest durable owner" is the section you want.</td></tr>
+    <tr><td><code>docs/effectiveness/</code></td><td>The antidote to accumulation. "Count fully loaded human attention" will reframe how you judge every skill you own.</td></tr>
+  </table>
+  </div>
+
+  <h3>Pointing an agent at it</h3>
+  <p>The repo is designed to be used as supplemental read-only context alongside a target
+  system. The intended invocation:</p>
+  <pre><code>git clone https://github.com/lopopolo/harness-engineering ~/ref/harness-engineering
+
+# then, in a session targeting a real repo:
+"Read ~/ref/harness-engineering/AGENTS.md. Apply the improve-harness
+ playbook to this repo. The representative job is: &lt;one real job&gt;.
+ Treat the bundle as read-only; this repo's own contracts govern."</code></pre>
+  <p>The <code>AGENTS.md</code> routing then pulls only the thesis your unresolved decision
+  needs — which is, itself, the demonstration.</p>
+
+  <div class="callout good">
+    <div class="lbl">The honest summary</div>
+    <p>You've been building harness for a while without the vocabulary for it — the
+    second-brain, orchestra, the skill system, the hooks are all harness engineering.
+    What the framework gives you is not new components. It gives you the two things that
+    turn components into a system: a <strong>routing layer</strong> so the right context arrives at
+    the right moment, and a <strong>removal criterion</strong> so the system can get smaller as well
+    as bigger. Build those two and everything you already own starts paying out.</p>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Sources.</strong> All quotations and thesis summaries from
+    <a href="https://github.com/lopopolo/harness-engineering">github.com/lopopolo/harness-engineering</a>
+    (trunk, cloned 22 July 2026), CC BY 4.0. Original framing:
+    <a href="https://openai.com/index/harness-engineering/">"Harness engineering: leveraging Codex
+    in an agent-first world."</a></p>
+    <p style="margin-top:14px"><strong>Audit basis.</strong> Direct filesystem read of
+    <code>~/.claude/settings.json</code>, <code>~/.claude/settings.local.json</code>,
+    <code>~/.claude/CLAUDE.md</code>, <code>~/.claude/hooks/</code>,
+    <code>~/.claude/skills/</code>, <code>~/.claude/agents/</code>, <code>~/orchestra/</code>,
+    <code>~/second-brain/CLAUDE.md</code>, and seven repositories under <code>~/</code>,
+    on 22 July 2026. Counts are exact as of that date. This is a point-in-time snapshot; the
+    scores are a diagnostic, not a verdict.</p>
+    <p style="margin-top:14px;color:var(--fg3)">Prepared for Prakhar · Meegrow Labs</p>
+  </div>
+</footer>
+
+</body>
+</html>
