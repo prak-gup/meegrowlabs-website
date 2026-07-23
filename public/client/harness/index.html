@@ -167,7 +167,7 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow">Tutorial &amp; System Audit · July 2026</div>
+    <div class="eyebrow">Tutorial &amp; System Audit · Updated 23 Jul 2026</div>
     <h1>Harness Engineering</h1>
     <p class="lede">Ryan Lopopolo's thesis is that you stop tuning the model and start engineering the
     environment around it. This is the practice explained in plain language — plus an
@@ -177,7 +177,7 @@
       <span class="pill">Source: github.com/lopopolo/harness-engineering</span>
       <span class="pill">12 theses · 3 playbooks</span>
       <span class="pill">Audited: ~/.claude + 7 repos</span>
-      <span class="pill">~30 min read</span>
+      <span class="pill" style="border-color:var(--good);color:var(--good)">4 of 5 findings now fixed</span>
     </div>
   </div>
 </header>
@@ -205,6 +205,16 @@
   <div class="num">Start here</div>
   <h2>The 60-second version</h2>
 
+  <div class="callout good">
+    <div class="lbl">Status · updated 23 July 2026</div>
+    <p>This page was first written as a diagnosis. Since then, <strong>4 of the 5 findings
+    have been fixed in a working session.</strong> The vault is rebuilt and live, the
+    authority boundary exists, claudeception is contained, and the Desktop is swept. The
+    audit below now carries a <strong>Before → After</strong> column so you can see exactly
+    what moved. The one finding still open — measurement, and the garbage-collection pass —
+    is called out at the end as the remaining work.</p>
+  </div>
+
   <p><strong>The claim:</strong> treat your model and coding agent as a fixed black box. Don't
   chase them. Instead improve the only two levers you actually control — <strong>context</strong> and
   <strong>tools</strong> — and curate the environment around them.</p>
@@ -228,16 +238,17 @@
   <em>retrieval</em> is broken.</p>
 
   <div class="stats">
-    <div class="stat"><div class="v">963</div><div class="l">SKILL.md files in ~/.claude/skills</div></div>
-    <div class="stat"><div class="v">937k</div><div class="l">lines of markdown in that directory</div></div>
-    <div class="stat"><div class="v">93</div><div class="l">subagent definitions</div></div>
-    <div class="stat"><div class="v">838</div><div class="l">bytes in your global CLAUDE.md</div></div>
-    <div class="stat"><div class="v">2</div><div class="l">of 391 skills your CLAUDE.md routes to</div></div>
-    <div class="stat"><div class="v">0</div><div class="l">deny rules in your permission config</div></div>
+    <div class="stat"><div class="v">0&nbsp;→&nbsp;12</div><div class="l">deny rules in your permission config <span style="color:var(--good)">✓ fixed</span></div></div>
+    <div class="stat"><div class="v">0&nbsp;→&nbsp;15</div><div class="l">ask rules gating client-facing writes <span style="color:var(--good)">✓ fixed</span></div></div>
+    <div class="stat"><div class="v">dead&nbsp;→&nbsp;live</div><div class="l">second-brain vault, now an index <span style="color:var(--good)">✓ fixed</span></div></div>
+    <div class="stat"><div class="v">1</div><div class="l">lesson auto-staged to candidates/ (loop works) <span style="color:var(--good)">✓</span></div></div>
+    <div class="stat"><div class="v">139&nbsp;→&nbsp;3</div><div class="l">loose files on your Desktop <span style="color:var(--good)">✓ fixed</span></div></div>
+    <div class="stat"><div class="v">963</div><div class="l">SKILL.md files — the GC pass is still open <span style="color:var(--warn)">pending</span></div></div>
   </div>
 
-  <p>That last row is the whole story. You have a 937,000-line library and a 838-byte
-  card catalogue. Everything below is how to fix that, in priority order.</p>
+  <p>The original diagnosis: a 937,000-line library with a 838-byte card catalogue.
+  The router now exists and the vault is live. The last open row — 963 skill files — is
+  the garbage-collection pass, the one part of the roadmap not yet done.</p>
 </section>
 
 <!-- ============ WHAT ============ -->
@@ -590,19 +601,19 @@ sources/           → preserved evidence + provenance</code></pre>
 
   <div class="scroll">
   <table>
-    <tr><th>#</th><th>Thesis</th><th>Status</th><th>Evidence in your setup</th></tr>
-    <tr><td>01</td><td>Hold the worker constant</td><td><span class="s part">Partial</span></td><td>Model pinned <code>opus[1m]</code>, high effort, always-thinking. But orchestra routes 6 workers — fine for production, fatal for diagnosis.</td></tr>
-    <tr><td>02</td><td>Private process-data iceberg</td><td><span class="s strong">Strong</span></td><td><code>~/second-brain</code> + <code>~/meegrow-brain</code>; client separation; voice-matching rules. Best part of your system.</td></tr>
-    <tr><td>03</td><td>One agent, whole job</td><td><span class="s part">Partial</span></td><td>93 subagents + Workflow + orchestrate. Orchestra's never-auto-merge is correct. Fan-out is over-reached for.</td></tr>
-    <tr><td>04</td><td>Route context just in time</td><td><span class="s weak">Weak</span></td><td>963 SKILL.md / 937k lines; CLAUDE.md is 838 bytes routing 2 skills. Second-brain loaded by session-start stuffing.</td></tr>
-    <tr><td>05</td><td>Tool legibility</td><td><span class="s part">Partial</span></td><td>Orchestra CLI is exemplary. ~20 MCP servers is a large unfamiliar surface.</td></tr>
-    <tr><td>06</td><td>Repository teaches the agent</td><td><span class="s weak">Weak</span></td><td>5/7 repos have CLAUDE.md, 3/7 AGENTS.md, <strong>0/7 ARCHITECTURE.md</strong>, 2/7 CI.</td></tr>
-    <tr><td>07</td><td>Autonomy inside authority</td><td><span class="s weak">Weak</span></td><td><code>deny: []</code>; both permission-prompt skips on; <code>Bash(bash)</code> and <code>Bash(sudo npm *)</code> allowlisted.</td></tr>
-    <tr><td>08</td><td>Prove in the real environment</td><td><span class="s weak">Weak</span></td><td>Orchestra test gate exists. Otherwise 2/7 CI, 3/7 tests, no default proof path.</td></tr>
-    <tr><td>09</td><td>Feedback → infrastructure</td><td><span class="s part">Inverted</span></td><td>Mandatory skill-extraction on every prompt, self-graded, no review gate. Loop present, boundary absent.</td></tr>
-    <tr><td>10</td><td>Coherence &amp; lifetime risk</td><td><span class="s weak">Weak</span></td><td>gstack-ship in 11 already-diverged copies; gstack-upgrade in 11; no GC pass ever run.</td></tr>
-    <tr><td>11</td><td>Continuous maintenance loops</td><td><span class="s part">Partial</span></td><td>Loop/cron/ralph machinery present; no owned state, per-run proof, or retirement conditions.</td></tr>
-    <tr><td>12</td><td>Measured effectiveness</td><td><span class="s weak">Missing</span></td><td>No evals, no firing counts, no baseline/rerun comparisons anywhere.</td></tr>
+    <tr><th>#</th><th>Thesis</th><th>Was</th><th>Now</th><th>What changed</th></tr>
+    <tr><td>01</td><td>Hold the worker constant</td><td><span class="s part">Partial</span></td><td><span class="s part">Partial</span></td><td>Unchanged. Router now says: hold the worker constant while <em>diagnosing</em>; vary via orchestra only when <em>producing</em>.</td></tr>
+    <tr><td>02</td><td>Private process-data iceberg</td><td><span class="s strong">Strong</span></td><td><span class="s strong">Strong</span></td><td>Still your best asset — and now correctly shaped as an <em>index</em>, not a mirror that drifts.</td></tr>
+    <tr><td>03</td><td>One agent, whole job</td><td><span class="s part">Partial</span></td><td><span class="s part">Partial</span></td><td>Router now states the default: one trajectory owns the job; fan out only for independently-verifiable work.</td></tr>
+    <tr><td>04</td><td>Route context just in time</td><td><span class="s weak">Weak</span></td><td><span class="s strong">Fixed</span></td><td>Global <code>CLAUDE.md</code> rewritten as an unresolved-decision router. Vault is now an index the agent re-derives, not session-start stuffing.</td></tr>
+    <tr><td>05</td><td>Tool legibility</td><td><span class="s part">Partial</span></td><td><span class="s part">Partial</span></td><td>Orchestra CLI still exemplary. MCP prune is part of the pending GC pass.</td></tr>
+    <tr><td>06</td><td>Repository teaches the agent</td><td><span class="s weak">Weak</span></td><td><span class="s part">Partial</span></td><td>Client index pages now teach where truth lives. Per-repo <code>ARCHITECTURE.md</code> still to do (roadmap step 4).</td></tr>
+    <tr><td>07</td><td>Autonomy inside authority</td><td><span class="s weak">Weak</span></td><td><span class="s strong">Fixed</span></td><td>12 deny rules + 15 ask rules gating every client publish/post/index + Windsor. Removed <code>Bash(bash)</code>, <code>sudo npm</code>, <code>brew</code>, <code>cargo install</code>.</td></tr>
+    <tr><td>08</td><td>Prove in the real environment</td><td><span class="s weak">Weak</span></td><td><span class="s part">Partial</span></td><td>gitleaks pre-commit proved itself this session (caught 3 real secrets). Per-repo journey checks still pending.</td></tr>
+    <tr><td>09</td><td>Feedback → infrastructure</td><td><span class="s part">Inverted</span></td><td><span class="s strong">Fixed</span></td><td>Hook rewritten: candidates stage in <code>~/second-brain/candidates/</code> outside the retrieval path; you promote what recurs. One real lesson already staged.</td></tr>
+    <tr><td>10</td><td>Coherence &amp; lifetime risk</td><td><span class="s weak">Weak</span></td><td><span class="s part">Partial</span></td><td>7 cold Meegrow projects archived; vault mirror archived. gstack's 11 diverged copies — the big GC — still pending.</td></tr>
+    <tr><td>11</td><td>Continuous maintenance loops</td><td><span class="s part">Partial</span></td><td><span class="s part">Partial</span></td><td>Unchanged. Machinery present; owned state + retirement conditions still to define.</td></tr>
+    <tr><td>12</td><td>Measured effectiveness</td><td><span class="s weak">Missing</span></td><td><span class="s weak">Missing</span></td><td>Deliberately last. Measure after the GC pass gives you something stable to measure.</td></tr>
   </table>
   </div>
 
@@ -623,7 +634,7 @@ sources/           → preserved evidence + provenance</code></pre>
   the place a fix stops the problem recurring.</p>
 
   <div class="finding">
-    <div class="hd"><span class="rank">1</span><h3>You have a library with no card catalogue</h3><span class="s weak">Highest impact</span></div>
+    <div class="hd"><span class="rank">1</span><h3>You have a library with no card catalogue</h3><span class="s part">Router fixed · GC pending</span></div>
     <div class="bd">
       <p><strong>Evidence.</strong> 963 <code>SKILL.md</code> files totalling 937,695 lines in
       <code>~/.claude/skills</code>. 391 top-level skills, 93 agents, 10 plugins. Your global
@@ -641,12 +652,12 @@ sources/           → preserved evidence + provenance</code></pre>
       <p><strong>Also.</strong> Your second-brain is loaded via "read <code>/Users/prakhar/second-brain/CLAUDE.md</code>
       at the start of every session." That's deterministic stuffing. By turn 40, post-compaction,
       it's gone — and nothing tells the agent how to get it back. Replace with a route the agent
-      can re-derive at any point.</p>
+      can re-derive at any point.</p><div class="callout warn" style="margin-top:16px"><div class="lbl">Status</div><p><strong>Router done, catalogue not.</strong> Global <code>CLAUDE.md</code> is now an unresolved-decision router and the vault loads as a re-derivable index — but the 963 skill files remain, so the router still points into a noisy library. Roadmap step 5 (the GC pass) finishes this one.</p></div>
     </div>
   </div>
 
   <div class="finding">
-    <div class="hd"><span class="rank">2</span><h3>Capability and authority are fully conflated</h3><span class="s weak">Highest risk</span></div>
+    <div class="hd"><span class="rank">2</span><h3>Capability and authority are fully conflated</h3><span class="s strong">✓ Fixed</span></div>
     <div class="bd">
       <p><strong>Evidence.</strong> <code>"defaultMode": "auto"</code>,
       <code>"skipDangerousModePermissionPrompt": true</code>,
@@ -668,13 +679,13 @@ sources/           → preserved evidence + provenance</code></pre>
         Asana, Notion, WordPress (<code>publish_wordpress</code>), social posting
         (<code>post_social</code>), and Windsor ad-platform mutations that can change real ad
         budgets. Those are consequential, externally-visible, and in several cases
-        irreversible — currently reachable with no gate.</p>
+        irreversible — currently reachable with no gate.</p><div class="callout good" style="margin-top:16px"><div class="lbl">Resolved · 22–23 Jul</div><p><strong>12 deny rules + 15 ask rules</strong> now in <code>settings.json</code>. Every client publish / post / index across all four Antidote servers, plus Windsor <code>execute_action</code> and Gmail drafts, prompts before firing. <code>Bash(bash)</code>, <code>sudo npm</code>, <code>brew install</code>, <code>cargo install</code> removed from the allowlist. <code>defaultMode: auto</code> kept — no speed lost.</p></div>
       </div>
     </div>
   </div>
 
   <div class="finding">
-    <div class="hd"><span class="rank">3</span><h3>Your feedback loop has no review boundary</h3><span class="s weak">Root cause of #1</span></div>
+    <div class="hd"><span class="rank">3</span><h3>Your feedback loop has no review boundary</h3><span class="s strong">✓ Fixed</span></div>
     <div class="bd">
       <p><strong>Evidence.</strong> <code>claudeception-activator.sh</code> fires on
       <em>every</em> <code>UserPromptSubmit</code> with "MANDATORY … NON-NEGOTIABLE … you MUST
@@ -691,12 +702,12 @@ sources/           → preserved evidence + provenance</code></pre>
       <p><strong>Earliest owner.</strong> A staging directory outside the retrieval tree.
       Candidates land in <code>~/.claude/candidates/</code>. You promote weekly, by hand, only
       what recurred. The instinct is right — <em>lessons should become infrastructure</em> — you
-      just need the gate that makes the lesson durable instead of noisy.</p>
+      just need the gate that makes the lesson durable instead of noisy.</p><div class="callout good" style="margin-top:16px"><div class="lbl">Resolved · 22–23 Jul</div><p><strong>Done, and already working.</strong> The hook no longer says “MANDATORY” and no longer writes to <code>~/.claude/skills/</code>. Candidates stage in <code>~/second-brain/candidates/</code>, outside the retrieval path. One real lesson is already captured there — proof the loop runs. Original hook kept as <code>.pre-harness</code>.</p></div>
     </div>
   </div>
 
   <div class="finding">
-    <div class="hd"><span class="rank">4</span><h3>No default proof path</h3><span class="s part">Medium</span></div>
+    <div class="hd"><span class="rank">4</span><h3>No default proof path</h3><span class="s part">Partly fixed</span></div>
     <div class="bd">
       <p><strong>Evidence.</strong> 2/7 repos have CI, 3/7 have any tests, 0/7 have
       ARCHITECTURE.md. Orchestra has a genuine test gate, but it only applies to orchestrated
@@ -709,12 +720,12 @@ sources/           → preserved evidence + provenance</code></pre>
       <p><strong>Earliest owner.</strong> A per-repo <code>ARCHITECTURE.md</code> naming the
       journey that must hold, plus one real check per repo — a Playwright journey, a link check,
       a schema validation. You already have Playwright installed and a Chrome MCP connected.
-      The capability exists; the default path doesn't.</p>
+      The capability exists; the default path doesn't.</p><div class="callout warn" style="margin-top:16px"><div class="lbl">Status</div><p><strong>Partly closed.</strong> Your gitleaks pre-commit hook proved itself this session, blocking three real secrets before they were committed. Per-repo <code>ARCHITECTURE.md</code> + one journey check each is still roadmap step 4.</p></div>
     </div>
   </div>
 
   <div class="finding">
-    <div class="hd"><span class="rank">5</span><h3>Nothing is measured, so nothing gets retired</h3><span class="s part">Compounding</span></div>
+    <div class="hd"><span class="rank">5</span><h3>Nothing is measured, so nothing gets retired</h3><span class="s warn">Still open</span></div>
     <div class="bd">
       <p><strong>Evidence.</strong> No <code>evals/</code> anywhere. No record of which skills
       fire. <code>gstack-ship</code> exists in 11 copies at 3056/3047/3045/2786/2781/2720/2669
@@ -726,7 +737,7 @@ sources/           → preserved evidence + provenance</code></pre>
       <p><strong>Earliest owner.</strong> A one-line-per-session record and a quarterly GC pass.
       The bar from the repo: <em>"Remove it when it adds noise, duplicates a better owner, or
       repeatedly fails to improve the job."</em> Removal is a first-class harness operation, not
-      an admission of failure.</p>
+      an admission of failure.</p><div class="callout warn" style="margin-top:16px"><div class="lbl">Status</div><p><strong>Still open — by design.</strong> The archive sweeps (7 cold projects, the vault mirror, 136 Desktop files) started it; the big one — gstack’s 11 diverged copies and a firing-count on the 963 skills — is the pending GC pass. Do it once everything else is stable.</p></div>
     </div>
   </div>
 </section>
