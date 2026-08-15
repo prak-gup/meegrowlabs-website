@@ -14,6 +14,11 @@
 /login     /index.html  200
 /login/    /index.html  200
 
+# Meegrow Antidote LLM Blueprint Library. The application and every asset use
+# this base path, so the proxy remains isolated from the main site's assets.
+/antidote/blueprint_llm    https://meegrow-antidote-blueprint-llm.prak-gup.chatgpt.site/antidote/blueprint_llm    200
+/antidote/blueprint_llm/*  https://meegrow-antidote-blueprint-llm.prak-gup.chatgpt.site/antidote/blueprint_llm/:splat  200
+
 # Anything else is genuinely not a page: serve a real 404, not a soft one.
 # (Was /* /index.html 200, which returned the homepage under a 200 for every
 # unknown URL — bad for SEO, and it hid the fact that /terms/ didn't exist.)
