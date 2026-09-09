@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /client/
+Disallow: /r/
 
 Sitemap: https://meegrowlabs.com/sitemap.xml
 
