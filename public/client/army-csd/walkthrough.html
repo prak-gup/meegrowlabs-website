@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guided Walkthrough — SUVIDHA SAINIK</title>
+  <link rel="stylesheet" href="assets/tokens.css">
+  <link rel="stylesheet" href="assets/app.css">
+  <style>
+    /* Walkthrough layout: chapters, numbered steps. Mirrors aps-demo/walkthrough.html structure. */
+    .aams-content { max-width: 1000px; }
+
+    .csd-wt-intro {
+      display: flex;
+      flex-direction: column;
+      gap: var(--aams-space-3);
+      background: var(--aams-primary-tint);
+      border: var(--aams-border-width) solid var(--aams-primary);
+      border-radius: var(--aams-radius-md);
+      padding: var(--aams-space-4);
+      margin-bottom: var(--aams-space-6);
+    }
+    .csd-wt-intro__title { font-size: var(--aams-fs-lg); font-weight: var(--aams-fw-bold); color: var(--aams-ink); margin: 0; }
+    .csd-wt-intro__text { font-size: var(--aams-fs-sm); color: var(--aams-ink-soft); line-height: var(--aams-lh-base); margin: 0; }
+    .csd-wt-intro__meta { font-size: var(--aams-fs-xs); font-weight: var(--aams-fw-bold); text-transform: uppercase; letter-spacing: 0.05em; color: var(--aams-muted); }
+
+    .csd-wt-list { display: flex; flex-direction: column; gap: var(--aams-space-6); }
+
+    .csd-wt-chapter {
+      display: flex;
+      flex-direction: column;
+      gap: var(--aams-space-4);
+      padding-bottom: var(--aams-space-6);
+      border-bottom: var(--aams-border-width) solid var(--aams-border);
+    }
+    .csd-wt-chapter:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .csd-wt-chapter__header { display: flex; flex-direction: column; gap: var(--aams-space-2); }
+    .csd-wt-chapter__number { font-size: var(--aams-fs-xs); font-weight: var(--aams-fw-bold); letter-spacing: 0.06em; text-transform: uppercase; color: var(--aams-muted); }
+    .csd-wt-chapter__title { font-size: var(--aams-fs-xl); font-weight: var(--aams-fw-bold); color: var(--aams-ink); margin: 0; }
+    .csd-wt-chapter__description { font-size: var(--aams-fs-sm); color: var(--aams-ink-soft); margin: 0; line-height: var(--aams-lh-base); }
+
+    .csd-wt-steps { display: flex; flex-direction: column; gap: var(--aams-space-4); }
+    .csd-wt-step {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: var(--aams-space-3);
+      background: var(--aams-paper-raised);
+      border: var(--aams-border-width) solid var(--aams-border);
+      border-radius: var(--aams-radius-md);
+      padding: var(--aams-space-4);
+    }
+    .csd-wt-step__number {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      background: var(--aams-primary); color: var(--aams-paper);
+      font-weight: var(--aams-fw-bold); border-radius: var(--aams-radius-sm);
+      font-size: var(--aams-fs-sm); flex-shrink: 0;
+    }
+    .csd-wt-step__content { display: flex; flex-direction: column; gap: var(--aams-space-2); }
+    .csd-wt-step__action { font-size: var(--aams-fs-base); font-weight: var(--aams-fw-bold); color: var(--aams-ink); margin: 0; }
+    .csd-wt-step__action a { color: var(--aams-primary); }
+
+    .csd-wt-step__block { margin-top: var(--aams-space-1); }
+    .csd-wt-step__label { font-size: var(--aams-fs-xs); font-weight: var(--aams-fw-bold); text-transform: uppercase; letter-spacing: 0.04em; color: var(--aams-muted); margin-bottom: 2px; }
+    .csd-wt-step__text { font-size: var(--aams-fs-sm); color: var(--aams-ink-soft); line-height: var(--aams-lh-base); margin: 0; }
+
+    .csd-wt-step__proof {
+      display: flex; flex-direction: column; gap: var(--aams-space-1);
+      padding: var(--aams-space-3);
+      background: var(--aams-status-vacant-tint);
+      border-radius: var(--aams-radius-sm);
+      border-left: 3px solid var(--aams-status-vacant);
+      margin-top: var(--aams-space-2);
+    }
+    .csd-wt-step__proof-label { font-size: var(--aams-fs-xs); font-weight: var(--aams-fw-bold); text-transform: uppercase; letter-spacing: 0.04em; color: var(--aams-muted); }
+    .csd-wt-step__proof-text { font-size: var(--aams-fs-sm); color: var(--aams-ink); line-height: var(--aams-lh-base); margin: 0; }
+
+    .csd-wt-closing {
+      background: var(--aams-status-reserved-tint);
+      border: var(--aams-border-width) solid var(--aams-amber);
+      border-radius: var(--aams-radius-md);
+      padding: var(--aams-space-5);
+      margin-top: var(--aams-space-7);
+    }
+    .csd-wt-closing__title { font-size: var(--aams-fs-md); font-weight: var(--aams-fw-bold); color: var(--aams-ink); margin: 0 0 var(--aams-space-3) 0; }
+    .csd-wt-closing ul { margin: 0 0 var(--aams-space-4) 0; padding-left: 18px; font-size: var(--aams-fs-sm); color: var(--aams-ink-soft); line-height: var(--aams-lh-base); }
+    .csd-wt-closing li { margin-bottom: var(--aams-space-1); }
+    .csd-wt-closing__next { font-size: var(--aams-fs-sm); color: var(--aams-ink); margin: 0; padding-top: var(--aams-space-3); border-top: var(--aams-border-width) solid var(--aams-amber); }
+
+    .csd-wt-footer { margin-top: var(--aams-space-7); border-top: var(--aams-border-width) solid var(--aams-border); padding-top: var(--aams-space-5); }
+
+    @media (max-width: 640px) {
+      .csd-wt-step { grid-template-columns: 1fr; }
+      .csd-wt-step__number { width: 100%; }
+      .csd-wt-chapter__title { font-size: var(--aams-fs-lg); }
+    }
+  </style>
+</head>
+<body class="aams-app">
+  <div id="aams-topbar"></div>
+  <main class="aams-main">
+    <div id="aams-nav"></div>
+    <div class="aams-content">
+
+      <div class="csd-wt-intro">
+        <div class="csd-wt-intro__meta">Guided Walkthrough &middot; ~12 minutes &middot; for CS Dte</div>
+        <h1 class="csd-wt-intro__title">SUVIDHA SAINIK — a script for the room</h1>
+        <p class="csd-wt-intro__text">
+          Seven chapters, one per demonstrator page, in presenter order. Every step names what to click, what the
+          audience sees, and the point it proves against PS-11. The OTP used throughout is <strong>246810</strong>.
+        </p>
+      </div>
+
+      <ol class="csd-wt-list">
+
+        <!-- Chapter 1 -->
+        <li class="csd-wt-chapter">
+          <div class="csd-wt-chapter__header">
+            <div class="csd-wt-chapter__number">Chapter 1 of 7 &middot; ~2 min</div>
+            <h2 class="csd-wt-chapter__title">The beneficiary</h2>
+            <p class="csd-wt-chapter__description">PS-11 AIM #1 — visibility of own PI data. Open on <a href="beneficiary.html">beneficiary.html</a>, the INDL mobile app.</p>
+          </div>
+          <div class="csd-wt-steps">
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">1</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Log in — card + OTP, then give DPDP consent</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">On <a href="beneficiary.html">beneficiary.html</a>, log in with a card number, enter OTP <strong>246810</strong>, then accept the DPDP consent screen.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">A two-factor login (card + mobile OTP) and an explicit consent step naming what data is used and why, before any PI data is shown.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">Login gates everything, and consent is asked before PI data is shown — not assumed.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">2</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">My Card → Entitlement balance → Nearest URC</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Open <strong>My Card</strong> (barcode, Grocery/Liquor Card ID, validity), then <strong>Entitlement</strong> (Grocery, Liquor, AFD I/II — overall vs. balance), then <strong>Nearest URC</strong>.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">The exact PS-11 field list rendered as-is: card IDs, validity, pay level, status; overall/balance meters; the nearest URC's code, address, timings and weekly off.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">This is the sponsor's own field list, delivered — not a reinterpretation of it.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">3</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Lodge a complaint and watch it route itself</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Open <strong>Contact Us</strong>, type a complaint, submit.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">SAMADHAN classifies the complaint live and routes it to the right nodal officer with an SLA timer, without a human dispatcher in the loop.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">Grievance intake is instant and self-routing — the 45-day manual chain (Unit CO → Area Depot → CS Dte) is not the only path.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">4</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Switch persona — War Widow, then ESM</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Use the persona switcher on <a href="beneficiary.html">beneficiary.html</a> to log in as a War Widow (no liquor card), then as an Ex-Serviceman.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">The same screens, but entitlement categories and card fields change to match the beneficiary's actual status — a War Widow has no liquor entitlement; an ESM's validity is tied to service record, not a serving unit.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">This works across CSD's whole beneficiary spectrum, not just serving personnel.</p></div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Chapter 2 -->
+        <li class="csd-wt-chapter">
+          <div class="csd-wt-chapter__header">
+            <div class="csd-wt-chapter__number">Chapter 2 of 7 &middot; ~3 min</div>
+            <h2 class="csd-wt-chapter__title">The counter — PRAMANIK</h2>
+            <p class="csd-wt-chapter__description">Pillar II, the hero of this demonstrator. Verifies the person, not just the card. Open on <a href="urc.html">urc.html</a>.</p>
+          </div>
+          <div class="csd-wt-steps">
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">1</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Ring up a liquor sale, ₹5,600, at URC Delhi Cantt (Tier 1)</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">On <a href="urc.html">urc.html</a>, select <strong>URC Delhi Cantt</strong>, start a liquor sale for ₹5,600 against a demo beneficiary's card.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">Because the amount exceeds ₹5,000 at a Tier 1 URC, all three PRAMANIK factors activate: <strong>F1</strong> card/QR scan, <strong>F2</strong> mobile OTP (enter <strong>246810</strong>), <strong>F3</strong> Aadhaar yes/no.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">The card is authenticated, but so is the person presenting it — three factors for the highest-value, highest-misuse transaction category.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">2</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">BADE clears, sale completes</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Continue through the BADE anomaly check, then <strong>Complete Sale</strong>.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">A pass/fail anomaly check with its evidence shown (no spike, no cross-URC conflict), then a completed, logged transaction.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">A clean sale is fast — PRAMANIK does not slow down the 99% of legitimate transactions.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">3</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Try a deceased-record card — HELD, not blocked</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Start a sale against the card flagged as a deceased record in the demo data.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">BADE flags the transaction and <strong>holds</strong> it for the URC Manager's decision — it does not refuse the sale outright.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">Flag, don't block — a false positive never turns into a genuine beneficiary being humiliated at the counter.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">4</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Manager decides, with remarks — logged to audit</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">From the held queue, open the item, enter remarks, and release or decline it.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">A named JCO's decision, with remarks, immediately visible on <a href="audit.html">audit.html</a>.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">The AI advises, a named officer decides — and that decision is permanent record, not a silent override.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">5</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Switch to a Tier 3 forward URC — offline-first</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Select a Tier 3 URC (e.g. a Kargil or Poonch forward URC) and start a sale.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">Only F1 (card scan) runs immediately; F2 OTP is <strong>deferred</strong> and queued for end-of-day sync when connectivity permits.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">PRAMANIK degrades gracefully at the front line — it never makes connectivity a precondition for a soldier getting his ration.</p></div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Chapter 3 -->
+        <li class="csd-wt-chapter">
+          <div class="csd-wt-chapter__header">
+            <div class="csd-wt-chapter__number">Chapter 3 of 7 &middot; ~1.5 min</div>
+            <h2 class="csd-wt-chapter__title">The URC Manager</h2>
+            <p class="csd-wt-chapter__description">PS-11 AIM #2 — visibility of URC data to the URC Manager. Still on <a href="urc.html">urc.html</a>.</p>
+          </div>
+          <div class="csd-wt-steps">
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">1</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">My URC, My QD, and Manager details</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Open the <strong>My URC</strong> tab, then <strong>Manager Details</strong>.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">URC code, name, address, PIN, contact, weekly off, My QD — and the manager's own rank, name, tenure and contact, exactly per the sponsor's field list.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">The URC Manager sees their own unit's operating data, not a subset filtered by a third party.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">2</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Bronze &amp; Steel cards, and the held queue</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Open <strong>Bronze Cards</strong> and <strong>Steel Cards</strong>, then the <strong>Held Queue</strong>.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">The Bronze/Steel card registers (Card ID, Number, Validity) and every anomaly currently awaiting this manager's decision.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">Everything a JCO needs to run the counter is in one screen — no separate ledger, no phone call to the depot.</p></div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Chapter 4 -->
+        <li class="csd-wt-chapter">
+          <div class="csd-wt-chapter__header">
+            <div class="csd-wt-chapter__number">Chapter 4 of 7 &middot; ~1.5 min</div>
+            <h2 class="csd-wt-chapter__title">Grievances — SAMADHAN</h2>
+            <p class="csd-wt-chapter__description">Pillar III. Open on <a href="samadhan.html">samadhan.html</a>.</p>
+          </div>
+          <div class="csd-wt-steps">
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">1</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Paste a Hinglish complaint, watch it classify live</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Paste a mixed Hindi-English complaint into the intake box.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">The classifier highlights the matched terms as it types, assigns a category (entitlement, card, URC conduct, quality, pricing) and a nodal officer, live.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">The classification is explainable — the matched terms are visible, not a black-box label.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">2</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Open an SLA-breached complaint, apply a precedent, resolve</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Open a complaint marked SLA-breached (card issue), review the matched precedent, apply it, and mark resolved.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">A similar, already-resolved complaint suggested as a template, and the SMS status notification the beneficiary receives.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">45–60 days shrinks to minutes for the routine cases, with the beneficiary kept informed at every stage, not left waiting.</p></div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Chapter 5 -->
+        <li class="csd-wt-chapter">
+          <div class="csd-wt-chapter__header">
+            <div class="csd-wt-chapter__number">Chapter 5 of 7 &middot; ~1.5 min</div>
+            <h2 class="csd-wt-chapter__title">Supply — MLDFE &amp; DRISHTIKON</h2>
+            <p class="csd-wt-chapter__description">Pillars I &amp; IV. Open on <a href="supply.html">supply.html</a>.</p>
+          </div>
+          <div class="csd-wt-steps">
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">1</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Leh thermal-innerwear forecast → approve redistribution</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Open the demand forecast for Leh Stn URC (thermal innerwear), then <strong>Approve Redistribution</strong> from Delhi Depot.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">A seasonal-spike forecast for a high-altitude URC, and a one-click, AI-recommended inter-depot transfer that a depot officer approves by name.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">Redistribution becomes proactive, not reactive — surplus at one depot meets shortage at another before either becomes a complaint.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">2</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">A red-flagged vendor, linked to insect complaints</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Open the vendor compliance scoreboard, find the vendor scored Red, and open the linked grievances.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">The compliance score traced directly to specific quality complaints (insects in packaged goods) filed through SAMADHAN — the two systems share evidence.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">A vendor's score isn't a guess — it's built from the beneficiary's own complaints.</p></div>
+              </div>
+            </div>
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">3</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">A GeM price benchmarking flag</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Open the price benchmarking panel and find a SKU flagged above GeM rate.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">CSD's procurement price sitting alongside the GeM rate and open-market MRP, with the deviation called out for the procurement committee.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">Procurement anomalies surface automatically, instead of waiting for the next CAG audit.</p></div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Chapter 6 -->
+        <li class="csd-wt-chapter">
+          <div class="csd-wt-chapter__header">
+            <div class="csd-wt-chapter__number">Chapter 6 of 7 &middot; ~1 min</div>
+            <h2 class="csd-wt-chapter__title">Command — DRISHTI</h2>
+            <p class="csd-wt-chapter__description">Pillar V. Open on <a href="drishti.html">drishti.html</a>.</p>
+          </div>
+          <div class="csd-wt-steps">
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">1</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Heatmap, fraud monitor, weekly brief — acknowledge item 1</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Scan the schematic national heatmap, open the fraud risk monitor, then the weekly AI brief, and <strong>Acknowledge</strong> the top item as Command.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">URC service status and complaint density across depots; PRAMANIK/BADE-flagged transactions ranked by severity; a five-item weekly brief in plain language, with an acknowledgement captured against a named officer.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">CS Dte gets one situational-awareness picture, not 4,000 separate URC ledgers — and even at this level, a decision is named and recorded, not left to the dashboard.</p></div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Chapter 7 -->
+        <li class="csd-wt-chapter">
+          <div class="csd-wt-chapter__header">
+            <div class="csd-wt-chapter__number">Chapter 7 of 7 &middot; ~1 min</div>
+            <h2 class="csd-wt-chapter__title">The audit trail</h2>
+            <p class="csd-wt-chapter__description">Everything above, named. Open on <a href="audit.html">audit.html</a>.</p>
+          </div>
+          <div class="csd-wt-steps">
+            <div class="csd-wt-step">
+              <div class="csd-wt-step__number">1</div>
+              <div class="csd-wt-step__content">
+                <p class="csd-wt-step__action">Find every decision made in the last six chapters</p>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What to click</div><p class="csd-wt-step__text">Open <a href="audit.html">audit.html</a> and locate the held-sale decision, the grievance resolution, the redistribution approval, and the command acknowledgement — then export the CSV.</p></div>
+                <div class="csd-wt-step__block"><div class="csd-wt-step__label">What they see</div><p class="csd-wt-step__text">A single, chronological, immutable log — who decided, what they decided, when, and on what evidence.</p></div>
+                <div class="csd-wt-step__proof"><div class="csd-wt-step__proof-label">The point it proves</div><p class="csd-wt-step__proof-text">Nothing in this demonstrator is opaque. Every AI-assisted step ends in a named human decision, and that decision is exportable, auditable record.</p></div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+      </ol>
+
+      <!-- Closing -->
+      <div class="csd-wt-closing">
+        <div class="csd-wt-closing__title">Questions this demo cannot answer — for CS Dte</div>
+        <ul>
+          <li>The exact entitlement rules per beneficiary category and pay level.</li>
+          <li>The definition of "My QD" and of Bronze vs. Steel cards, as CS Dte intends them.</li>
+          <li>Which systems of record are authoritative for card validity and deceased status — SPARSH, PCDA, or unit record offices.</li>
+          <li>AFD and Renewal Portal API availability, and the terms of access to them.</li>
+          <li>The URC POS landscape — how many of the ~4,000 URCs have digitised billing today.</li>
+          <li>Connectivity realistically available at each URC, by tier.</li>
+          <li>What data-sharing approvals are needed across SPARSH, PCDA, AFD and UIDAI before any of this can touch real data.</li>
+        </ul>
+        <p class="csd-wt-closing__next">
+          <strong>Proposed next step:</strong> a 30-URC Proof of Concept across plains, hill and high-altitude depots (concept paper &sect;14) — sized to answer these questions with evidence, before any wider rollout.
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <footer class="csd-wt-footer">
+        <div class="csd-doctrine">
+          THE CARD STAYS &middot; VERIFY THE PERSON, NOT JUST THE CARD &middot; FLAG, DON'T BLOCK &middot; THE AI ADVISES, A NAMED OFFICER DECIDES
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <script src="assets/ui.js"></script>
+  <script>
+    CSD.ui.initPage({ role: 'Presenter', activePage: 'walkthrough.html' });
+  </script>
+</body>
+</html>

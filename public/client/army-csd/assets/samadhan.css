@@ -1,0 +1,191 @@
+/*
+  SUVIDHA SAINIK — page-specific additions for samadhan.html and audit.html.
+  Built on tokens.css / app.css. Vanilla CSS only, no external requests.
+*/
+
+.csd-stat-note {
+  font-size: var(--aams-fs-sm);
+  color: var(--aams-ink-soft);
+  background: var(--aams-primary-tint);
+  border: 1px solid var(--aams-border);
+  border-radius: var(--aams-radius-sm);
+  padding: var(--aams-space-2) var(--aams-space-3);
+  margin-top: var(--aams-space-1);
+}
+.csd-stat-note strong { color: var(--aams-ink); }
+
+/* ---------- Live intake ---------- */
+.csd-intake {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--aams-space-5);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .csd-intake { grid-template-columns: 1fr; }
+}
+.csd-intake__quickfill {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--aams-space-2);
+  margin-bottom: var(--aams-space-3);
+}
+.csd-live-panel {
+  background: var(--aams-primary-tint);
+  border: 1px solid var(--aams-border);
+  border-radius: var(--aams-radius-md);
+  padding: var(--aams-space-4);
+  min-height: 200px;
+}
+.csd-live-panel__placeholder {
+  color: var(--aams-muted);
+  font-size: var(--aams-fs-sm);
+}
+.csd-live-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--aams-space-3);
+  margin-bottom: var(--aams-space-2);
+  font-size: var(--aams-fs-sm);
+}
+.csd-live-row dt { color: var(--aams-ink-soft); font-weight: var(--aams-fw-medium); }
+.csd-live-row dd { margin: 0; text-align: right; font-weight: var(--aams-fw-bold); }
+.csd-auto-reply {
+  margin-top: var(--aams-space-3);
+  background: var(--aams-status-vacant-tint);
+  border-left: 3px solid var(--aams-status-vacant);
+  padding: var(--aams-space-2) var(--aams-space-3);
+  border-radius: var(--aams-radius-sm);
+  font-size: var(--aams-fs-sm);
+}
+
+/* ---------- Filter bar (queue + audit) ---------- */
+.csd-filter-bar {
+  display: flex;
+  gap: var(--aams-space-3);
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: var(--aams-space-4);
+}
+.csd-filter-bar__count {
+  font-size: var(--aams-fs-xs);
+  color: var(--aams-muted);
+  margin-left: auto;
+  white-space: nowrap;
+}
+.csd-filter-bar .aams-field { margin-bottom: 0; }
+
+/* ---------- Distress marker ---------- */
+.csd-distress-marker {
+  color: var(--aams-alert);
+  font-weight: var(--aams-fw-bold);
+  white-space: nowrap;
+}
+
+/* ---------- Trend chart ---------- */
+.csd-chart-row {
+  display: flex;
+  align-items: center;
+  gap: var(--aams-space-3);
+  margin-bottom: var(--aams-space-2);
+}
+.csd-chart-row__label { flex: 0 0 170px; font-size: var(--aams-fs-sm); }
+.csd-chart-row__bar { flex: 0 0 auto; }
+.csd-chart-row__value { font-size: var(--aams-fs-xs); color: var(--aams-muted); }
+
+.csd-repeat-callout { margin-top: var(--aams-space-4); }
+.csd-repeat-item {
+  background: var(--aams-paper-raised);
+  border-left: 3px solid var(--aams-alert);
+  padding: var(--aams-space-2) var(--aams-space-3);
+  border-radius: var(--aams-radius-sm);
+  margin-bottom: var(--aams-space-2);
+  font-size: var(--aams-fs-sm);
+}
+.csd-repeat-item strong { color: var(--aams-alert); }
+
+/* ---------- Detail modal ---------- */
+.csd-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--aams-space-3);
+  margin-bottom: var(--aams-space-4);
+}
+.csd-detail-grid dt {
+  font-size: var(--aams-fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--aams-muted);
+  font-weight: var(--aams-fw-bold);
+  margin-bottom: 2px;
+}
+.csd-detail-grid dd { margin: 0; font-size: var(--aams-fs-sm); }
+
+.csd-full-text {
+  background: var(--aams-primary-tint);
+  border-radius: var(--aams-radius-sm);
+  padding: var(--aams-space-3);
+  font-size: var(--aams-fs-sm);
+  margin-bottom: var(--aams-space-4);
+}
+
+.csd-precedent-card {
+  border: 1px solid var(--aams-border);
+  border-radius: var(--aams-radius-sm);
+  padding: var(--aams-space-3);
+  margin-bottom: var(--aams-space-2);
+  background: var(--aams-paper-raised);
+}
+.csd-precedent-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--aams-space-2);
+  margin-bottom: 4px;
+}
+.csd-precedent-card__id { font-size: var(--aams-fs-xs); color: var(--aams-muted); font-weight: var(--aams-fw-bold); }
+.csd-precedent-card__why { font-size: var(--aams-fs-xs); color: var(--aams-muted); margin-top: var(--aams-space-2); }
+
+.csd-section-title {
+  font-size: var(--aams-fs-sm);
+  font-weight: var(--aams-fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--aams-primary);
+  margin: var(--aams-space-4) 0 var(--aams-space-2) 0;
+}
+.csd-section-title:first-child { margin-top: 0; }
+
+.csd-notify-line {
+  margin-top: var(--aams-space-3);
+  background: var(--aams-status-reserved-tint);
+  border-left: 3px solid var(--aams-amber);
+  padding: var(--aams-space-2) var(--aams-space-3);
+  border-radius: var(--aams-radius-sm);
+  font-size: var(--aams-fs-sm);
+}
+
+/* ---------- Audit page ---------- */
+.csd-audit-explain {
+  font-size: var(--aams-fs-sm);
+  color: var(--aams-ink-soft);
+  max-width: 880px;
+  margin-bottom: var(--aams-space-4);
+}
+.csd-sim-badge {
+  display: inline-block;
+  font-size: var(--aams-fs-xs);
+  font-weight: var(--aams-fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--aams-ink);
+  background: var(--aams-amber);
+  padding: 2px var(--aams-space-2);
+  border-radius: var(--aams-radius-sm);
+  margin-left: var(--aams-space-2);
+}
+@media (max-width: 640px) {
+  .csd-chart-row__label { flex-basis: 110px; }
+  .csd-chart-row__bar { flex: 1 1 auto; min-width: 0; }
+  .csd-chart-row__bar svg { width: 100%; }
+}

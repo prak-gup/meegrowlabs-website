@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SUVIDHA SAINIK — Canteen Services Application</title>
+  <link rel="stylesheet" href="assets/tokens.css">
+  <link rel="stylesheet" href="assets/app.css">
+  <style>
+    /* Landing page — no sidebar nav, full-width hero. Mirrors utms-demo/index.html structure. */
+    .csd-landing {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .csd-landing .aams-topbar { justify-content: center; }
+
+    .csd-hero {
+      padding: var(--aams-space-8) var(--aams-space-5) var(--aams-space-7);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(46, 74, 61, 0.03) 0%, rgba(196, 173, 74, 0.02) 100%);
+    }
+    .csd-wordmark {
+      font-size: var(--aams-fs-xl);
+      font-weight: var(--aams-fw-bold);
+      color: var(--aams-primary);
+      letter-spacing: 0.05em;
+      margin-bottom: var(--aams-space-2);
+    }
+    .csd-wordmark small {
+      display: block;
+      font-size: var(--aams-fs-xs);
+      font-weight: var(--aams-fw-normal);
+      color: var(--aams-muted);
+      letter-spacing: 0.02em;
+      margin-top: var(--aams-space-1);
+      text-transform: none;
+    }
+    .csd-badge-demo {
+      display: inline-block;
+      font-size: var(--aams-fs-xs);
+      font-weight: var(--aams-fw-bold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--aams-ink);
+      background: var(--aams-amber);
+      padding: var(--aams-space-2) var(--aams-space-3);
+      border-radius: var(--aams-radius-sm);
+      margin: var(--aams-space-3) 0 var(--aams-space-4);
+    }
+    .csd-purpose {
+      font-size: var(--aams-fs-lg);
+      color: var(--aams-ink);
+      max-width: 660px;
+      line-height: var(--aams-lh-base);
+      margin: 0;
+    }
+
+    .csd-body {
+      flex: 1 1 auto;
+      padding: 0 var(--aams-space-5) var(--aams-space-8);
+      max-width: 1180px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .csd-section { margin-top: var(--aams-space-8); }
+    .csd-section__eyebrow {
+      font-size: var(--aams-fs-xs);
+      font-weight: var(--aams-fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--aams-muted);
+      margin-bottom: var(--aams-space-2);
+      text-align: center;
+    }
+    .csd-section__title {
+      font-size: var(--aams-fs-lg);
+      font-weight: var(--aams-fw-bold);
+      color: var(--aams-ink);
+      text-align: center;
+      margin-bottom: var(--aams-space-2);
+    }
+    .csd-section__sub {
+      font-size: var(--aams-fs-sm);
+      color: var(--aams-muted);
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto var(--aams-space-6);
+      line-height: var(--aams-lh-base);
+    }
+
+    /* ---- PS-11 field-by-field mapping ---- */
+    .csd-ps11 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+      gap: var(--aams-space-5);
+      align-items: start;
+    }
+    .csd-ps11-col {
+      background: var(--aams-paper-raised);
+      border: var(--aams-border-width) solid var(--aams-border);
+      border-radius: var(--aams-radius-md);
+      box-shadow: var(--aams-shadow-sm);
+      overflow: hidden;
+    }
+    .csd-ps11-col__head {
+      padding: var(--aams-space-4);
+      background: var(--aams-primary-tint);
+      border-bottom: var(--aams-border-width) solid var(--aams-border);
+    }
+    .csd-ps11-col__head--plus { background: var(--aams-status-reserved-tint); }
+    .csd-ps11-col__title {
+      font-size: var(--aams-fs-md);
+      font-weight: var(--aams-fw-bold);
+      color: var(--aams-ink);
+      margin: 0 0 2px 0;
+    }
+    .csd-ps11-col__note { font-size: var(--aams-fs-xs); color: var(--aams-muted); }
+    .csd-ps11-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--aams-space-3);
+      padding: var(--aams-space-4);
+      border-bottom: var(--aams-border-width) solid var(--aams-border);
+    }
+    .csd-ps11-row:last-child { border-bottom: none; }
+    .csd-ps11-row__text { flex: 1 1 auto; min-width: 0; }
+    .csd-ps11-row__req { font-size: var(--aams-fs-sm); font-weight: var(--aams-fw-bold); color: var(--aams-ink); margin: 0 0 4px 0; }
+    .csd-ps11-row__target { font-size: var(--aams-fs-sm); color: var(--aams-ink-soft); margin: 0; line-height: var(--aams-lh-base); }
+    .csd-ps11-row__target a { font-weight: var(--aams-fw-medium); }
+    .csd-ps11-row__chip { flex: 0 0 auto; }
+
+    /* ---- Role doors ---- */
+    .csd-doors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--aams-space-5);
+      margin-bottom: var(--aams-space-5);
+    }
+    .csd-door-card {
+      background: var(--aams-paper-raised);
+      border: var(--aams-border-width) solid var(--aams-border);
+      border-radius: var(--aams-radius-md);
+      box-shadow: var(--aams-shadow-sm);
+      padding: var(--aams-space-5);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: var(--aams-space-2);
+      transition: all var(--aams-transition-base);
+    }
+    .csd-door-card:hover { box-shadow: var(--aams-shadow-lg); border-color: var(--aams-primary); transform: translateY(-2px); }
+    .csd-door-card__eyebrow { font-size: var(--aams-fs-xs); font-weight: var(--aams-fw-bold); text-transform: uppercase; letter-spacing: 0.05em; color: var(--aams-muted); }
+    .csd-door-card__title { font-size: var(--aams-fs-md); font-weight: var(--aams-fw-bold); color: var(--aams-primary); margin: 0; }
+    .csd-door-card__desc { font-size: var(--aams-fs-sm); color: var(--aams-ink-soft); margin: 0; line-height: var(--aams-lh-base); }
+
+    .csd-more-links { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--aams-space-2) var(--aams-space-4); }
+    .csd-more-links a {
+      font-size: var(--aams-fs-sm);
+      font-weight: var(--aams-fw-medium);
+      text-decoration: none;
+      padding: var(--aams-space-2) var(--aams-space-3);
+      border: var(--aams-border-width) solid var(--aams-border-strong);
+      border-radius: var(--aams-radius-pill);
+      color: var(--aams-ink-soft);
+    }
+    .csd-more-links a:hover { border-color: var(--aams-primary); color: var(--aams-primary); }
+
+    /* ---- Principles ---- */
+    .csd-principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--aams-space-5); }
+    .csd-principle-card {
+      background: var(--aams-paper-raised);
+      border: var(--aams-border-width) solid var(--aams-border);
+      border-left: 4px solid var(--aams-primary);
+      border-radius: var(--aams-radius-md);
+      padding: var(--aams-space-5);
+    }
+    .csd-principle-card__title { font-size: var(--aams-fs-sm); font-weight: var(--aams-fw-bold); text-transform: uppercase; letter-spacing: 0.04em; color: var(--aams-primary); margin: 0 0 var(--aams-space-2) 0; }
+    .csd-principle-card__text { font-size: var(--aams-fs-sm); color: var(--aams-ink); margin: 0; line-height: var(--aams-lh-base); }
+
+    /* ---- Not-box ---- */
+    .csd-notbox {
+      background: var(--aams-status-reserved-tint);
+      border: var(--aams-border-width) solid var(--aams-amber);
+      border-radius: var(--aams-radius-md);
+      padding: var(--aams-space-5);
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .csd-notbox__title { font-size: var(--aams-fs-sm); font-weight: var(--aams-fw-bold); text-transform: uppercase; letter-spacing: 0.04em; color: var(--aams-ink); margin: 0 0 var(--aams-space-2) 0; }
+    .csd-notbox ul { margin: 0; padding-left: 18px; font-size: var(--aams-fs-sm); color: var(--aams-ink-soft); line-height: var(--aams-lh-base); }
+    .csd-notbox li { margin-bottom: var(--aams-space-1); }
+    .csd-notbox li:last-child { margin-bottom: 0; }
+
+    /* ---- Footer ---- */
+    .csd-footer {
+      border-top: var(--aams-border-width) solid var(--aams-border);
+      padding: var(--aams-space-6) var(--aams-space-5);
+    }
+
+    @media (max-width: 768px) {
+      .csd-hero { padding: var(--aams-space-6) var(--aams-space-4) var(--aams-space-5); }
+      .csd-wordmark { font-size: var(--aams-fs-lg); }
+      .csd-purpose { font-size: var(--aams-fs-md); }
+      .csd-body { padding: 0 var(--aams-space-4) var(--aams-space-6); }
+      .csd-ps11-row { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body class="csd-landing">
+  <!-- Topbar (no side nav on landing — matches utms-demo/aps-demo index) -->
+  <div id="aams-topbar"></div>
+
+  <!-- Hero -->
+  <div class="csd-hero">
+    <div class="csd-wordmark">
+      SUVIDHA SAINIK
+      <small>Canteen Services Application &middot; Problem Statement 11 &middot; CS Dte</small>
+    </div>
+    <div class="csd-badge-demo">Demonstrator &middot; Seeded Data</div>
+    <p class="csd-purpose">
+      One non-invasive layer over the existing CSD card — visibility for the beneficiary, visibility for the
+      URC Manager, and an interface to the platforms around them. The card stays. Nothing here touches a real system.
+    </p>
+  </div>
+
+  <div class="csd-body">
+
+    <!-- PS-11, answered field by field -->
+    <section class="csd-section" id="ps11">
+      <div class="csd-section__eyebrow">Problem Statement 11 — CS Dte</div>
+      <h1 class="csd-section__title">PS-11, answered field by field</h1>
+      <p class="csd-section__sub">
+        Every line of the sponsor's one-page requirement, mapped to the screen that delivers it. Where a
+        requirement depends on a system this demonstrator cannot reach, that is said plainly.
+      </p>
+      <div class="csd-ps11">
+        <div class="csd-ps11-col">
+          <div class="csd-ps11-col__head">
+            <h2 class="csd-ps11-col__title">AIM &middot; Essential</h2>
+            <div class="csd-ps11-col__note">What CS Dte's PS-11 requires, at minimum</div>
+          </div>
+
+          <div class="csd-ps11-row">
+            <div class="csd-ps11-row__text">
+              <p class="csd-ps11-row__req">Visibility of own PI data of beneficiary</p>
+              <p class="csd-ps11-row__target">→ <a href="beneficiary.html">beneficiary.html</a> — My Card, Entitlement, Nearest URC</p>
+            </div>
+            <div class="csd-ps11-row__chip"><span class="aams-badge aams-badge--vacant">Working in demo</span></div>
+          </div>
+
+          <div class="csd-ps11-row">
+            <div class="csd-ps11-row__text">
+              <p class="csd-ps11-row__req">Visibility of URC data to URC Manager</p>
+              <p class="csd-ps11-row__target">→ <a href="urc.html">urc.html</a> — My URC, My QD, Manager details</p>
+            </div>
+            <div class="csd-ps11-row__chip"><span class="aams-badge aams-badge--vacant">Working in demo</span></div>
+          </div>
+
+          <div class="csd-ps11-row">
+            <div class="csd-ps11-row__text">
+              <p class="csd-ps11-row__req">Interface between online platforms (AFD, Renewal Portal)</p>
+              <p class="csd-ps11-row__target">→ <a href="beneficiary.html">beneficiary.html</a> — AFD &amp; Renewal Portal login stubs (no live AFD/PCDA API exists to connect to)</p>
+            </div>
+            <div class="csd-ps11-row__chip"><span class="aams-badge aams-badge--maintenance">Interface stub</span></div>
+          </div>
+        </div>
+
+        <div class="csd-ps11-col">
+          <div class="csd-ps11-col__head csd-ps11-col__head--plus">
+            <h2 class="csd-ps11-col__title">AIM PLUS &middot; Desirable</h2>
+            <div class="csd-ps11-col__note">What PS-11 asks for beyond the minimum</div>
+          </div>
+
+          <div class="csd-ps11-row">
+            <div class="csd-ps11-row__text">
+              <p class="csd-ps11-row__req">Single Sign-On (SSO)</p>
+              <p class="csd-ps11-row__target">→ <a href="beneficiary.html">beneficiary.html</a> — login flow simulates SSO; cards remain unchanged, per PRAMANIK design</p>
+            </div>
+            <div class="csd-ps11-row__chip"><span class="aams-badge aams-badge--vacant">Working in demo</span></div>
+          </div>
+
+          <div class="csd-ps11-row">
+            <div class="csd-ps11-row__text">
+              <p class="csd-ps11-row__req">Cardless Access</p>
+              <p class="csd-ps11-row__target">→ <a href="beneficiary.html">beneficiary.html</a> — mobile OTP login, no physical card required</p>
+            </div>
+            <div class="csd-ps11-row__chip"><span class="aams-badge aams-badge--vacant">Working in demo</span></div>
+          </div>
+
+          <div class="csd-ps11-row">
+            <div class="csd-ps11-row__text">
+              <p class="csd-ps11-row__req">Integration / Interface of Payment Gateways</p>
+              <p class="csd-ps11-row__target">→ <a href="beneficiary.html">beneficiary.html</a> — payment gateway stub (no live PCI-DSS gateway wired in)</p>
+            </div>
+            <div class="csd-ps11-row__chip"><span class="aams-badge aams-badge--maintenance">Interface stub</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Role doors -->
+    <section class="csd-section" id="roles">
+      <div class="csd-section__eyebrow">Enter as</div>
+      <h1 class="csd-section__title">Three roles, one system</h1>
+      <p class="csd-section__sub">Pick the seat you want to sit in. Each role sees only what PS-11 says it should see.</p>
+
+      <div class="csd-doors">
+        <a href="beneficiary.html" class="csd-door-card">
+          <div class="csd-door-card__eyebrow">INDL &middot; Mobile app</div>
+          <h3 class="csd-door-card__title">Beneficiary</h3>
+          <p class="csd-door-card__desc">Log in, see My Card and entitlement balance, find the nearest URC, lodge a complaint that routes itself.</p>
+        </a>
+        <a href="urc.html" class="csd-door-card">
+          <div class="csd-door-card__eyebrow">JCO &middot; Counter + back office</div>
+          <h3 class="csd-door-card__title">URC Manager</h3>
+          <p class="csd-door-card__desc">Verify a sale with PRAMANIK, decide a held anomaly, see My URC, My QD, and the Bronze/Steel card register.</p>
+        </a>
+        <a href="drishti.html" class="csd-door-card">
+          <div class="csd-door-card__eyebrow">CS Dte &middot; Command</div>
+          <h3 class="csd-door-card__title">CS Dte / Command</h3>
+          <p class="csd-door-card__desc">The national picture — heatmap, fraud risk, entitlement utilisation, grievance pulse, weekly AI brief.</p>
+        </a>
+      </div>
+
+      <div class="csd-more-links">
+        <a href="samadhan.html">SAMADHAN &middot; Grievances</a>
+        <a href="supply.html">Supply &amp; Vendors</a>
+        <a href="audit.html">Audit Trail</a>
+        <a href="walkthrough.html">Guided Walkthrough (~12 min)</a>
+      </div>
+    </section>
+
+    <!-- Principles -->
+    <section class="csd-section" id="principles">
+      <div class="csd-section__eyebrow">Concept Paper &middot; Table 2</div>
+      <h1 class="csd-section__title">Three principles</h1>
+      <div class="csd-principles">
+        <div class="csd-principle-card">
+          <div class="csd-principle-card__title">Non-invasive</div>
+          <p class="csd-principle-card__text">The card stays. No new URC hardware, no change to the beneficiary-facing procedure. Verification is a layer added on top of the card-presentation event, not a replacement for it.</p>
+        </div>
+        <div class="csd-principle-card">
+          <div class="csd-principle-card__title">Data-sovereign</div>
+          <p class="csd-principle-card__text">Hosted on NIC MeghRaj / MeitY-approved Government Cloud in a pilot — nothing on a commercial cloud. This demonstrator runs fully offline, in this browser, so the same discipline is visible right now.</p>
+        </div>
+        <div class="csd-principle-card">
+          <div class="csd-principle-card__title">Cost-proportionate</div>
+          <p class="csd-principle-card__text">Software-led architecture, no proprietary vendor lock-in, open-source AI stack where possible. Capex scales with what is actually needed at 4,000 URCs, not with what is impressive.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Doctrine -->
+    <section class="csd-section" id="doctrine">
+      <div class="csd-doctrine">
+        THE CARD STAYS &middot; VERIFY THE PERSON, NOT JUST THE CARD &middot; FLAG, DON'T BLOCK &middot; THE AI ADVISES, A NAMED OFFICER DECIDES
+      </div>
+    </section>
+
+    <!-- What this demonstrator is NOT -->
+    <section class="csd-section" id="not">
+      <div class="csd-notbox">
+        <div class="csd-notbox__title">What this demonstrator is NOT</div>
+        <ul>
+          <li>Not connected to any CSD, SPARSH, PCDA, AFD or UIDAI system — every request stays inside this browser.</li>
+          <li>All beneficiaries, URCs, cards, complaints and vendors are fictional, seeded data.</li>
+          <li>Entitlement ceilings, prices and volumes are illustrative only — they are not CS Dte policy values.</li>
+          <li>"AI" here is shown as transparent, inspectable rules, so every output can be traced to its evidence. Trained models can replace these rules in a pilot; the contract that every output carries its evidence stays.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="csd-footer">
+    <div class="csd-doctrine">
+      THE AI ADVISES, A NAMED OFFICER DECIDES
+    </div>
+  </footer>
+
+  <script src="assets/ui.js"></script>
+  <script>
+    // Landing page uses topbar only, no sidebar nav.
+    CSD.ui.renderTopbar(null);
+  </script>
+</body>
+</html>

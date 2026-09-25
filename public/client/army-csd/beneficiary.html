@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Canteen &middot; SUVIDHA SAINIK</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/beneficiary.css">
+</head>
+<body>
+<div class="aams-app">
+  <div id="aams-topbar"></div>
+  <div class="aams-main">
+    <nav id="aams-nav"></nav>
+    <main class="aams-content">
+
+      <div id="csd-banner"></div>
+
+      <div class="csd-switcher-row">
+        <label for="csd-switcher">Demo as</label>
+        <select id="csd-switcher"></select>
+      </div>
+
+      <div class="csd-phone-wrap">
+        <div class="csd-phone" id="csd-phone">
+          <div class="csd-phone__header">
+            <div class="csd-phone__wordmark">MY CANTEEN</div>
+            <div class="csd-phone__tag">SUVIDHA SAINIK &middot; INDL Beneficiary App</div>
+          </div>
+          <div class="csd-phone__body" id="csd-screen"></div>
+          <nav class="csd-tabbar" id="csd-tabbar"></nav>
+        </div>
+      </div>
+
+      <p class="csd-doctrine">THE CARD STAYS &middot; YOUR DATA, VISIBLE TO YOU &middot; NO BIOMETRIC IS EVER STORED</p>
+
+    </main>
+  </div>
+</div>
+
+<div id="aams-toast-region" class="aams-toast-region"></div>
+
+<script src="assets/seed.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/ui.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var CSD = window.CSD;
+  var esc = CSD.ui.escapeHtml;
+
+  // -----------------------------------------------------------------------
+  // Curated switcher personas — computed from real seeded data, never
+  // fabricated. Demo user first, then representative cases the presenter
+  // may want to jump to directly.
+  // -----------------------------------------------------------------------
+  function buildCurated() {
+    var list = CSD.data.beneficiaries;
+    var demo = CSD.engine.beneficiary(CSD.data.demoUserId);
+    var esmSorted = list.filter(function (x) { return x.category === 'esm'; })
+      .slice().sort(function (a, c) { return a.groceryCard.validity < c.groceryCard.validity ? -1 : 1; });
+    var esmSoon = esmSorted[0];
+    var widow = list.filter(function (x) { return x.category === 'widow' && !x.liquorCard; })[0];
+    var or = list.filter(function (x) { return x.category === 'serving-or'; })[0];
+    var out = [{ b: demo, tag: 'Serving Officer · default demo user' }];
+    if (esmSoon) out.push({ b: esmSoon, tag: 'Ex-Serviceman · card renews ' + CSD.ui.formatDate(esmSoon.groceryCard.validity) });
+    if (widow) out.push({ b: widow, tag: 'War Widow · no liquor card' });
+    if (or) out.push({ b: or, tag: 'Serving OR · ' + or.rank });
+    return out;
+  }
+  var CURATED = buildCurated();
+
+  // -----------------------------------------------------------------------
+  // State
+  // -----------------------------------------------------------------------
+  var TABS = [
+    { key: 'card', label: 'My Card' },
+    { key: 'entitlement', label: 'Entitlement' },
+    { key: 'urc', label: 'Nearest URC' },
+    { key: 'contact', label: 'Contact Us' },
+    { key: 'more', label: 'More' }
+  ];
+
+  var state = {
+    beneficiaryId: CSD.data.demoUserId,
+    screen: 'login',       // 'login' | 'consent' | 'home'
+    loginMethod: 'card',
+    loginSession: null,
+    otpError: '',
+    activeTab: 'card',
+    complaintResult: null
+  };
+
+  function currentBeneficiary() { return CSD.engine.beneficiary(state.beneficiaryId); }
+
+  function weekdayName(iso) {
+    var arr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var d = new Date(iso + 'T00:00:00Z');
+    return arr[d.getUTCDay()];
+  }
+
+  function kv(label, value) {
+    return '<div class="csd-kv__item"><dt>' + esc(label) + '</dt><dd>' + esc(value) + '</dd></div>';
+  }
+  function kvRaw(label, htmlValue) {
+    return '<div class="csd-kv__item"><dt>' + esc(label) + '</dt><dd>' + htmlValue + '</dd></div>';
+  }
+
+  // -----------------------------------------------------------------------
+  // Login screen
+  // -----------------------------------------------------------------------
+  function methodLabel(m) {
+    return m === 'card' ? 'Card + OTP' : m === 'cardless' ? 'Cardless (mobile + OTP)' : 'Single Sign-On (Army ID)';
+  }
+  function methodCta(m) { return m === 'sso' ? 'Continue with SSO' : 'Send OTP'; }
+
+  function tabBtn(method, label) {
+    return '<button type="button" class="aams-tabs__btn' + (state.loginMethod === method ? ' is-active' : '') +
+      '" data-method="' + method + '">' + label + '</button>';
+  }
+
+  function renderMethodBody(ben) {
+    if (state.loginMethod === 'card') {
+      return '<p class="csd-login-method-desc">Present your CSD card barcode, then verify with an OTP on your registered mobile.</p>' +
+        '<div class="aams-field"><label>Card Barcode</label><input type="text" value="' + esc(ben.barcode) + '" readonly></div>';
+    }
+    if (state.loginMethod === 'cardless') {
+      return '<p class="csd-login-method-desc">AIM PLUS: sign in without presenting the card, using your registered mobile number.</p>' +
+        '<div class="aams-field"><label>Registered Mobile</label><input type="text" value="' + esc(ben.mobile) + '" readonly></div>';
+    }
+    return '<p class="csd-login-method-desc">AIM PLUS: Single Sign-On via a simulated Army identity provider. A step-up OTP is still required before entitlement or payment screens.</p>' +
+      '<div class="aams-field"><label>Army ID (simulated)</label><input type="text" value="' + esc(ben.id) + ' · ' + esc(ben.name) + '" readonly></div>';
+  }
+
+  function renderLoginScreen() {
+    var ben = currentBeneficiary();
+    if (state.loginSession) {
+      return '<h2 class="csd-screen-title">Verify OTP</h2>' +
+        '<p class="csd-screen-sub">Method: ' + esc(methodLabel(state.loginSession.method)) + '</p>' +
+        CSD.ui.evidenceList(state.loginSession.evidence, 'Why — stated evidence') +
+        '<div class="csd-otp-hint"><strong>Demonstrator:</strong> OTP is ' + esc(CSD.engine.DEMO_OTP) + '</div>' +
+        '<div class="aams-field"><label for="csd-otp-input">One-Time Password</label>' +
+        '<input type="text" id="csd-otp-input" inputmode="numeric" maxlength="6" placeholder="6-digit OTP"></div>' +
+        (state.otpError ? '<div class="aams-field__error">' + esc(state.otpError) + '</div>' : '') +
+        '<div class="aams-btn-row">' +
+        '<button type="button" class="aams-btn aams-btn--primary" id="csd-otp-verify">Verify &amp; Continue</button>' +
+        '<button type="button" class="aams-btn aams-btn--ghost" id="csd-otp-back">Back</button>' +
+        '</div>';
+    }
+    return '<h2 class="csd-screen-title">Sign in</h2>' +
+      '<p class="csd-screen-sub">SUVIDHA SAINIK &mdash; My Canteen. Login gates everything (PS-11).</p>' +
+      '<div class="aams-tabs" id="csd-login-tabs">' +
+      tabBtn('card', 'Card + OTP') + tabBtn('cardless', 'Cardless') + tabBtn('sso', 'Single Sign-On') +
+      '</div>' +
+      renderMethodBody(ben) +
+      '<div class="aams-btn-row"><button type="button" class="aams-btn aams-btn--primary" id="csd-login-submit">' + methodCta(state.loginMethod) + '</button></div>';
+  }
+
+  function doStartLogin() {
+    var ben = currentBeneficiary();
+    var identifier = state.loginMethod === 'card' ? ben.barcode : state.beneficiaryId;
+    try {
+      state.loginSession = CSD.engine.startLogin(state.loginMethod, identifier);
+      state.otpError = '';
+      render();
+    } catch (err) {
+      CSD.ui.toast(err.message, 'error');
+    }
+  }
+
+  function doVerifyOtp() {
+    var input = document.getElementById('csd-otp-input');
+    var val = input ? input.value : '';
+    try {
+      var loggedIn = CSD.engine.completeLogin(state.loginSession, val);
+      var needsConsent = state.loginSession.needsConsent;
+      CSD.ui.toast('Logged in — ' + loggedIn.name, 'success');
+      state.loginSession = null;
+      state.otpError = '';
+      if (needsConsent) { state.screen = 'consent'; }
+      else { state.screen = 'home'; state.activeTab = 'card'; }
+      render();
+    } catch (err) {
+      state.otpError = err.message;
+      render();
+    }
+  }
+
+  // -----------------------------------------------------------------------
+  // DPDP consent screen
+  // -----------------------------------------------------------------------
+  function renderConsentScreen() {
+    return '<h2 class="csd-screen-title">Your Data, Your Consent</h2>' +
+      '<p class="csd-screen-sub">Digital Personal Data Protection Act, 2023 &mdash; a plain-language notice before your first use of My Canteen.</p>' +
+      '<div class="aams-card" style="margin-bottom:var(--aams-space-3);">' +
+      '<div class="aams-card__title" style="font-size:var(--aams-fs-sm);">What we hold</div>' +
+      '<p style="font-size:var(--aams-fs-sm);margin:6px 0 0 0;">The fields you see under My Card &mdash; card identifiers, personal details, entitlement balances and purchase history at your home URC.</p>' +
+      '</div>' +
+      '<div class="aams-card" style="margin-bottom:var(--aams-space-3);">' +
+      '<div class="aams-card__title" style="font-size:var(--aams-fs-sm);">What we never hold</div>' +
+      '<p style="font-size:var(--aams-fs-sm);margin:6px 0 0 0;">No biometric data is ever stored by this app or by the CSD system. Where Aadhaar is used for high-value verification, only a Yes/No response is recorded &mdash; never your fingerprint or Aadhaar number.</p>' +
+      '</div>' +
+      '<div class="aams-card" style="margin-bottom:var(--aams-space-3);">' +
+      '<div class="aams-card__title" style="font-size:var(--aams-fs-sm);">OTP logs</div>' +
+      '<p style="font-size:var(--aams-fs-sm);margin:6px 0 0 0;">Mobile OTP logs are purged after 30 days, per the DPDP Act 2023 consent framework.</p>' +
+      '</div>' +
+      '<div class="aams-card" style="margin-bottom:var(--aams-space-4);">' +
+      '<div class="aams-card__title" style="font-size:var(--aams-fs-sm);">You are not required to use this app</div>' +
+      '<p style="font-size:var(--aams-fs-sm);margin:6px 0 0 0;">Your physical card continues to work unchanged at any URC counter, with or without this app.</p>' +
+      '</div>' +
+      '<div class="aams-btn-row"><button type="button" class="aams-btn aams-btn--primary" id="csd-consent-agree">Agree &amp; Continue</button></div>';
+  }
+
+  function doAgreeConsent() {
+    try {
+      var entry = CSD.engine.recordConsent(state.beneficiaryId);
+      CSD.ui.auditToast(entry, 'Consent recorded');
+    } catch (err) {
+      CSD.ui.toast(err.message, 'error');
+      return;
+    }
+    state.screen = 'home';
+    state.activeTab = 'card';
+    render();
+  }
+
+  // -----------------------------------------------------------------------
+  // Home — tab bar
+  // -----------------------------------------------------------------------
+  function renderTabbar() {
+    return TABS.map(function (t) {
+      return '<button type="button" class="csd-tabbar__btn' + (state.activeTab === t.key ? ' is-active' : '') +
+        '" data-tab="' + t.key + '">' + esc(t.label) + '</button>';
+    }).join('');
+  }
+
+  function renderHomeScreen() {
+    var ben = currentBeneficiary();
+    if (!ben) return '<p>Beneficiary not found.</p>';
+    switch (state.activeTab) {
+      case 'card': return renderCardTab(ben);
+      case 'entitlement': return renderEntitlementTab(ben);
+      case 'urc': return renderUrcTab(ben);
+      case 'contact': return renderContactTab(ben);
+      case 'more': return renderMoreTab(ben);
+      default: return '';
+    }
+  }
+
+  // ---- My Card -----------------------------------------------------------
+  function renderCardTab(ben) {
+    return '<h2 class="csd-screen-title">My Card</h2>' +
+      '<p class="csd-screen-sub">' + esc(ben.name) + ' · ' + esc(ben.categoryLabel) +
+      (ben.rank && ben.rank !== '—' ? ' · ' + esc(ben.rank) : '') + '</p>' +
+      '<div class="csd-card-panel">' + CSD.ui.barcodeSvg(ben.barcode) + '</div>' +
+      '<div class="csd-section-label">Card Identifiers</div>' +
+      '<dl class="csd-kv">' +
+      kv('Grocery Card ID', ben.groceryCard.id) +
+      kv('Grocery Chip No', ben.groceryCard.chip) +
+      kv('Liquor Card ID', ben.liquorCard ? ben.liquorCard.id : 'Not applicable') +
+      kv('Liquor Chip No', ben.liquorCard ? ben.liquorCard.chip : 'Not applicable') +
+      '</dl>' +
+      '<div class="csd-section-label">Personal Details</div>' +
+      '<dl class="csd-kv">' +
+      kv('Date of Joining', CSD.ui.formatDate(ben.doj)) +
+      kv('Date of Retirement', CSD.ui.formatDate(ben.dor)) +
+      kv('Registered Email', ben.email) +
+      kv('Registered Mobile', ben.mobile) +
+      '</dl>' +
+      '<div class="csd-section-label">Status</div>' +
+      '<dl class="csd-kv">' +
+      kv('Validity', CSD.ui.formatDate(ben.groceryCard.validity)) +
+      kv('PAN', ben.pan) +
+      kv('Pay Level', ben.payLevel) +
+      kvRaw('Status', CSD.ui.statusBadge(ben.status)) +
+      '</dl>' +
+      (ben.status === 'deceased-flag' ? CSD.ui.evidenceList([
+        'Record marked deceased in ' + ben.deceasedFlag.source + ' on ' + CSD.ui.formatDate(ben.deceasedFlag.recordedOn),
+        'If this is in error, contact your Record Office and the CS Dte Card Cell immediately.'
+      ], 'Why this flag is shown') : '') +
+      '<p class="csd-readonly-note">Read-only view of your record. Corrections via Renewal Portal.</p>';
+  }
+
+  // ---- Entitlement ---------------------------------------------------------
+  function entBlock(title, e, notApplicableNote) {
+    if (!e) {
+      return '<div class="csd-entitlement-block"><div class="csd-entitlement-block__title">' + esc(title) + '</div>' +
+        '<p style="font-size:var(--aams-fs-sm);color:var(--aams-muted);margin:0;">' + esc(notApplicableNote || 'Not applicable') + '</p></div>';
+    }
+    return '<div class="csd-entitlement-block"><div class="csd-entitlement-block__title">' + esc(title) + '</div>' +
+      CSD.ui.meter(e.overall, e.balance, e.unit) + '</div>';
+  }
+
+  function renderEntitlementTab(ben) {
+    var e = ben.entitlement;
+    var html = '<h2 class="csd-screen-title">Entitlement</h2>' +
+      '<p class="csd-screen-sub">' + esc(e.period) + ' · Illustrative ceilings &mdash; not CSD policy values.</p>' +
+      entBlock('Grocery', e.grocery) +
+      entBlock('Liquor', ben.liquorCard ? e.liquor : null, 'Not applicable — no liquor card issued') +
+      entBlock('AFD II', e.afd2) +
+      '<div class="csd-entitlement-block"><div class="csd-entitlement-block__title">AFD I</div>' +
+      '<p style="margin:0;">' + (e.afd1.eligible ? '<span class="aams-badge aams-badge--vacant">Eligible</span>' : '<span class="aams-badge aams-badge--maintenance">Not eligible</span>') + '</p>' +
+      '<p style="font-size:var(--aams-fs-xs);color:var(--aams-muted);margin-top:4px;">' + esc(e.afd1.note) + '</p>' +
+      '</div>' +
+      '<div class="csd-section-label">Last Purchased</div>';
+    if (ben.lastPurchases.length) {
+      html += ben.lastPurchases.map(function (p) {
+        var u = CSD.engine.urc(p.urcId);
+        return '<div class="csd-purchase-row"><span>' + esc(u ? u.name : p.urcId) + ' · ' + esc(p.category) +
+          '<br><span class="csd-purchase-row__meta">' + CSD.ui.formatDate(p.date) + '</span></span><strong>' + CSD.engine.inr(p.amount) + '</strong></div>';
+      }).join('');
+    } else {
+      html += '<p class="aams-text-muted">No purchases on record.</p>';
+    }
+    return html;
+  }
+
+  // ---- Nearest URC ---------------------------------------------------------
+  function renderUrcTab(ben) {
+    var u = CSD.engine.nearestUrc(ben.id);
+    if (!u) return '<h2 class="csd-screen-title">Nearest URC</h2><p>No URC on record.</p>';
+    var todayName = weekdayName(CSD.DEMO_TODAY);
+    var isWeeklyOff = u.weeklyOff === todayName;
+    var closedToday = u.serviceStatus === 'closed-today' || isWeeklyOff;
+    var openLine = closedToday
+      ? (u.serviceStatus === 'closed-today' ? 'Closed today — service status update from the URC.' : 'Closed today — weekly off (' + todayName + ').')
+      : 'Open today (' + todayName + ') — ' + u.timings + '.';
+    return '<h2 class="csd-screen-title">Nearest URC</h2>' +
+      '<p class="csd-screen-sub">Your home Unit Run Canteen, from your registered station.</p>' +
+      '<div class="aams-card" style="margin-bottom:var(--aams-space-3);">' +
+      '<div class="aams-card__header"><div><div class="aams-card__title">' + esc(u.name) + '</div><p class="aams-card__subtitle">' + esc(u.code) + '</p></div>' + CSD.ui.statusBadge(u.serviceStatus) + '</div>' +
+      '<dl class="csd-kv">' +
+      kv('Postal Address', u.address) +
+      kv('Postal PIN', u.pin) +
+      kv('Email ID', u.email) +
+      kv('Mobile No', u.mobile) +
+      kv('Weekly Off', u.weeklyOff) +
+      kv('Timings', u.timings) +
+      '</dl>' +
+      '<p style="font-size:var(--aams-fs-sm);margin-top:var(--aams-space-3);"><strong>' + esc(openLine) + '</strong></p>' +
+      '</div>';
+  }
+
+  // ---- Contact Us / SAMADHAN ------------------------------------------------
+  function renderComplaintResult(res) {
+    var c = res.classification;
+    var cls = c.distress.flag ? 'csd-complaint-result csd-complaint-result--distress' : 'csd-complaint-result';
+    return '<div class="' + cls + '">' +
+      '<p style="margin:0 0 6px 0;">Your complaint <strong>' + esc(res.grievance.id) + '</strong> has been routed to <strong>' + esc(c.route) + '</strong>' +
+      (c.slaDays != null ? ' (SLA ' + c.slaDays + ' day' + (c.slaDays === 1 ? '' : 's') + ')' : ' (no fixed SLA)') + '.</p>' +
+      (c.distress.flag ? '<p style="margin:0 0 6px 0;color:var(--aams-alert);font-weight:bold;">Distress language detected &mdash; escalated to a senior nodal officer.</p>' : '') +
+      CSD.ui.evidenceList(c.evidence, 'Why this classification') +
+      '</div>';
+  }
+  function renderComplaintRow(g) {
+    return '<div class="csd-complaint-row"><div class="csd-complaint-row__head"><strong>' + esc(g.id) + '</strong>' + CSD.ui.statusBadge(g.stage) + '</div>' +
+      '<div class="csd-complaint-row__text">' + esc(g.text.length > 90 ? g.text.slice(0, 90) + '…' : g.text) + '</div>' +
+      '<div class="csd-purchase-row__meta">Lodged ' + CSD.ui.formatDate(g.lodgedOn) + '</div></div>';
+  }
+  function renderContactTab(ben) {
+    var mine = CSD.data.grievances.filter(function (g) { return g.beneficiaryId === ben.id; });
+    var html = '<h2 class="csd-screen-title">Contact Us</h2>' +
+      '<div class="aams-card" style="margin-bottom:var(--aams-space-4);">' +
+      '<div class="aams-card__title" style="font-size:var(--aams-fs-sm);">Contact Details</div>' +
+      '<dl class="csd-kv">' + kv('CS Dte Grievance Helpline', '1800-XXX-XXXX (toll-free, demo)') + kv('Email', 'grievance@csd-demo.invalid') + '</dl>' +
+      '<p style="font-size:var(--aams-fs-xs);color:var(--aams-muted);margin-top:var(--aams-space-2);">Also accepted via IVR, SMS and WhatsApp &mdash; all route into the same SAMADHAN queue.</p>' +
+      '</div>' +
+      '<div class="csd-section-label">Suggestions &amp; Complaints</div>' +
+      '<div class="aams-field"><label for="csd-grv-text">Describe the issue</label><textarea id="csd-grv-text" rows="4" placeholder="Describe your suggestion or complaint..."></textarea></div>' +
+      '<div class="aams-btn-row"><button type="button" class="aams-btn aams-btn--primary" id="csd-grv-submit">Submit</button></div>';
+    if (state.complaintResult) html += renderComplaintResult(state.complaintResult);
+    html += '<div class="csd-section-label">My Complaints</div>';
+    html += mine.length ? mine.map(renderComplaintRow).join('') : '<p class="aams-text-muted">No complaints lodged yet.</p>';
+    return html;
+  }
+
+  function doSubmitGrievance() {
+    var ben = currentBeneficiary();
+    var textEl = document.getElementById('csd-grv-text');
+    var text = textEl ? textEl.value : '';
+    try {
+      var res = CSD.engine.lodgeGrievance(ben.id, 'app', text);
+      state.complaintResult = res;
+      CSD.ui.toast('Complaint ' + res.grievance.id + ' lodged.', 'success');
+      render();
+    } catch (err) {
+      CSD.ui.toast(err.message, 'error');
+    }
+  }
+
+  // ---- More -----------------------------------------------------------------
+  function renderMoreTab() {
+    var groups = ['Indl Related', 'URC Related', 'Card Related', 'Misc', 'FAQs'];
+    var policies = CSD.data.policies;
+    var html = '<h2 class="csd-screen-title">More</h2>' +
+      '<div class="csd-section-label">Logins</div>' +
+      '<button type="button" class="csd-menu-row" data-ext="afd"><span>AFD Portal</span><span class="csd-menu-row__arrow">&rarr;</span></button>' +
+      '<button type="button" class="csd-menu-row" data-ext="renewal"><span>Renewal Portal</span><span class="csd-menu-row__arrow">&rarr;</span></button>' +
+      '<div class="csd-section-label">Policies</div>';
+    groups.forEach(function (g) {
+      var items = policies.filter(function (p) { return p.group === g; });
+      if (!items.length) return;
+      html += '<p style="font-size:var(--aams-fs-xs);font-weight:bold;color:var(--aams-ink-soft);margin:var(--aams-space-3) 0 var(--aams-space-1) 0;">' + esc(g) + '</p>';
+      items.forEach(function (p) {
+        html += '<details class="csd-policy"><summary>' + esc(p.title) + '</summary><p>' + esc(p.body) + '</p></details>';
+      });
+    });
+    html += '<div class="csd-section-label">Payment Gateway <span style="font-weight:normal;text-transform:none;letter-spacing:normal;">(AIM PLUS)</span></div>' +
+      '<div class="aams-card" style="margin-bottom:var(--aams-space-4);">' +
+      '<p style="font-size:var(--aams-fs-sm);margin:0 0 var(--aams-space-3) 0;">Pay online / pre-order &mdash; PCI-DSS gateway integration, Phase 2.</p>' +
+      '<button type="button" class="aams-btn aams-btn--primary" disabled>Pay Online (Phase 2)</button>' +
+      '</div>' +
+      '<div class="csd-section-label">Session</div>' +
+      '<button type="button" class="aams-btn aams-btn--danger" id="csd-logout">Logout</button>';
+    return html;
+  }
+
+  function doExternalStub(which) {
+    var name = which === 'afd' ? 'AFD portal' : 'Renewal Portal';
+    CSD.ui.toast('Interface to ' + name + ' — via NIC API gateway in production (PS-11 AIM: interface between online platforms)', 'info');
+  }
+
+  function doLogout() {
+    try { CSD.engine.audit(currentBeneficiary().name, 'Beneficiary', 'LOGOUT', state.beneficiaryId, ''); } catch (err) { /* non-fatal */ }
+    resetToLogin();
+  }
+
+  // -----------------------------------------------------------------------
+  // Switcher
+  // -----------------------------------------------------------------------
+  function renderSwitcher() {
+    var sel = document.getElementById('csd-switcher');
+    sel.innerHTML = CURATED.map(function (c) {
+      return '<option value="' + c.b.id + '"' + (c.b.id === state.beneficiaryId ? ' selected' : '') + '>' +
+        esc(c.b.name) + ' — ' + esc(c.tag) + '</option>';
+    }).join('');
+  }
+
+  function resetToLogin() {
+    state.screen = 'login';
+    state.loginSession = null;
+    state.loginMethod = 'card';
+    state.otpError = '';
+    state.activeTab = 'card';
+    state.complaintResult = null;
+    render();
+  }
+
+  // -----------------------------------------------------------------------
+  // Master render
+  // -----------------------------------------------------------------------
+  function render() {
+    renderSwitcher();
+    var screenEl = document.getElementById('csd-screen');
+    var tabbarEl = document.getElementById('csd-tabbar');
+    if (state.screen === 'login') {
+      screenEl.innerHTML = renderLoginScreen();
+      tabbarEl.innerHTML = '';
+      tabbarEl.style.display = 'none';
+    } else if (state.screen === 'consent') {
+      screenEl.innerHTML = renderConsentScreen();
+      tabbarEl.innerHTML = '';
+      tabbarEl.style.display = 'none';
+    } else {
+      screenEl.innerHTML = renderHomeScreen();
+      tabbarEl.innerHTML = renderTabbar();
+      tabbarEl.style.display = 'flex';
+    }
+  }
+
+  // -----------------------------------------------------------------------
+  // Event delegation (bound once — innerHTML is replaced on every render)
+  // -----------------------------------------------------------------------
+  function initEvents() {
+    var switcher = document.getElementById('csd-switcher');
+    switcher.addEventListener('change', function (e) {
+      state.beneficiaryId = e.target.value;
+      resetToLogin();
+    });
+
+    var phone = document.getElementById('csd-phone');
+    phone.addEventListener('click', function (e) {
+      var tabBtnEl = e.target.closest && e.target.closest('.csd-tabbar__btn');
+      if (tabBtnEl) { state.activeTab = tabBtnEl.getAttribute('data-tab'); state.complaintResult = null; render(); return; }
+
+      var loginTabEl = e.target.closest && e.target.closest('#csd-login-tabs .aams-tabs__btn');
+      if (loginTabEl) { state.loginMethod = loginTabEl.getAttribute('data-method'); render(); return; }
+
+      if (e.target.id === 'csd-login-submit') { doStartLogin(); return; }
+      if (e.target.id === 'csd-otp-verify') { doVerifyOtp(); return; }
+      if (e.target.id === 'csd-otp-back') { state.loginSession = null; state.otpError = ''; render(); return; }
+      if (e.target.id === 'csd-consent-agree') { doAgreeConsent(); return; }
+      if (e.target.id === 'csd-grv-submit') { doSubmitGrievance(); return; }
+      if (e.target.id === 'csd-logout') { doLogout(); return; }
+
+      var extEl = e.target.closest && e.target.closest('[data-ext]');
+      if (extEl) { doExternalStub(extEl.getAttribute('data-ext')); return; }
+    });
+    phone.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && e.target && e.target.id === 'csd-otp-input') { doVerifyOtp(); }
+      if (e.key === 'Enter' && e.target && e.target.id === 'csd-grv-text' && e.ctrlKey) { doSubmitGrievance(); }
+    });
+  }
+
+  // -----------------------------------------------------------------------
+  // Init
+  // -----------------------------------------------------------------------
+  CSD.ui.initPage({ role: 'Beneficiary', activePage: 'beneficiary.html' });
+  document.getElementById('csd-banner').innerHTML = CSD.ui.demoBanner('My Canteen — beneficiary self-service view. All data fictional and local to this browser.');
+  initEvents();
+  render();
+})();
+</script>
+</body>
+</html>

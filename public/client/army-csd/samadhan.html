@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMADHAN &mdash; Grievance Redressal &middot; SUVIDHA SAINIK</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/samadhan.css">
+</head>
+<body>
+<div class="aams-app">
+  <div id="aams-topbar"></div>
+  <div class="aams-main">
+    <nav id="aams-nav"></nav>
+    <main class="aams-content">
+
+      <h1 style="font-size:var(--aams-fs-xl);margin-bottom:var(--aams-space-1);">SAMADHAN &mdash; Grievance Redressal</h1>
+      <p class="aams-text-muted" style="margin-bottom:var(--aams-space-3);">Multi-channel intake, AI classification &amp; routing with SLA timers, precedent matching and sentiment-based distress escalation &mdash; Pillar III of Project SUVIDHA SAINIK.</p>
+
+      <div id="demo-banner"></div>
+
+      <!-- (1) Stat tiles -->
+      <section style="margin-bottom:var(--aams-space-5);">
+        <div class="aams-grid" id="samadhan-stat-tiles"></div>
+        <div class="csd-stat-note">
+          <strong>Today's baseline (concept paper):</strong> 45&ndash;60 days average resolution. <strong>Target:</strong> under 10 working days.
+        </div>
+      </section>
+
+      <!-- (2) Live intake -->
+      <section class="aams-card" style="margin-bottom:var(--aams-space-5);">
+        <div class="aams-card__header">
+          <div>
+            <h2 class="aams-card__title">Live Intake &mdash; Multi-Channel</h2>
+            <p class="aams-card__subtitle">Type or paste a grievance as it would arrive via App, IVR transcript or SMS. Classification updates live as you type.</p>
+          </div>
+        </div>
+
+        <div class="csd-intake">
+          <div>
+            <div class="csd-intake__quickfill">
+              <button type="button" class="aams-btn aams-btn--ghost aams-btn--sm" id="qf-billing">Quick-fill: English billing complaint</button>
+              <button type="button" class="aams-btn aams-btn--ghost aams-btn--sm" id="qf-hinglish">Quick-fill: Hinglish quality complaint</button>
+              <button type="button" class="aams-btn aams-btn--ghost aams-btn--sm" id="qf-distress">Quick-fill: Distressed veteran</button>
+            </div>
+
+            <div class="aams-field-row">
+              <div class="aams-field">
+                <label for="in-channel">Channel</label>
+                <select id="in-channel">
+                  <option value="app">App</option>
+                  <option value="ivr">IVR Transcript</option>
+                  <option value="sms">SMS</option>
+                </select>
+              </div>
+              <div class="aams-field" style="flex:2 1 260px;">
+                <label for="in-beneficiary">Beneficiary</label>
+                <select id="in-beneficiary"></select>
+              </div>
+            </div>
+
+            <div class="aams-field">
+              <label for="in-text">Grievance text</label>
+              <textarea id="in-text" rows="4" placeholder="Type the complaint as the beneficiary would say it&hellip;"></textarea>
+              <div class="aams-field__hint">Classification below updates as you type (debounced). Nothing is lodged until you press Lodge Grievance.</div>
+            </div>
+
+            <div class="aams-btn-row">
+              <button type="button" class="aams-btn aams-btn--primary" id="in-lodge">Lodge Grievance</button>
+              <button type="button" class="aams-btn aams-btn--ghost" id="in-clear">Clear</button>
+            </div>
+            <div id="in-error" class="aams-field__error" style="margin-top:var(--aams-space-2);"></div>
+          </div>
+
+          <div>
+            <h3 class="csd-section-title" style="margin-top:0;">Live Classification</h3>
+            <div class="csd-live-panel" id="live-panel">
+              <div class="csd-live-panel__placeholder">Start typing a grievance to see AI classification, routing, SLA and evidence here.</div>
+            </div>
+            <div id="auto-reply-panel"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- (3) Unified queue -->
+      <section class="aams-card" style="margin-bottom:var(--aams-space-5);">
+        <div class="aams-card__header">
+          <div>
+            <h2 class="aams-card__title">Unified Grievance Queue</h2>
+            <p class="aams-card__subtitle">All channels feed one queue. Click a row for full detail, precedent matching and stage advance.</p>
+          </div>
+        </div>
+
+        <div class="csd-filter-bar">
+          <div class="aams-field">
+            <label for="f-stage">Stage</label>
+            <select id="f-stage"><option value="">All Stages</option></select>
+          </div>
+          <div class="aams-field">
+            <label for="f-category">Category</label>
+            <select id="f-category"><option value="">All Categories</option></select>
+          </div>
+          <div class="aams-field">
+            <label for="f-channel">Channel</label>
+            <select id="f-channel"><option value="">All Channels</option></select>
+          </div>
+          <div class="aams-field" style="flex-direction:row;align-items:center;gap:var(--aams-space-2);">
+            <label for="f-distress-first" style="margin-bottom:0;">
+              <input type="checkbox" id="f-distress-first" style="vertical-align:middle;"> Distress first
+            </label>
+          </div>
+          <button type="button" class="aams-btn aams-btn--ghost aams-btn--sm" id="f-reset">Reset Filters</button>
+          <span class="csd-filter-bar__count" id="f-count"></span>
+        </div>
+
+        <div class="aams-table-wrap">
+          <table class="aams-table aams-table--dense" id="queue-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Channel</th>
+                <th>Excerpt</th>
+                <th>Category</th>
+                <th>Route</th>
+                <th>Stage</th>
+                <th>SLA</th>
+                <th>Distress</th>
+              </tr>
+            </thead>
+            <tbody id="queue-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- (4) Trend analytics -->
+      <section class="aams-card">
+        <div class="aams-card__header">
+          <div>
+            <h2 class="aams-card__title">Trend Analytics</h2>
+            <p class="aams-card__subtitle">Open grievance volume by category, and repeat patterns across URCs &mdash; feeds DRISHTI Command Dashboard (Pillar V).</p>
+          </div>
+        </div>
+        <div id="trend-chart"></div>
+        <div class="csd-repeat-callout">
+          <h3 class="csd-section-title">Repeat Pattern Detection</h3>
+          <div id="repeat-patterns"></div>
+        </div>
+      </section>
+
+      <p class="csd-doctrine">EVERY COMPLAINT ROUTED, TIMED AND ANSWERED &middot; THE AI SORTS, A NAMED OFFICER RESOLVES</p>
+
+    </main>
+  </div>
+</div>
+
+<!-- Grievance detail modal -->
+<div class="aams-modal-overlay" id="grv-modal">
+  <div class="aams-modal" style="max-width:760px;">
+    <div class="aams-modal__header">
+      <div>
+        <h3 class="aams-modal__title" id="gm-title">Grievance</h3>
+        <p class="aams-card__subtitle" id="gm-subtitle" style="margin:2px 0 0 0;"></p>
+      </div>
+      <button type="button" class="aams-modal__close" data-modal-close aria-label="Close">&times;</button>
+    </div>
+    <div id="gm-body"></div>
+    <div class="aams-modal__footer">
+      <button type="button" class="aams-btn aams-btn--ghost" data-modal-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="aams-toast-region" class="aams-toast-region"></div>
+
+<script src="assets/seed.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/ui.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var ui = window.CSD.ui;
+  var data = window.CSD.data;
+  var engine = window.CSD.engine;
+  var GSTAGES = engine.GRIEVANCE_STAGES;
+  var STAGE_LABEL = { 'lodged': 'Lodged', 'acknowledged': 'Acknowledged', 'under-investigation': 'Under Investigation', 'resolved': 'Resolved' };
+
+  ui.initPage({ role: 'Nodal Officer', activePage: 'samadhan.html' });
+  document.getElementById('demo-banner').innerHTML = ui.demoBanner('Grievance text, precedents and beneficiary names are fictional. Classification below is transparent rule logic, not a trained model.');
+
+  // -----------------------------------------------------------------------
+  // Helpers
+  // -----------------------------------------------------------------------
+  function excerpt(text, n) {
+    var s = String(text || '');
+    return s.length > (n || 70) ? s.slice(0, n || 70).replace(/\s+\S*$/, '') + '&hellip;' : ui.escapeHtml(s);
+  }
+  function channelBadge(ch) {
+    var LABEL = { app: 'App', ivr: 'IVR', sms: 'SMS' };
+    return '<span class="aams-badge aams-badge--neutral">' + (LABEL[ch] || ui.escapeHtml(ch)) + '</span>';
+  }
+  function svgBar(value, max, color, width, height) {
+    width = width || 220; height = height || 12;
+    var w = max > 0 ? Math.round((value / max) * width) : 0;
+    return '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="' + value + ' of ' + max + '">' +
+      '<rect x="0" y="0" width="' + width + '" height="' + height + '" rx="' + (height / 2) + '" fill="var(--aams-border)"></rect>' +
+      '<rect x="0" y="0" width="' + w + '" height="' + height + '" rx="' + (height / 2) + '" fill="' + color + '"></rect>' +
+      '</svg>';
+  }
+  function isOpen(g) { return g.stage !== 'resolved'; }
+
+
+  // -----------------------------------------------------------------------
+  // (1) Stat tiles
+  // -----------------------------------------------------------------------
+  function renderStatTiles() {
+    var open = data.grievances.filter(isOpen);
+    var breached = open.filter(function (g) { return engine.slaStatus(g).state === 'breached'; });
+    var distressed = open.filter(function (g) { return engine.classifyGrievance(g.text).distress.flag; });
+    var autoRes = open.filter(function (g) { return engine.classifyGrievance(g.text).autoResolvable; });
+    var resolved = data.grievances.filter(function (g) { return g.stage === 'resolved'; });
+
+    var tiles = [
+      { label: 'Open Grievances', value: open.length, mod: 'accent' },
+      { label: 'SLA Breached', value: breached.length, mod: 'alert' },
+      { label: 'Distress-Escalated (Open)', value: distressed.length, mod: 'alert' },
+      { label: 'Auto-Resolvable (Tier-1)', value: autoRes.length, mod: 'amber' },
+      { label: 'Resolved', value: resolved.length, mod: '' }
+    ];
+    document.getElementById('samadhan-stat-tiles').innerHTML = tiles.map(function (t) {
+      var mod = t.mod ? ' aams-stat-tile--' + t.mod : '';
+      return '<div class="aams-stat-tile' + mod + '"><span class="aams-stat-tile__label">' + t.label + '</span><span class="aams-stat-tile__value">' + t.value + '</span></div>';
+    }).join('');
+  }
+
+  // -----------------------------------------------------------------------
+  // (2) Live intake
+  // -----------------------------------------------------------------------
+  var benSel = document.getElementById('in-beneficiary');
+  benSel.innerHTML = data.beneficiaries.map(function (b) {
+    return '<option value="' + b.id + '">' + ui.escapeHtml(b.name) + ' &mdash; ' + ui.escapeHtml(b.categoryLabel) + (b.rank && b.rank !== '—' ? ' (' + ui.escapeHtml(b.rank) + ')' : '') + '</option>';
+  }).join('');
+  benSel.value = data.demoUserId;
+
+  var QUICKFILL = {
+    billing: 'I was charged for 2 bottles at the counter but received only 1. This is a billing error, please correct and refund.',
+    hinglish: 'Canteen mein atta mein keede nikle, doosri baar ho raha hai.',
+    distress: 'I am 78 years old veteran, cannot travel, no one answers phone at canteen. Please help urgently.'
+  };
+  document.getElementById('qf-billing').addEventListener('click', function () { fillQuick(QUICKFILL.billing); });
+  document.getElementById('qf-hinglish').addEventListener('click', function () { fillQuick(QUICKFILL.hinglish); });
+  document.getElementById('qf-distress').addEventListener('click', function () { fillQuick(QUICKFILL.distress); });
+  function fillQuick(text) {
+    document.getElementById('in-text').value = text;
+    renderLiveClassification();
+  }
+
+  var debounceTimer = null;
+  document.getElementById('in-text').addEventListener('input', function () {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(renderLiveClassification, 280);
+  });
+
+  function renderLiveClassification() {
+    var panel = document.getElementById('live-panel');
+    var text = document.getElementById('in-text').value.trim();
+    document.getElementById('auto-reply-panel').innerHTML = '';
+    if (text.length < 6) {
+      panel.innerHTML = '<div class="csd-live-panel__placeholder">Start typing a grievance to see AI classification, routing, SLA and evidence here.</div>';
+      return;
+    }
+    var c = engine.classifyGrievance(text);
+    var html = '<dl style="margin:0;">' +
+      '<div class="csd-live-row"><dt>Category</dt><dd>' + ui.escapeHtml(c.label) + '</dd></div>' +
+      '<div class="csd-live-row"><dt>Confidence</dt><dd>' + ui.statusBadge(c.confidence) + '</dd></div>' +
+      '<div class="csd-live-row"><dt>Route</dt><dd>' + ui.escapeHtml(c.route) + '</dd></div>' +
+      '<div class="csd-live-row"><dt>SLA</dt><dd>' + (c.slaDays == null ? 'No SLA' : c.slaDays + ' day(s)') + '</dd></div>' +
+      '<div class="csd-live-row"><dt>Auto-Resolvable</dt><dd>' + (c.autoResolvable ? '✓ Yes &mdash; Tier-1' : 'No &mdash; needs officer') + '</dd></div>' +
+      '<div class="csd-live-row"><dt>Distress Flag</dt><dd>' + (c.distress.flag ? '<span class="csd-distress-marker">⚠ Escalate</span>' : 'None') + '</dd></div>' +
+      '</dl>' + ui.evidenceList(c.evidence, 'Why — matched terms');
+    panel.innerHTML = html;
+  }
+
+  document.getElementById('in-clear').addEventListener('click', function () {
+    document.getElementById('in-text').value = '';
+    document.getElementById('in-error').textContent = '';
+    renderLiveClassification();
+  });
+
+  document.getElementById('in-lodge').addEventListener('click', function () {
+    var errEl = document.getElementById('in-error');
+    errEl.textContent = '';
+    var channel = document.getElementById('in-channel').value;
+    var beneficiaryId = benSel.value;
+    var text = document.getElementById('in-text').value.trim();
+    try {
+      var result = engine.lodgeGrievance(beneficiaryId, channel, text);
+      ui.toast('Grievance ' + result.grievance.id + ' lodged · ' + result.classification.label + ' → ' + result.classification.route, 'success');
+      document.getElementById('in-text').value = '';
+      renderLiveClassification();
+      if (result.classification.autoResolvable) {
+        var reply = engine.autoAnswer(result.grievance.id);
+        document.getElementById('auto-reply-panel').innerHTML = '<div class="csd-auto-reply"><strong>Auto-reply sent (Tier-1, no human needed):</strong><br>' + ui.escapeHtml(reply) + '</div>';
+      }
+      renderStatTiles();
+      renderQueue();
+      renderTrends();
+    } catch (e) {
+      errEl.textContent = e.message;
+      ui.toast(e.message, 'error');
+    }
+  });
+
+  // -----------------------------------------------------------------------
+  // (3) Unified queue
+  // -----------------------------------------------------------------------
+  var CATS = ['billing', 'entitlement', 'card', 'pricing', 'quality', 'stock', 'urc-conduct', 'information', 'welfare', 'suggestion', 'unclassified'];
+  var CAT_LABEL = {
+    billing: 'Billing error', entitlement: 'Entitlement / balance', card: 'Card / renewal / OTP', pricing: 'Pricing / MRP',
+    quality: 'Product quality', stock: 'Stock availability', 'urc-conduct': 'URC conduct / timings', information: 'Information query',
+    welfare: 'Welfare / widow support', suggestion: 'Suggestion', unclassified: 'Unclassified — human triage'
+  };
+  (function populateFilters() {
+    var stageSel = document.getElementById('f-stage');
+    GSTAGES.forEach(function (s) {
+      var o = document.createElement('option'); o.value = s; o.textContent = STAGE_LABEL[s]; stageSel.appendChild(o);
+    });
+    var catSel = document.getElementById('f-category');
+    CATS.forEach(function (c) {
+      var o = document.createElement('option'); o.value = c; o.textContent = CAT_LABEL[c]; catSel.appendChild(o);
+    });
+    var chSel = document.getElementById('f-channel');
+    [['app', 'App'], ['ivr', 'IVR'], ['sms', 'SMS']].forEach(function (p) {
+      var o = document.createElement('option'); o.value = p[0]; o.textContent = p[1]; chSel.appendChild(o);
+    });
+  })();
+
+  var qState = { stage: '', category: '', channel: '', distressFirst: false };
+  document.getElementById('f-stage').addEventListener('change', function (e) { qState.stage = e.target.value; renderQueue(); });
+  document.getElementById('f-category').addEventListener('change', function (e) { qState.category = e.target.value; renderQueue(); });
+  document.getElementById('f-channel').addEventListener('change', function (e) { qState.channel = e.target.value; renderQueue(); });
+  document.getElementById('f-distress-first').addEventListener('change', function (e) { qState.distressFirst = e.target.checked; renderQueue(); });
+  document.getElementById('f-reset').addEventListener('click', function () {
+    qState = { stage: '', category: '', channel: '', distressFirst: false };
+    document.getElementById('f-stage').value = '';
+    document.getElementById('f-category').value = '';
+    document.getElementById('f-channel').value = '';
+    document.getElementById('f-distress-first').checked = false;
+    renderQueue();
+  });
+
+  function renderQueue() {
+    var rows = data.grievances.map(function (g) {
+      return { g: g, c: engine.classifyGrievance(g.text), sla: engine.slaStatus(g) };
+    }).filter(function (r) {
+      if (qState.stage && r.g.stage !== qState.stage) return false;
+      if (qState.category && r.c.category !== qState.category) return false;
+      if (qState.channel && r.g.channel !== qState.channel) return false;
+      return true;
+    });
+    if (qState.distressFirst) {
+      rows.sort(function (a, b) { return (b.c.distress.flag ? 1 : 0) - (a.c.distress.flag ? 1 : 0); });
+    }
+    document.getElementById('f-count').textContent = rows.length + ' of ' + data.grievances.length + ' grievances';
+
+    var tbody = document.getElementById('queue-tbody');
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="aams-table__empty">No grievances match the current filters.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map(function (r) {
+      var g = r.g, c = r.c, sla = r.sla;
+      var slaLabel = sla.state === 'closed' ? 'Closed' : sla.state === 'no-sla' ? 'No SLA' : 'day ' + sla.daysOpen + ' of ' + sla.slaDays;
+      return '<tr data-id="' + g.id + '" style="cursor:pointer;">' +
+        '<td><strong>' + g.id + '</strong></td>' +
+        '<td>' + channelBadge(g.channel) + '</td>' +
+        '<td>' + excerpt(g.text, 60) + '</td>' +
+        '<td>' + ui.escapeHtml(c.label) + '</td>' +
+        '<td>' + ui.escapeHtml(c.route) + '</td>' +
+        '<td>' + ui.statusBadge(g.stage) + '</td>' +
+        '<td>' + ui.statusBadge(sla.state) + (sla.state !== 'closed' && sla.state !== 'no-sla' ? ' <span class="aams-text-muted" style="font-size:var(--aams-fs-xs);">' + slaLabel + '</span>' : '') + '</td>' +
+        '<td>' + (c.distress.flag ? '<span class="csd-distress-marker">⚠ Distress</span>' : '') + '</td>' +
+        '</tr>';
+    }).join('');
+
+    Array.prototype.forEach.call(tbody.querySelectorAll('tr[data-id]'), function (tr) {
+      tr.addEventListener('click', function () { openGrievanceDetail(tr.getAttribute('data-id')); });
+    });
+  }
+
+  // -----------------------------------------------------------------------
+  // Grievance detail modal
+  // -----------------------------------------------------------------------
+  function openGrievanceDetail(id, initialNotify) {
+    var g = data.grievances.filter(function (x) { return x.id === id; })[0];
+    if (!g) return;
+    var c = engine.classifyGrievance(g.text);
+    var sla = engine.slaStatus(g);
+    var b = engine.beneficiary(g.beneficiaryId);
+    var u = engine.urc(g.urcId);
+    var precedents = engine.precedentsFor(g.id, 3);
+
+    document.getElementById('gm-title').textContent = g.id;
+    document.getElementById('gm-subtitle').innerHTML = channelBadge(g.channel) + ' &middot; lodged ' + ui.formatDate(g.lodgedOn) + ' &middot; ' + ui.statusBadge(g.stage) + ' &middot; ' + ui.statusBadge(sla.state);
+
+    var detailHtml = '<div class="csd-full-text">' + ui.escapeHtml(g.text) + '</div>' +
+      '<dl class="csd-detail-grid">' +
+        '<div><dt>Beneficiary</dt><dd>' + ui.escapeHtml(b ? b.name : '—') + (b ? ' (' + ui.escapeHtml(b.categoryLabel) + ')' : '') + '</dd></div>' +
+        '<div><dt>URC</dt><dd>' + ui.escapeHtml(u ? u.name + ' (' + u.code + ')' : '—') + '</dd></div>' +
+        '<div><dt>Category</dt><dd>' + ui.escapeHtml(c.label) + ' &middot; ' + ui.statusBadge(c.confidence) + '</dd></div>' +
+        '<div><dt>Route</dt><dd>' + ui.escapeHtml(c.route) + '</dd></div>' +
+        '<div><dt>SLA</dt><dd>' + (sla.state === 'closed' ? 'Closed' : sla.state === 'no-sla' ? 'No SLA' : 'day ' + sla.daysOpen + ' of ' + sla.slaDays) + ' &middot; ' + ui.statusBadge(sla.state) + '</dd></div>' +
+        '<div><dt>Distress</dt><dd>' + (c.distress.flag ? '<span class="csd-distress-marker">⚠ Escalated to senior nodal officer</span>' : 'None detected') + '</dd></div>' +
+      '</dl>' +
+      ui.evidenceList(c.evidence, 'Classification — why');
+
+    var precHtml = '<h3 class="csd-section-title">Precedent Matching</h3>';
+    if (!precedents.length) {
+      precHtml += '<p class="aams-text-muted" style="font-size:var(--aams-fs-sm);">No matching precedent found for this category.</p>';
+    } else {
+      precHtml += precedents.map(function (p) {
+        var pr = p.precedent;
+        return '<div class="csd-precedent-card">' +
+          '<div class="csd-precedent-card__head"><span class="csd-precedent-card__id">' + pr.id + '</span><span class="aams-text-muted" style="font-size:var(--aams-fs-xs);">Resolved in ' + pr.days + ' day(s)</span></div>' +
+          '<div style="font-size:var(--aams-fs-sm);font-weight:var(--aams-fw-medium);margin-bottom:2px;">' + ui.escapeHtml(pr.summary) + '</div>' +
+          '<div style="font-size:var(--aams-fs-sm);color:var(--aams-ink-soft);">' + ui.escapeHtml(pr.resolution) + '</div>' +
+          '<div class="csd-precedent-card__why">Why matched: ' + ui.escapeHtml(p.why) + '</div>' +
+          '<button type="button" class="aams-btn aams-btn--ghost aams-btn--sm" style="margin-top:var(--aams-space-2);" data-template="' + ui.escapeHtml(pr.resolution) + '">Use as resolution template</button>' +
+          '</div>';
+      }).join('');
+    }
+
+    var timelineHtml = '<h3 class="csd-section-title">Lifecycle Timeline</h3><ul class="aams-timeline">' +
+      g.history.map(function (h) {
+        return '<li class="aams-timeline__item">' +
+          '<div class="aams-timeline__meta">' + ui.formatDate(h.ts) + ' ' + ui.formatTime(h.ts) + ' hrs &middot; ' + ui.escapeHtml(h.by) + '</div>' +
+          '<div class="aams-timeline__title">' + ui.escapeHtml(STAGE_LABEL[h.stage] || h.stage) + '</div>' +
+          (h.remarks ? '<div class="aams-timeline__body">' + ui.escapeHtml(h.remarks) + '</div>' : '') +
+          '</li>';
+      }).join('') + '</ul>';
+
+    var stageOptions = GSTAGES.filter(function (s) { return s !== g.stage; })
+      .map(function (s) { return '<option value="' + s + '">' + STAGE_LABEL[s] + '</option>'; }).join('');
+
+    var advanceHtml = '<h3 class="csd-section-title">Advance Stage</h3>' +
+      '<div class="aams-field-row">' +
+        '<div class="aams-field"><label for="adv-officer">Officer Name (mandatory)</label><input type="text" id="adv-officer" placeholder="e.g. Maj A. Verma"></div>' +
+        '<div class="aams-field"><label for="adv-stage">Next Stage</label><select id="adv-stage">' + stageOptions + '</select></div>' +
+      '</div>' +
+      '<div class="aams-field"><label for="adv-remarks">Remarks (mandatory if resolving)</label><textarea id="adv-remarks" rows="3" placeholder="Resolution remarks / action taken&hellip;"></textarea></div>' +
+      '<div class="aams-btn-row"><button type="button" class="aams-btn aams-btn--primary" id="adv-submit">Update Grievance</button></div>' +
+      '<div id="adv-error" class="aams-field__error" style="margin-top:var(--aams-space-2);"></div>' +
+      '<div id="adv-notify">' + (initialNotify ? '<div class="csd-notify-line"><strong>SMS sent:</strong> ' + ui.escapeHtml(initialNotify) + '</div>' : '') + '</div>';
+
+    document.getElementById('gm-body').innerHTML = detailHtml + precHtml + timelineHtml + advanceHtml;
+
+    Array.prototype.forEach.call(document.querySelectorAll('#gm-body [data-template]'), function (btn) {
+      btn.addEventListener('click', function () {
+        document.getElementById('adv-remarks').value = btn.getAttribute('data-template');
+        ui.toast('Precedent resolution copied into remarks — edit before submitting.', 'info');
+      });
+    });
+
+    document.getElementById('adv-submit').addEventListener('click', function () {
+      var errEl = document.getElementById('adv-error');
+      errEl.textContent = '';
+      var officer = document.getElementById('adv-officer').value;
+      var stage = document.getElementById('adv-stage').value;
+      var remarks = document.getElementById('adv-remarks').value;
+      try {
+        var res = engine.advanceGrievance(g.id, stage, officer, remarks);
+        ui.auditToast(res.audit, 'Grievance updated');
+        renderStatTiles();
+        renderQueue();
+        renderTrends();
+        openGrievanceDetail(g.id, res.notification.replace(/^SMS to [^:]+: /, ''));
+      } catch (e) {
+        errEl.textContent = e.message;
+        ui.toast(e.message, 'error');
+      }
+    });
+
+    ui.openModal('grv-modal');
+  }
+
+  // -----------------------------------------------------------------------
+  // (4) Trend analytics
+  // -----------------------------------------------------------------------
+  function renderTrends() {
+    var open = data.grievances.filter(isOpen);
+    var counts = {};
+    CATS.forEach(function (c) { counts[c] = 0; });
+    open.forEach(function (g) { var c = engine.classifyGrievance(g.text).category; counts[c] = (counts[c] || 0) + 1; });
+    var max = Math.max.apply(null, CATS.map(function (c) { return counts[c]; }).concat([1]));
+    document.getElementById('trend-chart').innerHTML = CATS.filter(function (c) { return counts[c] > 0; }).map(function (c) {
+      return '<div class="csd-chart-row">' +
+        '<span class="csd-chart-row__label">' + CAT_LABEL[c] + '</span>' +
+        '<span class="csd-chart-row__bar">' + svgBar(counts[c], max, 'var(--aams-primary)') + '</span>' +
+        '<span class="csd-chart-row__value">' + counts[c] + ' open</span>' +
+        '</div>';
+    }).join('') || '<p class="aams-text-muted" style="font-size:var(--aams-fs-sm);">No open grievances.</p>';
+
+    // Repeat pattern: URC + category with >= 2 grievances across all history.
+    var byKey = {};
+    data.grievances.forEach(function (g) {
+      var c = engine.classifyGrievance(g.text).category;
+      var key = g.urcId + '::' + c;
+      byKey[key] = byKey[key] || { urcId: g.urcId, category: c, count: 0, ids: [] };
+      byKey[key].count++;
+      byKey[key].ids.push(g.id);
+    });
+    var repeats = Object.keys(byKey).map(function (k) { return byKey[k]; })
+      .filter(function (r) { return r.count >= 2 && r.category !== 'information' && r.category !== 'suggestion'; })
+      .sort(function (a, b) { return b.count - a.count; });
+
+    var repeatEl = document.getElementById('repeat-patterns');
+    if (!repeats.length) {
+      repeatEl.innerHTML = '<p class="aams-text-muted" style="font-size:var(--aams-fs-sm);">No repeat patterns detected at any single URC.</p>';
+    } else {
+      repeatEl.innerHTML = repeats.map(function (r) {
+        var u = engine.urc(r.urcId);
+        return '<div class="csd-repeat-item"><strong>' + ui.escapeHtml(u ? u.name + ' (' + u.code + ')' : r.urcId) + ':</strong> ' +
+          r.count + ' &times; ' + ui.escapeHtml(CAT_LABEL[r.category]) + ' complaints (' + r.ids.join(', ') + ') &mdash; systemic issue, not individual complaint.</div>';
+      }).join('');
+    }
+  }
+
+  renderStatTiles();
+  renderLiveClassification();
+  renderQueue();
+  renderTrends();
+})();
+</script>
+</body>
+</html>

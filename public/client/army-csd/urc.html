@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>URC Manager &amp; Counter &middot; SUVIDHA SAINIK</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/urc.css">
+</head>
+<body>
+<div class="aams-app">
+  <div id="aams-topbar"></div>
+  <div class="aams-main">
+    <nav id="aams-nav"></nav>
+    <main class="aams-content">
+
+      <h1 style="font-size:var(--aams-fs-xl);margin-bottom:var(--aams-space-1);">URC Manager &amp; Counter</h1>
+      <p class="aams-text-muted" style="margin-bottom:var(--aams-space-4);">Point-of-sale verification (PRAMANIK), held-transaction review, and the URC's own PS-11 data &mdash; as seen by the URC Manager.</p>
+
+      <div id="demo-banner-slot"></div>
+
+      <!-- URC selector -->
+      <div class="csd-urc-select-bar">
+        <div class="aams-field">
+          <label for="urc-select">Select URC</label>
+          <select id="urc-select"></select>
+        </div>
+        <div class="csd-urc-select-bar__badges" id="urc-select-badges"></div>
+      </div>
+
+      <div id="offline-strip-slot"></div>
+
+      <!-- Tabs -->
+      <div class="aams-tabs" id="urc-tabs">
+        <button type="button" class="aams-tabs__btn is-active" data-tab="counter">The Counter &mdash; PRAMANIK</button>
+        <button type="button" class="aams-tabs__btn" data-tab="queue">Held &amp; Flagged Queue</button>
+        <button type="button" class="aams-tabs__btn" data-tab="myurc">My URC</button>
+        <button type="button" class="aams-tabs__btn" data-tab="cards">Bronze &amp; Steel Cards</button>
+        <button type="button" class="aams-tabs__btn" data-tab="today">Today at this URC</button>
+      </div>
+
+      <!-- ===================== (1) THE COUNTER ===================== -->
+      <section id="tab-counter">
+        <div class="aams-card" style="margin-bottom:var(--aams-space-4);">
+          <div class="aams-card__header">
+            <div>
+              <h2 class="aams-card__title">Point of Sale &mdash; PRAMANIK Verification</h2>
+              <p class="aams-card__subtitle">Pick a demo scenario, scan the card, satisfy the required factors, run the anomaly check, then complete the sale.</p>
+            </div>
+          </div>
+
+          <!-- Step 0: scenario + scan -->
+          <div class="csd-counter-step">
+            <div class="csd-counter-step__title">Step 1 &middot; Present card</div>
+            <div class="aams-field-row">
+              <div class="aams-field">
+                <label for="scan-scenario">Demo scenario</label>
+                <select id="scan-scenario"></select>
+              </div>
+              <div class="aams-field">
+                <label for="scan-category">Category</label>
+                <select id="scan-category">
+                  <option value="grocery">Grocery</option>
+                  <option value="liquor">Liquor</option>
+                  <option value="afd">AFD II</option>
+                </select>
+              </div>
+              <div class="aams-field">
+                <label for="scan-amount">Amount (&#8377;)</label>
+                <input type="number" id="scan-amount" min="0" step="1">
+              </div>
+            </div>
+            <div class="csd-scenario-preview" id="scan-preview"></div>
+            <div class="aams-btn-row">
+              <button type="button" class="aams-btn aams-btn--primary" id="scan-btn">SCAN CARD</button>
+              <button type="button" class="aams-btn aams-btn--ghost aams-btn--sm" id="scan-reset-btn">New Transaction</button>
+            </div>
+            <div class="csd-inline-error" id="scan-error"></div>
+          </div>
+
+          <!-- Step 1: factor ladder + evidence (populated after scan) -->
+          <div id="session-block"></div>
+
+          <p class="csd-doctrine">THE CARD STAYS &mdash; WE VERIFY THE PERSON, NOT JUST THE CARD &middot; FLAG, DON'T BLOCK</p>
+        </div>
+
+        <div class="aams-card">
+          <div class="aams-card__header">
+            <div>
+              <h2 class="aams-card__title">Live Verification Timeline</h2>
+              <p class="aams-card__subtitle">Every step of the current counter session, in order.</p>
+            </div>
+          </div>
+          <div id="session-timeline"><p class="aams-text-muted">No session yet &mdash; select a scenario and scan a card to begin.</p></div>
+        </div>
+      </section>
+
+      <!-- ===================== (2) HELD & FLAGGED QUEUE ===================== -->
+      <section id="tab-queue" class="aams-hidden">
+        <div class="aams-card">
+          <div class="aams-card__header">
+            <div>
+              <h2 class="aams-card__title">Held &amp; Flagged Queue</h2>
+              <p class="aams-card__subtitle">BADE anomaly holds awaiting a named officer's decision. Nothing here was auto-blocked.</p>
+            </div>
+            <div class="aams-field" style="margin-bottom:0;min-width:200px;">
+              <label for="queue-scope">Scope</label>
+              <select id="queue-scope">
+                <option value="this">This URC only</option>
+                <option value="depot">All URCs in my depot</option>
+                <option value="all">All URCs</option>
+              </select>
+            </div>
+          </div>
+          <div class="aams-table-wrap">
+            <table class="aams-table aams-table--dense">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Severity</th>
+                  <th>Beneficiary</th>
+                  <th>URC</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Evidence</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="queue-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== (3) MY URC ===================== -->
+      <section id="tab-myurc" class="aams-hidden">
+        <div class="aams-grid" style="margin-bottom:var(--aams-space-4);">
+          <div class="aams-card">
+            <div class="aams-card__header">
+              <div><h2 class="aams-card__title">My URC</h2><p class="aams-card__subtitle">URC Code, Name, Postal Address, PIN, Email, Mobile, My QD &mdash; per PS-11.</p></div>
+            </div>
+            <dl class="csd-detail-grid" id="myurc-fields"></dl>
+          </div>
+          <div class="aams-card">
+            <div class="aams-card__header">
+              <div><h2 class="aams-card__title">Manager Details</h2><p class="aams-card__subtitle">Rank, Name, Effective from, Mobile, Email &mdash; per PS-11.</p></div>
+            </div>
+            <dl class="csd-detail-grid" id="manager-fields"></dl>
+          </div>
+        </div>
+        <div class="aams-card">
+          <div class="aams-card__header">
+            <div><h2 class="aams-card__title">Timings &amp; Connectivity</h2></div>
+          </div>
+          <dl class="csd-detail-grid" id="timings-fields"></dl>
+        </div>
+      </section>
+
+      <!-- ===================== (4) BRONZE / STEEL CARDS ===================== -->
+      <section id="tab-cards" class="aams-hidden">
+        <div class="aams-card" style="margin-bottom:var(--aams-space-4);">
+          <div class="aams-card__header">
+            <div><h2 class="aams-card__title">Bronze Cards</h2><p class="aams-card__subtitle">Grocery &amp; Liquor &mdash; per PS-11.</p></div>
+          </div>
+          <div class="aams-table-wrap">
+            <table class="aams-table aams-table--dense">
+              <thead><tr><th>Category</th><th>Card ID</th><th>Number</th><th>Validity</th></tr></thead>
+              <tbody id="bronze-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="aams-card">
+          <div class="aams-card__header">
+            <div><h2 class="aams-card__title">Steel Cards</h2><p class="aams-card__subtitle">Grocery &mdash; per PS-11.</p></div>
+          </div>
+          <div class="aams-table-wrap">
+            <table class="aams-table aams-table--dense">
+              <thead><tr><th>Category</th><th>Card ID</th><th>Number</th><th>Validity</th></tr></thead>
+              <tbody id="steel-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== (5) TODAY AT THIS URC ===================== -->
+      <section id="tab-today" class="aams-hidden">
+        <div class="aams-grid" id="today-stat-tiles" style="margin-bottom:var(--aams-space-4);"></div>
+        <div class="aams-card">
+          <div class="aams-card__header">
+            <div><h2 class="aams-card__title">Recent Transactions</h2><p class="aams-card__subtitle">Most recent sales at this URC, with the PRAMANIK factors used.</p></div>
+          </div>
+          <div class="aams-table-wrap">
+            <table class="aams-table aams-table--dense">
+              <thead><tr><th>Txn ID</th><th>Time</th><th>Beneficiary</th><th>Category</th><th>Amount</th><th>Factors Used</th></tr></thead>
+              <tbody id="today-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- Flag review modal -->
+<div class="aams-modal-overlay" id="flag-review-modal">
+  <div class="aams-modal">
+    <div class="aams-modal__header">
+      <div>
+        <h3 class="aams-modal__title">Review Flagged Transaction</h3>
+        <p class="aams-card__subtitle" id="fr-subtitle" style="margin:2px 0 0 0;"></p>
+      </div>
+      <button type="button" class="aams-modal__close" data-modal-close aria-label="Close">&times;</button>
+    </div>
+    <div id="fr-evidence"></div>
+    <div class="aams-field">
+      <label for="fr-officer">Reviewing officer (name)</label>
+      <input type="text" id="fr-officer" placeholder="e.g. Sub Balwant Singh">
+    </div>
+    <div class="aams-field">
+      <label for="fr-disposition">Disposition</label>
+      <select id="fr-disposition">
+        <option value="released">Released &mdash; no action</option>
+        <option value="card-suspended">Card Suspended</option>
+        <option value="referred">Referred (to Area Depot / CS Dte)</option>
+      </select>
+    </div>
+    <div class="aams-field">
+      <label for="fr-remarks">Remarks (mandatory)</label>
+      <textarea id="fr-remarks" placeholder="State the reason for this decision"></textarea>
+    </div>
+    <div class="csd-inline-error" id="fr-error"></div>
+    <div class="aams-modal__footer">
+      <button type="button" class="aams-btn aams-btn--ghost" data-modal-close>Cancel</button>
+      <button type="button" class="aams-btn aams-btn--primary" id="fr-submit">Record Decision</button>
+    </div>
+  </div>
+</div>
+
+<div id="aams-toast-region" class="aams-toast-region"></div>
+
+<script src="assets/seed.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/ui.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var data = window.CSD.data;
+  var engine = window.CSD.engine;
+  var ui = window.CSD.ui;
+  var TODAY = window.CSD.DEMO_TODAY;
+
+  ui.initPage({ role: 'URC Manager', activePage: 'urc.html' });
+  document.getElementById('demo-banner-slot').innerHTML = ui.demoBanner('Counter, queue and URC data are all seeded and reset on reload.');
+
+  // -----------------------------------------------------------------------
+  // Factor label map — mirrors ui.js's internal FACTOR_LABEL (not exported),
+  // used only for plain-language step titles here.
+  // -----------------------------------------------------------------------
+  var FACTOR_LABEL = { F1: 'F1 Card scan', F2: 'F2 Mobile OTP', F3: 'F3 Aadhaar yes/no' };
+
+  function nowClock() {
+    var d = new Date();
+    function p(n) { return (n < 10 ? '0' : '') + n; }
+    return p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
+  }
+
+  // =========================================================================
+  // Current URC state
+  // =========================================================================
+  var currentUrc = engine.urc(data.demoUrcId);
+  var session = null;      // live POS session object from engine.posStart
+  var sessionTimeline = [];
+  var scenarios = [];      // rebuilt whenever currentUrc changes
+
+  // -----------------------------------------------------------------------
+  // URC selector
+  // -----------------------------------------------------------------------
+  var urcSelectEl = document.getElementById('urc-select');
+  data.urcs.slice().sort(function (a, b) { return a.code.localeCompare(b.code); }).forEach(function (u) {
+    var opt = document.createElement('option');
+    opt.value = u.id;
+    opt.textContent = u.code + ' — ' + u.name + ' (Tier ' + u.tier + ')';
+    urcSelectEl.appendChild(opt);
+  });
+  urcSelectEl.value = currentUrc.id;
+  urcSelectEl.addEventListener('change', function () {
+    currentUrc = engine.urc(urcSelectEl.value);
+    session = null;
+    sessionTimeline = [];
+    renderAll();
+  });
+
+  function renderUrcBadges() {
+    document.getElementById('urc-select-badges').innerHTML =
+      ui.tierBadge(currentUrc.tier) + ' ' + ui.statusBadge(currentUrc.connectivity) +
+      ' <span class="aams-text-muted" style="font-size:var(--aams-fs-xs);">Last sync ' + ui.formatDate(currentUrc.lastSync) + ' ' + ui.formatTime(currentUrc.lastSync) + '</span>';
+    var slot = document.getElementById('offline-strip-slot');
+    if (currentUrc.tier === 3) {
+      slot.innerHTML = '<div class="csd-offline-strip"><strong>Offline-first:</strong> F1 card scan works without network; OTP is queued and reconciled at end-of-day sync.</div>';
+    } else {
+      slot.innerHTML = '';
+    }
+  }
+
+  // -----------------------------------------------------------------------
+  // Tabs
+  // -----------------------------------------------------------------------
+  var TAB_KEYS = ['counter', 'queue', 'myurc', 'cards', 'today'];
+  Array.prototype.forEach.call(document.querySelectorAll('#urc-tabs .aams-tabs__btn'), function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-tab');
+      Array.prototype.forEach.call(document.querySelectorAll('#urc-tabs .aams-tabs__btn'), function (b) { b.classList.toggle('is-active', b === btn); });
+      TAB_KEYS.forEach(function (k) { document.getElementById('tab-' + k).classList.toggle('aams-hidden', k !== key); });
+    });
+  });
+
+  // =========================================================================
+  // (1) THE COUNTER — scenarios
+  // =========================================================================
+  function computeScenarios(u) {
+    var demoUser = engine.beneficiary(data.demoUserId);
+    var deceased = data.beneficiaries[33];
+    var lapsed = data.beneficiaries.filter(function (b) { return b.status === 'renewal-due'; })[0];
+    var otherStation = data.beneficiaries.filter(function (b) { return b.homeUrcId !== u.id && b.registeredStation !== u.station; })[0];
+    var list = [];
+    list.push({ label: 'Demo user, liquor ₹5,600 (Tier 1 → needs F3) — ' + demoUser.name, beneficiaryId: demoUser.id, category: 'liquor', amount: 5600 });
+    list.push({ label: 'Demo user, grocery ₹2,400 (clean) — ' + demoUser.name, beneficiaryId: demoUser.id, category: 'grocery', amount: 2400 });
+    list.push({ label: 'Card of a SPARSH-deceased record — ' + deceased.name, beneficiaryId: deceased.id, category: 'grocery', amount: 1800 });
+    if (otherStation) list.push({ label: 'Beneficiary from another station — ' + otherStation.name + ' (' + otherStation.registeredStation + ')', beneficiaryId: otherStation.id, category: 'grocery', amount: 2000 });
+    if (lapsed) list.push({ label: 'Card with lapsed validity — ' + lapsed.name, beneficiaryId: lapsed.id, category: 'grocery', amount: 1500 });
+    return list;
+  }
+
+  function renderScenarioSelect() {
+    scenarios = computeScenarios(currentUrc);
+    var sel = document.getElementById('scan-scenario');
+    sel.innerHTML = '';
+    scenarios.forEach(function (sc, i) {
+      var opt = document.createElement('option');
+      opt.value = String(i);
+      opt.textContent = sc.label;
+      sel.appendChild(opt);
+    });
+    sel.value = '0';
+    applyScenario(0);
+  }
+  function applyScenario(i) {
+    var sc = scenarios[i];
+    if (!sc) return;
+    document.getElementById('scan-category').value = sc.category;
+    document.getElementById('scan-amount').value = sc.amount;
+    var b = engine.beneficiary(sc.beneficiaryId);
+    document.getElementById('scan-preview').textContent =
+      'Card: ' + b.barcode + ' · ' + b.name + ' (' + b.categoryLabel + ') · home URC ' + engine.urc(b.homeUrcId).code + ' · status: ' + b.status;
+  }
+  document.getElementById('scan-scenario').addEventListener('change', function (e) { applyScenario(Number(e.target.value)); });
+
+  document.getElementById('scan-reset-btn').addEventListener('click', function () {
+    session = null;
+    sessionTimeline = [];
+    document.getElementById('scan-error').textContent = '';
+    renderScenarioSelect();
+    renderSessionBlock();
+    renderTimeline();
+  });
+
+  // -----------------------------------------------------------------------
+  // Timeline
+  // -----------------------------------------------------------------------
+  function pushTimeline(title, body) {
+    sessionTimeline.push({ time: nowClock(), title: title, body: body || '' });
+    renderTimeline();
+  }
+  function renderTimeline() {
+    var el = document.getElementById('session-timeline');
+    if (!sessionTimeline.length) {
+      el.innerHTML = '<p class="aams-text-muted">No session yet — select a scenario and scan a card to begin.</p>';
+      return;
+    }
+    el.innerHTML = '<ul class="aams-timeline">' + sessionTimeline.map(function (e) {
+      return '<li class="aams-timeline__item"><div class="aams-timeline__meta">' + e.time + '</div>' +
+        '<div class="aams-timeline__title">' + ui.escapeHtml(e.title) + '</div>' +
+        (e.body ? '<div class="aams-timeline__body">' + ui.escapeHtml(e.body) + '</div>' : '') + '</li>';
+    }).join('') + '</ul>';
+  }
+
+  // -----------------------------------------------------------------------
+  // SCAN CARD
+  // -----------------------------------------------------------------------
+  document.getElementById('scan-btn').addEventListener('click', function () {
+    document.getElementById('scan-error').textContent = '';
+    var i = Number(document.getElementById('scan-scenario').value);
+    var sc = scenarios[i];
+    var category = document.getElementById('scan-category').value;
+    var amount = Number(document.getElementById('scan-amount').value);
+    var b = engine.beneficiary(sc.beneficiaryId);
+    try {
+      session = engine.posStart(currentUrc.id, b.barcode, category, amount);
+      sessionTimeline = [];
+      pushTimeline('F1 — card scanned', b.name + ' (' + b.barcode + ') at ' + currentUrc.code + '. Required: ' + session.required.join(' + ') + (session.deferred.length ? '; deferred: ' + session.deferred.join(', ') : ''));
+      renderSessionBlock();
+      ui.toast('Card scanned — F1 passed.', 'success');
+    } catch (err) {
+      document.getElementById('scan-error').textContent = err.message;
+      ui.toast(err.message, 'error');
+    }
+  });
+
+  // -----------------------------------------------------------------------
+  // Session block: factor ladder, OTP, biometric, anomaly check, held panel,
+  // complete-sale, receipt.
+  // -----------------------------------------------------------------------
+  function renderSessionBlock() {
+    var el = document.getElementById('session-block');
+    if (!session) { el.innerHTML = ''; return; }
+    var b = engine.beneficiary(session.beneficiaryId);
+    var html = '';
+
+    // Factor ladder
+    html += '<div class="csd-counter-step"><div class="csd-counter-step__title">Step 2 · Factor ladder</div>';
+    html += '<div class="csd-factor-ladder">';
+    session.required.forEach(function (f) {
+      html += ui.factorChip(f, session.passed[f] ? 'passed' : 'pending');
+    });
+    session.deferred.forEach(function (f) { html += ui.factorChip(f, 'deferred'); });
+    html += '</div>';
+    html += ui.evidenceList(session.policyEvidence, 'Why these factors — PRAMANIK policy (§5.4)');
+    html += ui.evidenceList([session.entitlementCheck.evidence], 'Entitlement check (' + (session.entitlementCheck.ok ? 'within balance' : 'over balance') + ')');
+    html += '</div>';
+
+    // F2 OTP
+    if (session.required.indexOf('F2') !== -1 && !session.passed.F2) {
+      html += '<div class="csd-counter-step"><div class="csd-counter-step__title">Step 3 · F2 — Mobile OTP</div>';
+      html += '<p class="aams-card__subtitle">OTP sent to ' + ui.escapeHtml(b.mobile) + ' (registered mobile). Demo OTP: <strong>' + engine.DEMO_OTP + '</strong></p>';
+      html += '<div class="aams-field-row"><div class="aams-field" style="max-width:200px;"><label for="otp-input">Enter OTP</label><input type="text" id="otp-input" maxlength="6"></div></div>';
+      html += '<div class="aams-btn-row"><button type="button" class="aams-btn aams-btn--primary aams-btn--sm" id="otp-verify-btn">Verify OTP</button></div>';
+      html += '<div class="csd-inline-error" id="otp-error"></div></div>';
+    }
+
+    // F3 biometric
+    if (session.required.indexOf('F3') !== -1 && !session.passed.F3) {
+      html += '<div class="csd-counter-step"><div class="csd-counter-step__title">Step 4 · F3 — Aadhaar yes/no check</div>';
+      html += '<p class="aams-card__subtitle">UIDAI returns yes/no only — no fingerprint or biometric template is stored by this system.</p>';
+      html += '<div class="aams-btn-row"><button type="button" class="aams-btn aams-btn--primary aams-btn--sm" id="f3-yes-btn">Simulate YES</button>' +
+        '<button type="button" class="aams-btn aams-btn--danger aams-btn--sm" id="f3-no-btn">Simulate NO</button></div>';
+      html += '<div class="csd-inline-error" id="f3-error"></div></div>';
+    }
+
+    // Anomaly check
+    html += '<div class="csd-counter-step"><div class="csd-counter-step__title">Step 5 · Anomaly check (BADE)</div>';
+    if (session.status === 'verifying') {
+      html += '<div class="aams-btn-row"><button type="button" class="aams-btn aams-btn--ghost" id="bade-btn">RUN ANOMALY CHECK</button></div>';
+    } else if (session.status === 'held') {
+      html += renderHeldPanel();
+    } else if (session.status === 'ready' || session.status === 'declined' || session.status === 'completed') {
+      if (session.flags && session.flags.length === 0) {
+        html += '<p class="aams-text-muted">No anomaly detected. ' + ui.statusBadge('clear') + '</p>';
+      } else if (session.status === 'declined') {
+        html += '<p class="aams-text-alert">Held sale was <strong>declined</strong> by the URC Manager. Sale cannot be completed.</p>';
+        if (session.managerDecision) html += ui.evidenceList([session.managerDecision.remarks], 'Manager remarks (' + session.managerDecision.by + ')');
+      } else if (session.managerDecision) {
+        html += '<p>Manager <strong>released</strong> this held sale.</p>' + ui.evidenceList([session.managerDecision.remarks], 'Manager remarks (' + session.managerDecision.by + ')');
+      }
+    }
+    html += '</div>';
+
+    // Complete sale
+    var canComplete = engine.factorsSatisfied(session) && session.status === 'ready';
+    html += '<div class="csd-counter-step"><div class="csd-counter-step__title">Step 6 · Complete sale</div>';
+    if (session.status === 'completed' && session.receiptTxnId) {
+      html += '<p>' + ui.statusBadge('completed') + ' Sale completed — receipt below.</p>';
+      html += renderReceipt();
+    } else {
+      html += '<div class="aams-btn-row"><button type="button" class="aams-btn aams-btn--primary' + (canComplete ? '' : ' is-locked') + '" id="complete-btn">COMPLETE SALE</button></div>';
+      html += '<div class="csd-inline-error" id="complete-error"></div>';
+    }
+    html += '</div>';
+
+    el.innerHTML = html;
+    wireSessionBlock();
+  }
+
+  function renderHeldPanel() {
+    var html = '<div class="csd-held-panel"><div class="csd-held-panel__title">HELD — not blocked, held for URC Manager confirmation</div>';
+    session.flags.forEach(function (f) {
+      html += '<div class="csd-held-panel__flag"><div class="csd-held-panel__flag-head"><strong>' + ui.escapeHtml(f.type.replace(/-/g, ' ')) + '</strong>' + ui.statusBadge(f.severity) + '</div>';
+      html += ui.evidenceList(f.evidence, 'Evidence');
+      html += '</div>';
+    });
+    html += '<div class="aams-field-row">' +
+      '<div class="aams-field"><label for="mgr-name">Manager name</label><input type="text" id="mgr-name" value="' + ui.escapeHtml(currentUrc.manager.rank + ' ' + currentUrc.manager.name) + '"></div>' +
+      '<div class="aams-field"><label for="mgr-decision">Decision</label><select id="mgr-decision"><option value="release">Release</option><option value="decline">Decline</option></select></div>' +
+      '</div>' +
+      '<div class="aams-field"><label for="mgr-remarks">Remarks (mandatory)</label><textarea id="mgr-remarks" placeholder="State the reason for release or decline"></textarea></div>' +
+      '<div class="csd-inline-error" id="mgr-error"></div>' +
+      '<div class="aams-btn-row"><button type="button" class="aams-btn aams-btn--primary" id="mgr-submit-btn">Record Manager Decision</button></div>' +
+      '</div>';
+    return html;
+  }
+
+  function renderReceipt() {
+    var b = engine.beneficiary(session.beneficiaryId);
+    var key = session.category === 'liquor' ? 'liquor' : session.category === 'afd' ? 'afd2' : 'grocery';
+    var ent = b.entitlement[key];
+    var unit = key === 'liquor' ? 'units' : '₹';
+    var html = '<div class="csd-receipt">';
+    html += '<div class="csd-receipt__row"><span>Transaction ID</span><strong>' + ui.escapeHtml(session.receiptTxnId) + '</strong></div>';
+    html += '<div class="csd-receipt__row"><span>Beneficiary</span><strong>' + ui.escapeHtml(b.name) + '</strong></div>';
+    html += '<div class="csd-receipt__row"><span>Amount</span><strong>' + engine.inr(session.amount) + ' (' + session.category + ')</strong></div>';
+    html += '<div class="csd-receipt__row"><span>Factors used</span><span>' + session.receiptFactors.map(function (f) { return ui.factorChip(f, 'passed'); }).join(' ') + '</span></div>';
+    if (session.deferred.length) html += '<div class="csd-receipt__row"><span>Deferred (to EOD sync)</span><span>' + session.deferred.map(function (f) { return ui.factorChip(f, 'deferred'); }).join(' ') + '</span></div>';
+    html += '<div class="csd-receipt__row" style="display:block;"><span>Updated balance</span>' + ui.meter(ent.overall, ent.balance, unit) + '</div>';
+    html += '</div>';
+    return html;
+  }
+
+  function wireSessionBlock() {
+    var otpBtn = document.getElementById('otp-verify-btn');
+    if (otpBtn) otpBtn.addEventListener('click', function () {
+      var otp = document.getElementById('otp-input').value;
+      try {
+        engine.posVerifyOtp(session.id, otp);
+        pushTimeline('F2 — OTP verified', 'Registered mobile OTP matched.');
+        ui.toast('F2 OTP verified.', 'success');
+        renderSessionBlock();
+      } catch (err) {
+        document.getElementById('otp-error').textContent = err.message;
+        ui.toast(err.message, 'error');
+      }
+    });
+
+    var f3YesBtn = document.getElementById('f3-yes-btn');
+    if (f3YesBtn) f3YesBtn.addEventListener('click', function () {
+      try {
+        engine.posVerifyBiometric(session.id, true);
+        pushTimeline('F3 — Aadhaar check: YES', 'UIDAI yes/no response only — no biometric stored.');
+        ui.toast('F3 Aadhaar check: YES.', 'success');
+        renderSessionBlock();
+      } catch (err) {
+        document.getElementById('f3-error').textContent = err.message;
+        ui.toast(err.message, 'error');
+      }
+    });
+    var f3NoBtn = document.getElementById('f3-no-btn');
+    if (f3NoBtn) f3NoBtn.addEventListener('click', function () {
+      var errMsg = null;
+      try {
+        engine.posVerifyBiometric(session.id, false);
+      } catch (err) {
+        errMsg = err.message;
+        ui.toast(err.message, 'error');
+        pushTimeline('F3 — Aadhaar check: NO', 'Sale cannot proceed on F3. UIDAI yes/no response only — no biometric stored.');
+      }
+      renderSessionBlock();
+      if (errMsg) {
+        var f3ErrEl = document.getElementById('f3-error');
+        if (f3ErrEl) f3ErrEl.textContent = errMsg;
+      }
+    });
+
+    var bbr = document.getElementById('bade-btn');
+    if (bbr) bbr.addEventListener('click', function () {
+      engine.badeCheck(session.id);
+      if (session.status === 'held') {
+        pushTimeline('BADE anomaly check — HELD', session.flags.map(function (f) { return f.type; }).join(', ') + ' — not blocked, awaiting manager decision.');
+        ui.toast('Anomaly detected — sale held for manager confirmation.', 'info');
+      } else {
+        pushTimeline('BADE anomaly check — clear', 'No anomaly detected.');
+        ui.toast('No anomaly detected.', 'success');
+      }
+      renderSessionBlock();
+    });
+
+    var mgrBtn = document.getElementById('mgr-submit-btn');
+    if (mgrBtn) mgrBtn.addEventListener('click', function () {
+      document.getElementById('mgr-error').textContent = '';
+      var name = document.getElementById('mgr-name').value;
+      var decision = document.getElementById('mgr-decision').value;
+      var remarks = document.getElementById('mgr-remarks').value;
+      try {
+        var entry = engine.managerDecide(session.id, name, decision, remarks);
+        pushTimeline('Manager decision — ' + decision, remarks + ' (by ' + name + ')');
+        ui.auditToast(entry, 'Held sale');
+        renderSessionBlock();
+      } catch (err) {
+        document.getElementById('mgr-error').textContent = err.message;
+        ui.toast(err.message, 'error');
+      }
+    });
+
+    var completeBtn = document.getElementById('complete-btn');
+    if (completeBtn) completeBtn.addEventListener('click', function () {
+      document.getElementById('complete-error').textContent = '';
+      try {
+        var txn = engine.posComplete(session.id);
+        session.receiptTxnId = txn.id;
+        session.receiptFactors = txn.factors;
+        pushTimeline('Sale completed', txn.id + ' · ' + engine.inr(session.amount) + ' ' + session.category + ' · factors ' + txn.factors.join('+'));
+        ui.toast('Sale completed — ' + txn.id, 'success');
+        renderSessionBlock();
+        renderTodayTab();
+      } catch (err) {
+        document.getElementById('complete-error').textContent = err.message;
+        ui.toast(err.message, 'error');
+      }
+    });
+  }
+
+  // =========================================================================
+  // (2) HELD & FLAGGED QUEUE
+  // =========================================================================
+  var currentReviewFlagId = null;
+  function renderQueue() {
+    var scope = document.getElementById('queue-scope').value;
+    var scopeUrcIds = null;
+    if (scope === 'this') scopeUrcIds = [currentUrc.id];
+    else if (scope === 'depot') scopeUrcIds = data.urcs.filter(function (u) { return u.depotId === currentUrc.depotId; }).map(function (u) { return u.id; });
+    var rows = data.flags.filter(function (f) { return !scopeUrcIds || scopeUrcIds.indexOf(f.urcId) !== -1; });
+    var tbody = document.getElementById('queue-tbody');
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="aams-table__empty">No flags in this scope.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map(function (f) {
+      var b = engine.beneficiary(f.beneficiaryId);
+      var u = engine.urc(f.urcId);
+      var action = f.status === 'held'
+        ? '<button type="button" class="aams-btn aams-btn--sm aams-btn--primary" data-flag-id="' + f.id + '">Review</button>'
+        : '<span class="aams-text-muted">' + ui.escapeHtml(f.reviewedBy || '') + '</span>';
+      return '<tr>' +
+        '<td>' + ui.escapeHtml(f.type.replace(/-/g, ' ')) + '</td>' +
+        '<td>' + ui.statusBadge(f.severity) + '</td>' +
+        '<td>' + ui.escapeHtml(b ? b.name : f.beneficiaryId) + '</td>' +
+        '<td>' + ui.escapeHtml(u ? u.code : f.urcId) + '</td>' +
+        '<td>' + ui.formatDate(f.ts) + ' ' + ui.formatTime(f.ts) + '</td>' +
+        '<td>' + ui.statusBadge(f.status) + '</td>' +
+        '<td style="max-width:320px;">' + ui.evidenceList(f.evidence) + '</td>' +
+        '<td>' + action + '</td>' +
+        '</tr>';
+    }).join('');
+    Array.prototype.forEach.call(tbody.querySelectorAll('button[data-flag-id]'), function (btn) {
+      btn.addEventListener('click', function () { openFlagReview(btn.getAttribute('data-flag-id')); });
+    });
+  }
+  document.getElementById('queue-scope').addEventListener('change', renderQueue);
+
+  function openFlagReview(flagId) {
+    currentReviewFlagId = flagId;
+    var f = data.flags.filter(function (x) { return x.id === flagId; })[0];
+    var b = engine.beneficiary(f.beneficiaryId);
+    document.getElementById('fr-subtitle').textContent = f.id + ' · ' + f.type.replace(/-/g, ' ') + ' · ' + b.name;
+    document.getElementById('fr-evidence').innerHTML = ui.evidenceList(f.evidence, 'Evidence');
+    document.getElementById('fr-officer').value = currentUrc.manager.rank + ' ' + currentUrc.manager.name;
+    document.getElementById('fr-disposition').value = 'released';
+    document.getElementById('fr-remarks').value = '';
+    document.getElementById('fr-error').textContent = '';
+    ui.openModal('flag-review-modal');
+  }
+  document.getElementById('fr-submit').addEventListener('click', function () {
+    document.getElementById('fr-error').textContent = '';
+    var officer = document.getElementById('fr-officer').value;
+    var disposition = document.getElementById('fr-disposition').value;
+    var remarks = document.getElementById('fr-remarks').value;
+    try {
+      var entry = engine.reviewFlag(currentReviewFlagId, officer, disposition, remarks);
+      ui.auditToast(entry, 'Flag review');
+      ui.closeModal('flag-review-modal');
+      renderQueue();
+      renderTodayTab();
+    } catch (err) {
+      document.getElementById('fr-error').textContent = err.message;
+      ui.toast(err.message, 'error');
+    }
+  });
+
+  // =========================================================================
+  // (3) MY URC
+  // =========================================================================
+  function renderMyUrc() {
+    var u = currentUrc;
+    document.getElementById('myurc-fields').innerHTML =
+      field('URC Code', u.code) + field('Name', u.name) + field('Postal Address', u.address) + field('PIN', u.pin) +
+      field('Email', u.email) + field('Mobile', u.mobile) +
+      field('My QD — Quarter', u.qd.quarter) + field('My QD — Indent Value', '₹' + u.qd.indentValueLakh + ' lakh') +
+      field('My QD — Status', u.qd.status) + field('My QD — Last Indent Date', ui.formatDate(u.qd.lastIndentDate)) +
+      '<div style="grid-column:1 / -1;"><p class="csd-section-note">"QD" as named in PS-11; definition to be confirmed with CS Dte. Modelled here as the URC\'s current quarterly demand indent.</p></div>';
+
+    var m = u.manager;
+    document.getElementById('manager-fields').innerHTML =
+      field('Rank', m.rank) + field('Name', m.name) + field('Effective from', ui.formatDate(m.effectiveFrom)) +
+      field('Mobile', m.mobile) + field('Email', m.email);
+
+    document.getElementById('timings-fields').innerHTML =
+      field('Timings', u.timings) + field('Weekly Off', u.weeklyOff) +
+      field('Tier', ui.tierBadge(u.tier)) + field('Connectivity', ui.statusBadge(u.connectivity)) +
+      field('Last Sync', ui.formatDate(u.lastSync) + ' ' + ui.formatTime(u.lastSync)) + field('Service Status', ui.statusBadge(u.serviceStatus));
+  }
+  function field(label, value) {
+    return '<div><dt>' + ui.escapeHtml(label) + '</dt><dd>' + value + '</dd></div>';
+  }
+
+  // =========================================================================
+  // (4) BRONZE / STEEL CARDS
+  // =========================================================================
+  function cardStatus(validity) { return validity < TODAY ? 'renewal-due' : 'active'; }
+  function renderCardsTab() {
+    function rows(cards) {
+      if (!cards.length) return '<tr><td colspan="5" class="aams-table__empty">None recorded.</td></tr>';
+      return cards.map(function (c) {
+        return '<tr><td style="text-transform:capitalize;">' + ui.escapeHtml(c.category) + '</td><td>' + ui.escapeHtml(c.cardId) + '</td>' +
+          '<td>' + ui.escapeHtml(c.number) + '</td><td>' + ui.formatDate(c.validity) + ' ' + ui.statusBadge(cardStatus(c.validity)) + '</td></tr>';
+      }).join('');
+    }
+    document.getElementById('bronze-tbody').innerHTML = rows(currentUrc.bronzeCards);
+    document.getElementById('steel-tbody').innerHTML = rows(currentUrc.steelCards);
+  }
+
+  // =========================================================================
+  // (5) TODAY AT THIS URC
+  // =========================================================================
+  function renderTodayTab() {
+    var txns = data.transactions.filter(function (t) { return t.urcId === currentUrc.id && t.ts.slice(0, 10) === TODAY; });
+    var value = txns.reduce(function (a, t) { return a + t.amount; }, 0);
+    var heldForUrc = data.flags.filter(function (f) { return f.urcId === currentUrc.id && f.status === 'held'; }).length;
+    if (session && session.urcId === currentUrc.id && session.status === 'held') heldForUrc += 1;
+
+    var tiles = [
+      { label: 'Transactions Today', value: txns.length, mod: 'accent' },
+      { label: 'Value Today', value: engine.inr(value), mod: '' },
+      { label: 'Held Sales', value: heldForUrc, mod: heldForUrc ? 'amber' : '' },
+      { label: 'Beneficiaries Attached', value: currentUrc.beneficiariesAttached.toLocaleString('en-IN'), mod: '' }
+    ];
+    document.getElementById('today-stat-tiles').innerHTML = tiles.map(function (t) {
+      return '<div class="aams-stat-tile' + (t.mod ? ' aams-stat-tile--' + t.mod : '') + '"><span class="aams-stat-tile__label">' + t.label + '</span><span class="aams-stat-tile__value">' + t.value + '</span></div>';
+    }).join('');
+
+    var recent = data.transactions.filter(function (t) { return t.urcId === currentUrc.id; }).slice(0, 12);
+    var tbody = document.getElementById('today-tbody');
+    if (!recent.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="aams-table__empty">No transactions recorded for this URC.</td></tr>';
+    } else {
+      tbody.innerHTML = recent.map(function (t) {
+        var b = engine.beneficiary(t.beneficiaryId);
+        return '<tr><td>' + ui.escapeHtml(t.id) + '</td><td>' + ui.formatDate(t.ts) + ' ' + ui.formatTime(t.ts) + '</td>' +
+          '<td>' + ui.escapeHtml(b ? b.name : t.beneficiaryId) + '</td><td style="text-transform:capitalize;">' + ui.escapeHtml(t.category) + '</td>' +
+          '<td>' + engine.inr(t.amount) + '</td><td>' + t.factors.map(function (f) { return ui.factorChip(f, 'passed'); }).join(' ') + '</td></tr>';
+      }).join('');
+    }
+  }
+
+  // =========================================================================
+  // Master render
+  // =========================================================================
+  function renderAll() {
+    renderUrcBadges();
+    renderScenarioSelect();
+    renderSessionBlock();
+    renderTimeline();
+    document.getElementById('scan-error').textContent = '';
+    renderQueue();
+    renderMyUrc();
+    renderCardsTab();
+    renderTodayTab();
+  }
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

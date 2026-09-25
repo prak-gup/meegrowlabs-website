@@ -1,0 +1,72 @@
+/*
+  urc.html page-specific additions.
+  Builds on tokens.css / app.css (aams-*) and the shared csd-* helpers in
+  app.css. Only adds what those do not already cover.
+*/
+
+/* ---------- URC selector strip ---------- */
+.csd-urc-select-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--aams-space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--aams-space-4);
+}
+.csd-urc-select-bar .aams-field { margin-bottom: 0; min-width: 280px; }
+.csd-urc-select-bar__badges { display: flex; align-items: center; gap: var(--aams-space-2); padding-bottom: 9px; flex-wrap: wrap; }
+
+/* ---------- Offline-first strip (Tier 3) ---------- */
+.csd-offline-strip {
+  font-size: var(--aams-fs-xs);
+  background: var(--aams-status-maintenance-tint);
+  border: 1px solid var(--aams-border-strong);
+  color: var(--aams-ink-soft);
+  padding: var(--aams-space-2) var(--aams-space-3);
+  border-radius: var(--aams-radius-sm);
+  margin-bottom: var(--aams-space-4);
+}
+.csd-offline-strip strong { color: var(--aams-ink); }
+
+/* ---------- Counter / POS panel ---------- */
+.csd-counter-step { padding: var(--aams-space-4) 0; border-top: 1px solid var(--aams-border); }
+.csd-counter-step:first-of-type { border-top: none; padding-top: 0; }
+.csd-counter-step__title {
+  font-size: var(--aams-fs-xs); font-weight: var(--aams-fw-bold); text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--aams-muted); margin-bottom: var(--aams-space-2);
+}
+.csd-factor-ladder { display: flex; gap: var(--aams-space-2); flex-wrap: wrap; margin-bottom: var(--aams-space-2); }
+.csd-scenario-preview { font-size: var(--aams-fs-sm); color: var(--aams-ink-soft); margin: var(--aams-space-1) 0 var(--aams-space-3) 0; }
+
+/* ---------- Held panel (amber, not blocked) ---------- */
+.csd-held-panel {
+  background: var(--aams-status-reserved-tint);
+  border: 1px solid var(--aams-amber);
+  border-radius: var(--aams-radius-md);
+  padding: var(--aams-space-4);
+  margin: var(--aams-space-3) 0;
+}
+.csd-held-panel__title { font-weight: var(--aams-fw-bold); color: #7a5f16; margin-bottom: var(--aams-space-1); }
+.csd-held-panel__flag { background: var(--aams-paper-raised); border: 1px solid var(--aams-border); border-radius: var(--aams-radius-sm); padding: var(--aams-space-2) var(--aams-space-3); margin-bottom: var(--aams-space-2); }
+.csd-held-panel__flag-head { display: flex; align-items: center; gap: var(--aams-space-2); margin-bottom: 2px; font-size: var(--aams-fs-sm); font-weight: var(--aams-fw-medium); }
+
+/* ---------- Complete-sale visual lock (not a true disabled attr, so an
+   early click still reaches the engine and shows its refusal). ---------- */
+.aams-btn.is-locked { opacity: 0.45; cursor: not-allowed; }
+
+/* ---------- Receipt ---------- */
+.csd-receipt {
+  border: 1px dashed var(--aams-border-strong);
+  border-radius: var(--aams-radius-md);
+  padding: var(--aams-space-4);
+  margin-top: var(--aams-space-3);
+  background: var(--aams-primary-tint);
+}
+.csd-receipt__row { display: flex; justify-content: space-between; gap: var(--aams-space-3); font-size: var(--aams-fs-sm); padding: 3px 0; }
+.csd-receipt__row strong { color: var(--aams-ink); }
+
+/* ---------- Misc layout ---------- */
+.csd-inline-error { font-size: var(--aams-fs-xs); color: var(--aams-alert); margin-top: var(--aams-space-1); }
+.csd-section-note { font-size: var(--aams-fs-xs); color: var(--aams-muted); margin-top: 2px; }
+dl.csd-detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--aams-space-3) var(--aams-space-4); margin: 0; }
+dl.csd-detail-grid dt { font-size: var(--aams-fs-xs); text-transform: uppercase; letter-spacing: 0.03em; color: var(--aams-muted); font-weight: var(--aams-fw-bold); margin-bottom: 2px; }
+dl.csd-detail-grid dd { margin: 0; font-size: var(--aams-fs-sm); color: var(--aams-ink); }

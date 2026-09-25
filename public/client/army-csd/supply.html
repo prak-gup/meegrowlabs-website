@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supply &amp; Vendors — SUVIDHA SAINIK</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/supply.css">
+</head>
+<body>
+<div class="aams-app">
+  <div id="aams-topbar"></div>
+  <div class="aams-main">
+    <nav id="aams-nav"></nav>
+    <main class="aams-content">
+
+      <div id="demo-banner"></div>
+
+      <!-- ============ 1. DEMAND FORECAST (MLDFE) ============ -->
+      <section class="supply-section" aria-labelledby="forecast-heading">
+        <div class="supply-section__head">
+          <h2 id="forecast-heading" class="supply-section__title">Demand Forecast — MLDFE</h2>
+          <p class="supply-section__subtitle">Multi-Layer Demand Forecasting Engine: 12 weeks of history projected 4 weeks forward, compared against stock on hand. Concept paper §4.</p>
+        </div>
+        <div class="aams-card">
+          <div class="supply-forecast-controls">
+            <div class="aams-field-row">
+              <div class="aams-field">
+                <label for="forecast-depot">Area Depot</label>
+                <select id="forecast-depot"></select>
+              </div>
+              <div class="aams-field">
+                <label for="forecast-sku">SKU</label>
+                <select id="forecast-sku"></select>
+              </div>
+            </div>
+          </div>
+          <div id="forecast-result"></div>
+        </div>
+
+        <div class="aams-card" style="margin-top: var(--aams-space-4);">
+          <div class="aams-card__header">
+            <h3 class="aams-card__title">Depot × SKU Risk Grid</h3>
+            <span class="aams-text-muted" style="font-size: var(--aams-fs-xs);">Click a cell's SKU/depot above to inspect the full chart</span>
+          </div>
+          <div class="aams-table-wrap">
+            <table class="aams-table" id="risk-grid"></table>
+          </div>
+          <p class="supply-risk-grid-note">Colour = forecast risk band (stockout / balanced / overstock) for that depot–SKU pair. Hover a cell for weeks of cover.</p>
+        </div>
+      </section>
+
+      <!-- ============ 2. INTER-DEPOT REDISTRIBUTION ============ -->
+      <section class="supply-section" aria-labelledby="redist-heading">
+        <div class="supply-section__head">
+          <h2 id="redist-heading" class="supply-section__title">Inter-Depot Redistribution Recommendations</h2>
+          <p class="supply-section__subtitle">MLDFE flags real-time imbalances between depots and proposes moves that close a stockout without fresh procurement.</p>
+          <span class="supply-advisory-tag">ADVISORY — the Depot Commandant decides</span>
+        </div>
+        <div id="redistribution-list" class="supply-redistribution-grid"></div>
+      </section>
+
+      <!-- ============ 3. VENDOR COMPLIANCE (DRISHTIKON) ============ -->
+      <section class="supply-section" aria-labelledby="vendor-heading">
+        <div class="supply-section__head">
+          <h2 id="vendor-heading" class="supply-section__title">Vendor Compliance — DRISHTIKON</h2>
+          <p class="supply-section__subtitle">Six-parameter compliance score, updated monthly, used in procurement preference decisions. Concept paper §7.2. Click a row for the scoring evidence.</p>
+        </div>
+        <div class="aams-table-wrap">
+          <table class="aams-table" id="vendor-table">
+            <thead>
+              <tr>
+                <th>Vendor</th>
+                <th>Score</th>
+                <th>Band</th>
+                <th>Six Parameters (weighted)</th>
+                <th>Inspection Priority</th>
+                <th>Open Consignments</th>
+              </tr>
+            </thead>
+            <tbody id="vendor-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ 4. CONSIGNMENTS ============ -->
+      <section class="supply-section" aria-labelledby="consignment-heading">
+        <div class="supply-section__head">
+          <h2 id="consignment-heading" class="supply-section__title">Consignment Tracking</h2>
+          <p class="supply-section__subtitle">Near-real-time consignment status from dispatch to depot receipt, with priority inspection flagged for high-risk vendors.</p>
+        </div>
+        <div class="aams-table-wrap">
+          <table class="aams-table" id="consignment-table">
+            <thead>
+              <tr>
+                <th>Consignment</th>
+                <th>Vendor</th>
+                <th>Depot</th>
+                <th>SKU</th>
+                <th>Qty</th>
+                <th>Status</th>
+                <th>ETA</th>
+                <th>Inspection</th>
+              </tr>
+            </thead>
+            <tbody id="consignment-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ 5. PRICE BENCHMARKING ============ -->
+      <section class="supply-section" aria-labelledby="price-heading">
+        <div class="supply-section__head">
+          <h2 id="price-heading" class="supply-section__title">Price Benchmarking</h2>
+          <p class="supply-section__subtitle">CSD procurement price vs GeM, open-market MRP and the previous period. Flags anomalies for the procurement committee.</p>
+        </div>
+        <p class="supply-price-note">Illustrative prices — not CSD rates.</p>
+        <div class="aams-table-wrap">
+          <table class="aams-table" id="price-table">
+            <thead>
+              <tr>
+                <th>SKU</th>
+                <th>CSD Price</th>
+                <th>GeM</th>
+                <th>Open Market MRP</th>
+                <th>Previous Period</th>
+                <th>Flag</th>
+              </tr>
+            </thead>
+            <tbody id="price-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="csd-doctrine">FORECAST BEFORE THE SHORTAGE · EVERY RECOMMENDATION SHOWS ITS NUMBERS</div>
+
+    </main>
+  </div>
+</div>
+
+<script src="assets/seed.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/ui.js"></script>
+<script>
+(function () {
+  'use strict';
+  var CSD = window.CSD;
+  var data = CSD.data;
+  var engine = CSD.engine;
+  var ui = CSD.ui;
+  var esc = ui.escapeHtml;
+  var inr = engine.inr;
+
+  ui.initPage({ role: 'Depot Commandant', activePage: 'supply.html' });
+  document.getElementById('demo-banner').innerHTML = ui.demoBanner('Forecasts, prices and vendor scores are illustrative demonstrator values, not CS Dte figures.');
+
+  var KEY_SKUS = ['SKU-1002', 'SKU-1008', 'SKU-1010', 'SKU-1011', 'SKU-1012'];
+
+  // -----------------------------------------------------------------------
+  // 1. DEMAND FORECAST — chart + selectors + risk grid
+  // -----------------------------------------------------------------------
+  var depotSel = document.getElementById('forecast-depot');
+  var skuSel = document.getElementById('forecast-sku');
+  depotSel.innerHTML = data.depots.map(function (d) { return '<option value="' + d.id + '">' + esc(d.name) + '</option>'; }).join('');
+  skuSel.innerHTML = data.skus.map(function (s) { return '<option value="' + s.id + '">' + esc(s.name) + ' (' + s.category + ')</option>'; }).join('');
+  depotSel.value = 'AD-LEH';
+  skuSel.value = 'SKU-1012';
+
+  function buildForecastChart(f, unitLabel) {
+    var W = 680, H = 260, M = { left: 46, right: 90, top: 16, bottom: 30 };
+    var plotW = W - M.left - M.right, plotH = H - M.top - M.bottom;
+    var histN = f.history.length, fcN = f.weekly.length, total = histN + fcN;
+    var xStep = plotW / (total - 1);
+    var maxY = Math.max.apply(null, f.history.concat(f.weekly).concat([f.stock])) * 1.15;
+    if (maxY <= 0) maxY = 1;
+    function xAt(i) { return M.left + i * xStep; }
+    function yAt(v) { return M.top + plotH * (1 - v / maxY); }
+
+    // history path (solid)
+    var histPts = f.history.map(function (v, i) { return xAt(i) + ',' + yAt(v).toFixed(1); });
+    var histPath = 'M ' + histPts.join(' L ');
+    // forecast path (dashed) — starts at last history point
+    var fcPts = [xAt(histN - 1) + ',' + yAt(f.history[histN - 1]).toFixed(1)].concat(
+      f.weekly.map(function (v, i) { return xAt(histN + i) + ',' + yAt(v).toFixed(1); })
+    );
+    var fcPath = 'M ' + fcPts.join(' L ');
+
+    var histDots = f.history.map(function (v, i) {
+      return '<circle cx="' + xAt(i) + '" cy="' + yAt(v).toFixed(1) + '" r="2.6" fill="var(--aams-primary)"><title>Week -' + (histN - i) + ': ' + v + ' units</title></circle>';
+    }).join('');
+    var fcDots = f.weekly.map(function (v, i) {
+      return '<circle cx="' + xAt(histN + i) + '" cy="' + yAt(v).toFixed(1) + '" r="3" fill="var(--aams-paper-raised)" stroke="var(--aams-amber)" stroke-width="2"><title>Forecast week +' + (i + 1) + ': ' + v + ' units</title></circle>';
+    }).join('');
+
+    // stock-on-hand horizontal line
+    var stockY = yAt(f.stock).toFixed(1);
+    var stockLine = '<line x1="' + M.left + '" y1="' + stockY + '" x2="' + (W - M.right) + '" y2="' + stockY + '" stroke="var(--aams-border-strong)" stroke-width="1.5" stroke-dasharray="2 3"></line>' +
+      '<text x="' + (W - M.right + 6) + '" y="' + (parseFloat(stockY) + 3) + '" font-size="10" fill="var(--aams-ink-soft)" font-family="var(--aams-font-sans)">Stock ' + f.stock + '</text>';
+
+    // "today" divider
+    var todayX = (xAt(histN - 1) + xAt(histN)) / 2;
+    var todayLine = '<line x1="' + todayX + '" y1="' + M.top + '" x2="' + todayX + '" y2="' + (M.top + plotH) + '" stroke="var(--aams-border)" stroke-width="1" stroke-dasharray="1 3"></line>' +
+      '<text x="' + todayX + '" y="' + (M.top - 4) + '" text-anchor="middle" font-size="9" fill="var(--aams-muted)" font-family="var(--aams-font-sans)">TODAY</text>';
+
+    // gridlines + y labels (0, mid, max)
+    var grid = [0, 0.5, 1].map(function (frac) {
+      var v = maxY * frac, y = yAt(v).toFixed(1);
+      return '<line x1="' + M.left + '" y1="' + y + '" x2="' + (W - M.right) + '" y2="' + y + '" stroke="var(--aams-border)" stroke-width="1"></line>' +
+        '<text x="' + (M.left - 8) + '" y="' + (parseFloat(y) + 3) + '" text-anchor="end" font-size="9" fill="var(--aams-muted)" font-family="var(--aams-font-sans)">' + Math.round(v) + '</text>';
+    }).join('');
+
+    // x labels — sparse
+    var xLabels = [0, histN - 1, histN, total - 1].map(function (i) {
+      var label = i < histN ? ('W-' + (histN - i)) : ('F+' + (i - histN + 1));
+      return '<text x="' + xAt(i) + '" y="' + (H - M.bottom + 16) + '" text-anchor="middle" font-size="9" fill="var(--aams-muted)" font-family="var(--aams-font-sans)">' + label + '</text>';
+    }).join('');
+
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="' + H + '" role="img" aria-label="Demand forecast chart">' +
+      grid + stockLine + todayLine +
+      '<path d="' + histPath + '" fill="none" stroke="var(--aams-primary)" stroke-width="2"></path>' +
+      '<path d="' + fcPath + '" fill="none" stroke="var(--aams-amber)" stroke-width="2" stroke-dasharray="5 4"></path>' +
+      histDots + fcDots + xLabels +
+      '<text x="' + M.left + '" y="12" font-size="10" fill="var(--aams-muted)" font-family="var(--aams-font-sans)">' + esc(unitLabel) + '</text>' +
+      '</svg>';
+  }
+
+  function renderForecast() {
+    var depotId = depotSel.value, skuId = skuSel.value;
+    var f;
+    try {
+      f = engine.forecast(depotId, skuId, 4);
+    } catch (err) {
+      document.getElementById('forecast-result').innerHTML = '<p class="aams-text-alert">Could not compute forecast: ' + esc(err.message) + '</p>';
+      return;
+    }
+    var s = engine.sku(skuId), d = engine.depot(depotId);
+    var chart = buildForecastChart(f, s.name + ' — units/week');
+    document.getElementById('forecast-result').innerHTML =
+      '<div class="supply-forecast-top">' +
+        '<div class="supply-forecast-heading">' +
+          '<h3>' + esc(s.name) + ' — ' + esc(d.name) + '</h3>' +
+          ui.statusBadge(f.risk) +
+        '</div>' +
+        '<div class="supply-forecast-cover"><strong>' + f.coverWeeks.toFixed(1) + ' weeks</strong> cover · stock on hand ' + f.stock + ' units</div>' +
+      '</div>' +
+      '<div class="supply-forecast-chart-wrap">' + chart + '</div>' +
+      '<div class="supply-forecast-legend">' +
+        '<span><i></i> History (12 wk, solid)</span>' +
+        '<span><i class="is-dashed" style="border-color: var(--aams-amber);"></i> Forecast (4 wk, dashed)</span>' +
+        '<span><i class="is-flat"></i> Stock on hand (horizontal)</span>' +
+      '</div>' +
+      ui.evidenceList(f.evidence, 'Why this forecast');
+  }
+  depotSel.addEventListener('change', renderForecast);
+  skuSel.addEventListener('change', renderForecast);
+  renderForecast();
+
+  function renderRiskGrid() {
+    var head = '<thead><tr><th>Depot</th>' + KEY_SKUS.map(function (id) { return '<th>' + esc(engine.sku(id).name) + '</th>'; }).join('') + '</tr></thead>';
+    var rows = data.depots.map(function (d) {
+      var cells = KEY_SKUS.map(function (skuId) {
+        var f = engine.forecast(d.id, skuId, 4);
+        return '<td class="supply-risk-cell" title="' + f.coverWeeks.toFixed(1) + ' weeks cover">' + ui.statusBadge(f.risk) + '</td>';
+      }).join('');
+      return '<tr><td><strong>' + esc(d.name) + '</strong></td>' + cells + '</tr>';
+    }).join('');
+    document.getElementById('risk-grid').innerHTML = head + '<tbody>' + rows + '</tbody>';
+  }
+  renderRiskGrid();
+
+  // -----------------------------------------------------------------------
+  // 2. INTER-DEPOT REDISTRIBUTION
+  // -----------------------------------------------------------------------
+  function renderRedistribution() {
+    var list;
+    try {
+      list = engine.redistributionSuggestions();
+    } catch (err) {
+      document.getElementById('redistribution-list').innerHTML = '<p class="aams-text-alert">' + esc(err.message) + '</p>';
+      return;
+    }
+    if (!list.length) {
+      document.getElementById('redistribution-list').innerHTML = '<div class="aams-card"><p class="aams-text-muted">No redistribution recommendations at present — all depots within cover tolerance.</p></div>';
+      return;
+    }
+    document.getElementById('redistribution-list').innerHTML = list.map(function (r) {
+      var s = engine.sku(r.skuId), from = engine.depot(r.from), to = engine.depot(r.to);
+      var rec = null;
+      for (var i = 0; i < data.redistributions.length; i++) if (data.redistributions[i].id === r.id) rec = data.redistributions[i];
+      var decided = rec && (rec.status === 'approved' || rec.status === 'rejected');
+      var body =
+        '<div class="supply-redist-card__route">' + esc(from.name) + '<span class="arrow">&rarr;</span>' + esc(to.name) + '</div>' +
+        '<div class="supply-redist-card__qty"><strong>' + esc(s.name) + '</strong> · move <strong>' + r.qty + ' units</strong></div>' +
+        ui.evidenceList(r.evidence, 'Why this move');
+      if (decided) {
+        body += '<div class="supply-redist-card__decided">' + ui.statusBadge(rec.status) +
+          '<div class="who">by ' + esc(rec.by) + (rec.remarks ? ' — "' + esc(rec.remarks) + '"' : '') + '</div></div>';
+      } else {
+        body += '<div class="supply-redist-card__form" data-redist-form data-id="' + esc(r.id) + '">' +
+          '<input type="text" placeholder="Depot Commandant name (required)" data-officer-name aria-label="Officer name">' +
+          '<textarea rows="2" placeholder="Remarks (optional)" data-remarks aria-label="Remarks"></textarea>' +
+          '<div class="aams-btn-row">' +
+            '<button type="button" class="aams-btn aams-btn--primary aams-btn--sm" data-decide="approved">Approve</button>' +
+            '<button type="button" class="aams-btn aams-btn--danger aams-btn--sm" data-decide="rejected">Reject</button>' +
+          '</div>' +
+        '</div>';
+      }
+      return '<div class="aams-card">' + ui.statusBadge(decided ? rec.status : r.status) + body + '</div>';
+    }).join('');
+  }
+  renderRedistribution();
+
+  document.getElementById('redistribution-list').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-decide]');
+    if (!btn) return;
+    var wrap = btn.closest('[data-redist-form]');
+    var id = wrap.getAttribute('data-id');
+    var nameInput = wrap.querySelector('[data-officer-name]');
+    var remarksInput = wrap.querySelector('[data-remarks]');
+    var decision = btn.getAttribute('data-decide');
+    try {
+      var entry = engine.decideRedistribution(id, nameInput.value, decision, remarksInput.value);
+      ui.auditToast(entry, decision === 'approved' ? 'Redistribution approved' : 'Redistribution rejected');
+      renderRedistribution();
+    } catch (err) {
+      ui.toast(err.message, 'error');
+      nameInput.focus();
+    }
+  });
+
+  // -----------------------------------------------------------------------
+  // 3. VENDOR COMPLIANCE
+  // -----------------------------------------------------------------------
+  function miniBars(v) {
+    var order = ['timeliness', 'quantityAccuracy', 'qualityRejection', 'priceCompliance', 'documentation', 'sustainability'];
+    var short = { timeliness: 'Tml', quantityAccuracy: 'Qty', qualityRejection: 'Qlt', priceCompliance: 'Prc', documentation: 'Doc', sustainability: 'Sus' };
+    var bars = order.map(function (k) {
+      var val = v.parts[k];
+      var color = val >= 80 ? 'var(--aams-status-vacant)' : val >= 60 ? 'var(--aams-amber)' : 'var(--aams-alert)';
+      return '<div class="supply-vendor-bar" title="' + esc(v.labels[k]) + ': ' + Math.round(val) + '/100 (weight ' + Math.round(v.weights[k] * 100) + '%)">' +
+        '<span class="supply-vendor-bar__fill" style="height:' + Math.round(val) + '%;background:' + color + '"></span></div>';
+    }).join('');
+    var legend = order.map(function (k) { return '<span>' + short[k] + '</span>'; }).join('');
+    return '<div class="supply-vendor-bars">' + bars + '</div><div class="supply-vendor-bar-legend">' + legend + '</div>';
+  }
+  function priorityLabel(p) {
+    return '<span class="supply-priority-badge--' + p + '">' + p.toUpperCase() + '</span>';
+  }
+  function renderVendors() {
+    var rows = data.vendors.map(function (v) {
+      var sc = engine.vendorScore(v.id);
+      var isRed = sc.band === 'red';
+      return '<tr class="supply-vendor-row' + (isRed ? ' is-red' : '') + '" data-vendor-toggle data-vendor-id="' + esc(v.id) + '">' +
+        '<td><strong>' + esc(v.name) + '</strong></td>' +
+        '<td>' + sc.score + '/100</td>' +
+        '<td>' + ui.statusBadge(sc.band) + '</td>' +
+        '<td>' + miniBars(sc) + '</td>' +
+        '<td>' + priorityLabel(sc.inspectionPriority) + '</td>' +
+        '<td>' + v.consignmentsOpen + '</td>' +
+      '</tr>' +
+      '<tr class="supply-vendor-detail-row aams-hidden" data-vendor-detail="' + esc(v.id) + '"><td colspan="6">' +
+        ui.evidenceList(sc.evidence, 'Scoring evidence — lowest two weighted parameters') +
+      '</td></tr>';
+    }).join('');
+    document.getElementById('vendor-table-body').innerHTML = rows;
+  }
+  renderVendors();
+  document.getElementById('vendor-table-body').addEventListener('click', function (e) {
+    var row = e.target.closest('[data-vendor-toggle]');
+    if (!row) return;
+    var id = row.getAttribute('data-vendor-id');
+    var detail = document.querySelector('[data-vendor-detail="' + id + '"]');
+    if (detail) detail.classList.toggle('aams-hidden');
+  });
+
+  // -----------------------------------------------------------------------
+  // 4. CONSIGNMENTS
+  // -----------------------------------------------------------------------
+  function renderConsignments() {
+    var rows = data.consignments.map(function (c) {
+      var v = engine.vendor(c.vendorId), d = engine.depot(c.depotId), s = engine.sku(c.skuId);
+      var priority = engine.vendorScore(c.vendorId).inspectionPriority === 'high';
+      return '<tr>' +
+        '<td>' + esc(c.id) + '</td>' +
+        '<td>' + esc(v.name) + '</td>' +
+        '<td>' + esc(d.name) + '</td>' +
+        '<td>' + esc(s.name) + '</td>' +
+        '<td>' + c.qty + '</td>' +
+        '<td>' + ui.statusBadge(c.status) + '</td>' +
+        '<td>' + ui.formatDate(c.eta) + '</td>' +
+        '<td>' + (priority ? '<span class="supply-priority-marker">&#9888; Priority inspection</span>' : '&mdash;') + '</td>' +
+      '</tr>';
+    }).join('');
+    document.getElementById('consignment-table-body').innerHTML = rows;
+  }
+  renderConsignments();
+
+  // -----------------------------------------------------------------------
+  // 5. PRICE BENCHMARKING
+  // -----------------------------------------------------------------------
+  function renderPriceFlags() {
+    var flags;
+    try {
+      flags = engine.priceFlags();
+    } catch (err) {
+      document.getElementById('price-table-body').innerHTML = '<tr><td colspan="6" class="aams-text-alert">' + esc(err.message) + '</td></tr>';
+      return;
+    }
+    var rows = flags.map(function (p) {
+      var main = '<tr class="supply-price-row' + (p.flagged ? ' is-flagged' : '') + '">' +
+        '<td>' + esc(p.name) + '</td>' +
+        '<td>' + inr(p.csd) + '</td>' +
+        '<td>' + inr(p.gem) + '</td>' +
+        '<td>' + inr(p.mrp) + '</td>' +
+        '<td>' + inr(p.prev) + '</td>' +
+        '<td>' + (p.flagged ? '<span class="aams-badge aams-badge--blocked">Flagged</span>' : '<span class="aams-badge aams-badge--vacant">OK</span>') + '</td>' +
+      '</tr>';
+      if (p.flagged) {
+        main += '<tr class="supply-price-evidence-row"><td colspan="6">' + ui.evidenceList(p.evidence, 'Why flagged') + '</td></tr>';
+      }
+      return main;
+    }).join('');
+    document.getElementById('price-table-body').innerHTML = rows;
+  }
+  renderPriceFlags();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+/*
+  AAMS design tokens.
+  Restrained government/military aesthetic: paper, ink, olive, amber accents.
+  No external fonts or assets — system font stack only.
+*/
+:root {
+  /* Palette */
+  --aams-paper: #fdfdfb;
+  --aams-ink: #1c2430;
+  --aams-primary: #2e4a3d;
+  --aams-primary-tint: #eef0e9;
+  --aams-amber: #c4ad4a;
+  --aams-alert: #a33c3c;
+  --aams-muted: #78816e;
+
+  /* Derived surfaces */
+  --aams-paper-raised: #ffffff;
+  --aams-border: #d8dcd0;
+  --aams-border-strong: #b8bfae;
+  --aams-ink-soft: #4a5262;
+  --aams-ink-faint: #8a90a0;
+  --aams-overlay: rgba(28, 36, 48, 0.55);
+
+  /* Unit status colors */
+  --aams-status-occupied: #5b6b7d;
+  --aams-status-vacant: #3d7a4f;
+  --aams-status-reserved: #c4ad4a;
+  --aams-status-maintenance: #9aa094;
+  --aams-status-blocked: #a33c3c;
+
+  --aams-status-occupied-tint: #e7eaee;
+  --aams-status-vacant-tint: #e5f0e7;
+  --aams-status-reserved-tint: #f6f1de;
+  --aams-status-maintenance-tint: #ececea;
+  --aams-status-blocked-tint: #f5e6e6;
+
+  /* Typography */
+  --aams-font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --aams-font-mono: 'Courier New', Courier, monospace;
+
+  --aams-fs-xs: 0.6875rem;
+  --aams-fs-sm: 0.8125rem;
+  --aams-fs-base: 0.9375rem;
+  --aams-fs-md: 1.0625rem;
+  --aams-fs-lg: 1.3125rem;
+  --aams-fs-xl: 1.75rem;
+
+  --aams-fw-normal: 400;
+  --aams-fw-medium: 500;
+  --aams-fw-bold: 700;
+
+  --aams-lh-tight: 1.2;
+  --aams-lh-base: 1.5;
+
+  /* Spacing scale */
+  --aams-space-1: 4px;
+  --aams-space-2: 8px;
+  --aams-space-3: 12px;
+  --aams-space-4: 16px;
+  --aams-space-5: 24px;
+  --aams-space-6: 32px;
+  --aams-space-7: 48px;
+  --aams-space-8: 64px;
+
+  /* Radius */
+  --aams-radius-sm: 3px;
+  --aams-radius-md: 6px;
+  --aams-radius-lg: 10px;
+  --aams-radius-pill: 999px;
+
+  /* Shadow */
+  --aams-shadow-sm: 0 1px 2px rgba(28, 36, 48, 0.08);
+  --aams-shadow-md: 0 2px 8px rgba(28, 36, 48, 0.10);
+  --aams-shadow-lg: 0 8px 28px rgba(28, 36, 48, 0.20);
+
+  /* Layout */
+  --aams-topbar-height: 56px;
+  --aams-nav-width: 208px;
+  --aams-max-width: 1320px;
+  --aams-border-width: 1px;
+
+  /* Motion */
+  --aams-transition-fast: 120ms ease;
+  --aams-transition-base: 200ms ease;
+}

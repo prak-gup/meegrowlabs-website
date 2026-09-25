@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Trail &middot; SUVIDHA SAINIK</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/samadhan.css">
+</head>
+<body>
+<div class="aams-app">
+  <div id="aams-topbar"></div>
+  <div class="aams-main">
+    <nav id="aams-nav"></nav>
+    <main class="aams-content">
+
+      <h1 style="font-size:var(--aams-fs-xl);margin-bottom:var(--aams-space-1);">Audit Trail</h1>
+      <p class="csd-audit-explain">Every login, verification, held sale, decision and grievance update is an immutable entry with a named actor. CERT-In guidelines require logs retained for 180 days on NIC infrastructure; the concept paper proposes 36 months of retention specifically for Command Dashboard access events (Pillar V, &sect;8.3).</p>
+
+      <div id="demo-banner"></div>
+
+      <!-- Generate sample activity -->
+      <section class="aams-card" style="margin-bottom:var(--aams-space-5);">
+        <div class="aams-card__header">
+          <div>
+            <h2 class="aams-card__title">Generate Sample Activity <span class="csd-sim-badge">Simulated Session</span></h2>
+            <p class="aams-card__subtitle">Audit entries live only in this page's memory and reset on reload. Run a short scripted sequence through the live engine to populate the log below &mdash; login, point-of-sale verification and sale, a grievance lodged and acknowledged, and a fraud flag reviewed.</p>
+          </div>
+        </div>
+        <div class="aams-btn-row">
+          <button type="button" class="aams-btn aams-btn--primary" id="gen-activity">Generate Sample Activity</button>
+          <button type="button" class="aams-btn aams-btn--ghost" id="clear-activity">Clear Log</button>
+        </div>
+        <div id="gen-log" style="margin-top:var(--aams-space-3);"></div>
+      </section>
+
+      <!-- Count tiles by role -->
+      <section style="margin-bottom:var(--aams-space-5);">
+        <div class="aams-grid" id="role-tiles"></div>
+      </section>
+
+      <!-- Audit table -->
+      <section class="aams-card">
+        <div class="aams-card__header">
+          <div>
+            <h2 class="aams-card__title">Audit Log</h2>
+            <p class="aams-card__subtitle">Immutable, named-actor entries. Newest first.</p>
+          </div>
+        </div>
+
+        <div class="csd-filter-bar">
+          <div class="aams-field">
+            <label for="a-role">Role</label>
+            <select id="a-role"><option value="">All Roles</option></select>
+          </div>
+          <div class="aams-field" style="flex:1 1 240px;">
+            <label for="a-search">Search action / target / remarks</label>
+            <input type="text" id="a-search" placeholder="e.g. GRIEVANCE, POS-, GRV-, held&hellip;">
+          </div>
+          <button type="button" class="aams-btn aams-btn--ghost aams-btn--sm" id="a-reset">Reset Filters</button>
+          <button type="button" class="aams-btn aams-btn--ghost aams-btn--sm" id="a-export">Export (CSV)</button>
+          <span class="csd-filter-bar__count" id="a-count"></span>
+        </div>
+
+        <div class="aams-table-wrap">
+          <table class="aams-table aams-table--dense" id="audit-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Actor</th>
+                <th>Role</th>
+                <th>Action</th>
+                <th>Target</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody id="audit-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <p class="csd-doctrine">THE AI ADVISES &middot; A NAMED HUMAN DECIDES &middot; EVERY DECISION IS LOGGED</p>
+
+    </main>
+  </div>
+</div>
+
+<div id="aams-toast-region" class="aams-toast-region"></div>
+
+<script src="assets/seed.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/ui.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var ui = window.CSD.ui;
+  var data = window.CSD.data;
+  var engine = window.CSD.engine;
+
+  ui.initPage({ role: 'Auditor', activePage: 'audit.html' });
+  document.getElementById('demo-banner').innerHTML = ui.demoBanner('Audit entries below are generated live in this browser tab. Nothing is written anywhere else, and nothing leaves this page.');
+
+  var ROLES = ['Beneficiary', 'URC Manager', 'PRAMANIK', 'BADE', 'POS', 'Reviewing Officer', 'Nodal Officer', 'Depot Commandant', 'Command'];
+
+
+  // -----------------------------------------------------------------------
+  // Generate sample activity — a short scripted sequence through the live engine.
+  // -----------------------------------------------------------------------
+  document.getElementById('gen-activity').addEventListener('click', function () {
+    var officer = 'Col R. Mehta (Demo Script)';
+    var log = [];
+
+    try {
+      var login = engine.startLogin('cardless', data.demoUserId);
+      engine.completeLogin(login, engine.DEMO_OTP);
+      log.push({ ok: true, text: 'Login simulated for demo beneficiary (OTP ' + engine.DEMO_OTP + ').' });
+    } catch (e) {
+      log.push({ ok: false, text: 'Login step failed: ' + e.message });
+    }
+
+    try {
+      var ben = engine.beneficiary(data.demoUserId);
+      var session = engine.posStart(data.demoUrcId, ben.barcode, 'grocery', 2400);
+      engine.posVerifyOtp(session.id, engine.DEMO_OTP);
+      engine.badeCheck(session.id);
+      if (session.status === 'held') {
+        engine.managerDecide(session.id, officer, 'release', 'Released for demo script continuity.');
+      }
+      var txn = engine.posComplete(session.id);
+      log.push({ ok: true, text: 'POS sale simulated: ' + engine.inr(txn.amount) + ' grocery at ' + data.demoUrcId + ' (' + txn.id + ').' });
+    } catch (e) {
+      log.push({ ok: false, text: 'POS step failed: ' + e.message });
+    }
+
+    var grievanceId = null;
+    try {
+      var lodge = engine.lodgeGrievance(data.demoUserId, 'app', 'Demo activity: sample grievance raised to illustrate the audit trail.');
+      grievanceId = lodge.grievance.id;
+      log.push({ ok: true, text: 'Grievance ' + grievanceId + ' lodged (' + lodge.classification.label + ').' });
+    } catch (e) {
+      log.push({ ok: false, text: 'Grievance lodge failed: ' + e.message });
+    }
+
+    if (grievanceId) {
+      try {
+        engine.advanceGrievance(grievanceId, 'acknowledged', officer, 'Acknowledged per demo script.');
+        log.push({ ok: true, text: 'Grievance ' + grievanceId + ' advanced to Acknowledged.' });
+      } catch (e) {
+        log.push({ ok: false, text: 'Grievance advance failed: ' + e.message });
+      }
+    }
+
+    try {
+      var flag = data.flags[0];
+      engine.reviewFlag(flag.id, officer, 'referred', 'Referred for verification per demo script.');
+      log.push({ ok: true, text: 'Flag ' + flag.id + ' reviewed (referred for verification).' });
+    } catch (e) {
+      log.push({ ok: false, text: 'Flag review failed: ' + e.message });
+    }
+
+    document.getElementById('gen-log').innerHTML = '<div class="csd-evidence"><div class="csd-evidence__title">Simulated session &mdash; ' + log.filter(function (l) { return l.ok; }).length + ' of ' + log.length + ' steps completed</div><ul>' +
+      log.map(function (l) { return '<li' + (l.ok ? '' : ' style="color:var(--aams-alert);"') + '>' + ui.escapeHtml(l.text) + '</li>'; }).join('') + '</ul></div>';
+
+    ui.toast('Simulated session complete · ' + data.audit.length + ' audit entries now in the log.', 'success');
+    renderRoleTiles();
+    renderTable();
+  });
+
+  document.getElementById('clear-activity').addEventListener('click', function () {
+    data.audit.length = 0;
+    document.getElementById('gen-log').innerHTML = '';
+    renderRoleTiles();
+    renderTable();
+    ui.toast('Audit log cleared for this page session.', 'info');
+  });
+
+  // -----------------------------------------------------------------------
+  // Count tiles by role
+  // -----------------------------------------------------------------------
+  function renderRoleTiles() {
+    var counts = {};
+    data.audit.forEach(function (a) { counts[a.role] = (counts[a.role] || 0) + 1; });
+    var present = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
+    var el = document.getElementById('role-tiles');
+    if (!present.length) {
+      el.innerHTML = '<p class="aams-text-muted" style="font-size:var(--aams-fs-sm);">No audit entries yet in this page session. Use "Generate Sample Activity" above, or perform actions on the other pages of this demonstrator.</p>';
+      return;
+    }
+    el.innerHTML = present.map(function (r) {
+      return '<div class="aams-stat-tile"><span class="aams-stat-tile__label">' + ui.escapeHtml(r) + '</span><span class="aams-stat-tile__value">' + counts[r] + '</span></div>';
+    }).join('');
+  }
+
+  // -----------------------------------------------------------------------
+  // Filter + table
+  // -----------------------------------------------------------------------
+  (function populateRoleFilter() {
+    var sel = document.getElementById('a-role');
+    ROLES.forEach(function (r) {
+      var o = document.createElement('option'); o.value = r; o.textContent = r; sel.appendChild(o);
+    });
+  })();
+
+  var aState = { role: '', search: '' };
+  document.getElementById('a-role').addEventListener('change', function (e) { aState.role = e.target.value; renderTable(); });
+  document.getElementById('a-search').addEventListener('input', function (e) { aState.search = e.target.value; renderTable(); });
+  document.getElementById('a-reset').addEventListener('click', function () {
+    aState = { role: '', search: '' };
+    document.getElementById('a-role').value = '';
+    document.getElementById('a-search').value = '';
+    renderTable();
+  });
+
+  function filteredAudit() {
+    var q = aState.search.trim().toLowerCase();
+    return data.audit.filter(function (a) {
+      if (aState.role && a.role !== aState.role) return false;
+      if (q) {
+        var hay = (a.action + ' ' + a.target + ' ' + (a.remarks || '') + ' ' + a.actor).toLowerCase();
+        if (hay.indexOf(q) === -1) return false;
+      }
+      return true;
+    });
+  }
+
+  function renderTable() {
+    var rows = filteredAudit();
+    document.getElementById('a-count').textContent = rows.length + ' of ' + data.audit.length + ' entries';
+    var tbody = document.getElementById('audit-tbody');
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="aams-table__empty">No audit entries yet. Use "Generate Sample Activity" above.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map(function (a) {
+      return '<tr>' +
+        '<td style="white-space:nowrap;">' + ui.formatDate(a.ts) + ' ' + ui.formatTime(a.ts) + '</td>' +
+        '<td>' + ui.escapeHtml(a.actor) + '</td>' +
+        '<td>' + ui.escapeHtml(a.role) + '</td>' +
+        '<td>' + ui.escapeHtml(a.action) + '</td>' +
+        '<td>' + ui.escapeHtml(a.target) + '</td>' +
+        '<td>' + ui.escapeHtml(a.remarks || '') + '</td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  // -----------------------------------------------------------------------
+  // Export (CSV) — filtered rows, client-side Blob, no network.
+  // -----------------------------------------------------------------------
+  function csvField(v) {
+    var s = String(v == null ? '' : v);
+    if (/[",\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+  document.getElementById('a-export').addEventListener('click', function () {
+    var rows = filteredAudit();
+    if (!rows.length) { ui.toast('No audit entries to export.', 'error'); return; }
+    var header = ['Time', 'Actor', 'Role', 'Action', 'Target', 'Remarks'];
+    var lines = [header.join(',')];
+    rows.forEach(function (a) {
+      lines.push([a.ts, a.actor, a.role, a.action, a.target, a.remarks || ''].map(csvField).join(','));
+    });
+    var blob = new Blob([lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'suvidha-sainik-audit-' + window.CSD.DEMO_TODAY + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    ui.toast('Exported ' + rows.length + ' audit entries to CSV.', 'success');
+  });
+
+  renderRoleTiles();
+  renderTable();
+})();
+</script>
+</body>
+</html>

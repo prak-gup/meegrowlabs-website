@@ -1,0 +1,144 @@
+/*
+  SUPPLY & VENDORS (MLDFE + DRISHTIKON) — page-specific styles.
+  Builds on tokens.css / app.css. No new colors — reuses existing aams tokens.
+  Scoped to supply.html only; does not touch app.css / tokens.css.
+*/
+
+.supply-section { margin-bottom: var(--aams-space-6); }
+.supply-section__head { margin-bottom: var(--aams-space-3); }
+.supply-section__title {
+  font-size: var(--aams-fs-md);
+  font-weight: var(--aams-fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+.supply-section__subtitle {
+  font-size: var(--aams-fs-sm);
+  color: var(--aams-muted);
+  margin: var(--aams-space-1) 0 0 0;
+}
+.supply-advisory-tag {
+  display: inline-block;
+  font-size: var(--aams-fs-xs);
+  font-weight: var(--aams-fw-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a6f1e;
+  background: var(--aams-status-reserved-tint);
+  border: 1px solid var(--aams-amber);
+  padding: var(--aams-space-1) var(--aams-space-3);
+  border-radius: var(--aams-radius-sm);
+  margin-top: var(--aams-space-1);
+}
+
+/* ---------- Forecast card ---------- */
+.supply-forecast-controls { margin-bottom: var(--aams-space-4); }
+.supply-forecast-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--aams-space-3);
+  margin-bottom: var(--aams-space-3);
+}
+.supply-forecast-heading { display: flex; align-items: center; gap: var(--aams-space-2); flex-wrap: wrap; }
+.supply-forecast-heading h3 { margin: 0; font-size: var(--aams-fs-md); font-weight: var(--aams-fw-bold); }
+.supply-forecast-cover { font-size: var(--aams-fs-sm); color: var(--aams-ink-soft); }
+.supply-forecast-cover strong { color: var(--aams-ink); }
+.supply-forecast-chart-wrap {
+  border: var(--aams-border-width) solid var(--aams-border);
+  border-radius: var(--aams-radius-md);
+  background: var(--aams-paper-raised);
+  padding: var(--aams-space-3);
+  overflow-x: auto;
+}
+.supply-forecast-legend {
+  display: flex;
+  gap: var(--aams-space-4);
+  flex-wrap: wrap;
+  font-size: var(--aams-fs-xs);
+  color: var(--aams-ink-soft);
+  margin-top: var(--aams-space-2);
+}
+.supply-forecast-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.supply-forecast-legend i { display: inline-block; width: 16px; height: 0; border-top: 2px solid; }
+.supply-forecast-legend i.is-dashed { border-top-style: dashed; }
+.supply-forecast-legend i.is-flat { border-top-style: dashed; border-color: var(--aams-border-strong); }
+
+/* ---------- Risk grid ---------- */
+.supply-risk-cell {
+  text-align: center;
+}
+.supply-risk-grid-note { font-size: var(--aams-fs-xs); color: var(--aams-muted); margin-top: var(--aams-space-2); }
+
+/* ---------- Redistribution cards ---------- */
+.supply-redistribution-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: var(--aams-space-4);
+}
+.supply-redist-card__route {
+  font-size: var(--aams-fs-md);
+  font-weight: var(--aams-fw-bold);
+  margin: var(--aams-space-1) 0 var(--aams-space-2) 0;
+}
+.supply-redist-card__route .arrow { color: var(--aams-muted); margin: 0 var(--aams-space-1); }
+.supply-redist-card__qty { font-size: var(--aams-fs-sm); color: var(--aams-ink-soft); margin-bottom: var(--aams-space-2); }
+.supply-redist-card__qty strong { color: var(--aams-ink); }
+.supply-redist-card__form {
+  margin-top: var(--aams-space-3);
+  padding-top: var(--aams-space-3);
+  border-top: var(--aams-border-width) solid var(--aams-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--aams-space-2);
+}
+.supply-redist-card__form input,
+.supply-redist-card__form textarea {
+  padding: var(--aams-space-2) var(--aams-space-3);
+  border: var(--aams-border-width) solid var(--aams-border-strong);
+  border-radius: var(--aams-radius-sm);
+  background: var(--aams-paper-raised);
+  color: var(--aams-ink);
+  font-size: var(--aams-fs-sm);
+}
+.supply-redist-card__decided {
+  margin-top: var(--aams-space-3);
+  padding-top: var(--aams-space-3);
+  border-top: var(--aams-border-width) solid var(--aams-border);
+  font-size: var(--aams-fs-sm);
+}
+.supply-redist-card__decided .who { color: var(--aams-ink-soft); font-size: var(--aams-fs-xs); margin-top: 2px; }
+
+/* ---------- Vendor table ---------- */
+.supply-vendor-row { cursor: pointer; }
+.supply-vendor-row.is-red { box-shadow: inset 3px 0 0 var(--aams-alert); }
+.supply-vendor-bars { display: flex; gap: 4px; align-items: flex-end; height: 30px; }
+.supply-vendor-bar { width: 9px; background: var(--aams-border); border-radius: 2px 2px 0 0; position: relative; height: 100%; display: flex; align-items: flex-end; }
+.supply-vendor-bar__fill { display: block; width: 100%; border-radius: 2px 2px 0 0; background: var(--aams-primary); }
+.supply-vendor-bar-legend { display: flex; gap: 4px; font-size: 9px; color: var(--aams-muted); margin-top: 2px; }
+.supply-vendor-bar-legend span { width: 9px; text-align: center; }
+.supply-vendor-detail-row td { background: var(--aams-primary-tint); }
+.supply-vendor-detail-row .csd-evidence { margin-top: 0; }
+.supply-priority-badge--high { color: var(--aams-alert); font-weight: var(--aams-fw-bold); }
+.supply-priority-badge--medium { color: #8a6f1e; font-weight: var(--aams-fw-medium); }
+.supply-priority-badge--low { color: var(--aams-muted); }
+
+/* ---------- Consignments ---------- */
+.supply-priority-marker {
+  font-size: var(--aams-fs-xs);
+  font-weight: var(--aams-fw-bold);
+  color: var(--aams-alert);
+  white-space: nowrap;
+}
+
+/* ---------- Price benchmarking ---------- */
+.supply-price-note { font-size: var(--aams-fs-xs); color: var(--aams-muted); font-style: italic; margin-bottom: var(--aams-space-3); }
+.supply-price-row.is-flagged td { background: var(--aams-status-blocked-tint); }
+.supply-price-evidence-row td { background: var(--aams-primary-tint); }
+.supply-price-evidence-row .csd-evidence { margin-top: 0; }
+
+@media (max-width: 640px) {
+  .supply-redistribution-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DRISHTI Command Dashboard — SUVIDHA SAINIK</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/drishti.css">
+</head>
+<body>
+<div class="aams-app">
+  <div id="aams-topbar"></div>
+  <div class="aams-main">
+    <nav id="aams-nav"></nav>
+    <main class="aams-content">
+
+      <div id="demo-banner"></div>
+
+      <div class="drishti-doctrine">
+        <div class="drishti-doctrine__lead">THE AI SYNTHESISES — THE COMMAND DECIDES.</div>
+        <div class="drishti-doctrine__sub" id="drishti-asof"></div>
+      </div>
+
+      <!-- ============ 1. STAT ROW ============ -->
+      <section class="drishti-section" aria-labelledby="stats-heading">
+        <div class="drishti-section__head">
+          <h2 id="stats-heading" class="drishti-section__title">Command Snapshot</h2>
+        </div>
+        <div class="aams-grid" id="stat-row"></div>
+      </section>
+
+      <!-- ============ 2. NATIONAL HEATMAP ============ -->
+      <section class="drishti-section" aria-labelledby="heatmap-heading">
+        <div class="drishti-section__head">
+          <h2 id="heatmap-heading" class="drishti-section__title">National Heatmap</h2>
+          <p class="drishti-section__subtitle">URC service status and Area Depot nodes across the network. Click a URC for detail.</p>
+        </div>
+        <div class="drishti-heatmap-wrap">
+          <div>
+            <div class="drishti-heatmap-svg-wrap" id="heatmap-svg-wrap"></div>
+            <div class="drishti-heatmap-caption">Schematic layout for demonstration — not to scale, not geo-accurate.</div>
+            <div class="drishti-heatmap-legend">
+              <span><i style="background:var(--aams-status-vacant)"></i> Open</span>
+              <span><i style="background:var(--aams-status-blocked)"></i> Stock Critical</span>
+              <span><i style="background:var(--aams-status-reserved)"></i> Sync Overdue</span>
+              <span><i style="background:var(--aams-status-maintenance)"></i> Closed Today</span>
+              <span><i style="background:var(--aams-primary);width:14px;height:14px;"></i> Area Depot</span>
+              <span style="color:var(--aams-muted)">Dot size = URC tier</span>
+            </div>
+          </div>
+          <div class="drishti-urc-detail" id="urc-detail">
+            <p class="drishti-urc-detail__empty">Click a URC on the map to see its status, manager and open items.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3. FRAUD RISK MONITOR ============ -->
+      <section class="drishti-section" aria-labelledby="fraud-heading">
+        <div class="drishti-section__head">
+          <h2 id="fraud-heading" class="drishti-section__title">Fraud Risk Monitor — PRAMANIK / BADE</h2>
+          <p class="drishti-section__subtitle">Live feed of held anomalous transactions, risk-stratified by severity. Flag, don't block — the reviewing officer decides.</p>
+        </div>
+        <div class="drishti-flag-list" id="flag-list"></div>
+      </section>
+
+      <!-- ============ 4. ENTITLEMENT UTILISATION ============ -->
+      <section class="drishti-section" aria-labelledby="util-heading">
+        <div class="drishti-section__head">
+          <h2 id="util-heading" class="drishti-section__title">Entitlement Utilisation</h2>
+          <p class="drishti-section__subtitle">Command-level view of entitlement consumption — sample of seeded beneficiaries.</p>
+        </div>
+        <div class="aams-card">
+          <div class="drishti-util-grid" id="util-grid"></div>
+        </div>
+      </section>
+
+      <!-- ============ 5. GRIEVANCE PULSE ============ -->
+      <section class="drishti-section" aria-labelledby="pulse-heading">
+        <div class="drishti-section__head">
+          <h2 id="pulse-heading" class="drishti-section__title">Grievance Pulse — SAMADHAN</h2>
+          <p class="drishti-section__subtitle">Open complaint volume by category and SLA adherence.</p>
+        </div>
+        <div class="drishti-pulse-grid">
+          <div class="aams-card">
+            <h3 class="aams-card__title">Open Grievances by Category</h3>
+            <div id="pulse-categories"></div>
+          </div>
+          <div class="aams-card">
+            <h3 class="aams-card__title">SLA State</h3>
+            <div id="pulse-sla"></div>
+            <a class="drishti-pulse-link" href="samadhan.html">Open SAMADHAN Grievances &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 6. AI INSIGHTS FEED — WEEKLY BRIEF ============ -->
+      <section class="drishti-section" aria-labelledby="brief-heading">
+        <div class="drishti-section__head">
+          <h2 id="brief-heading" class="drishti-section__title">AI Insights Feed — Weekly Brief</h2>
+          <p class="drishti-section__subtitle" id="brief-generated"></p>
+          <span class="drishti-advisory-tag" id="brief-advisory"></span>
+        </div>
+        <div class="drishti-brief-list" id="brief-list"></div>
+      </section>
+
+      <!-- ============ 7. DATA FRESHNESS STRIP ============ -->
+      <section class="drishti-section" aria-labelledby="freshness-heading">
+        <div class="drishti-section__head">
+          <h2 id="freshness-heading" class="drishti-section__title">Data Freshness — Remote URCs</h2>
+          <p class="drishti-section__subtitle">Tier 3 / offline-sync URCs batch-sync at end of business day. Their data lags accordingly.</p>
+        </div>
+        <div class="aams-table-wrap">
+          <table class="aams-table drishti-freshness-table" id="freshness-table">
+            <thead><tr><th>URC</th><th>Depot</th><th>Connectivity</th><th>Last Sync</th><th>Age</th></tr></thead>
+            <tbody id="freshness-table-body"></tbody>
+          </table>
+        </div>
+        <p class="drishti-freshness-note" id="freshness-note"></p>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- Flag review modal -->
+<div class="aams-modal-overlay" id="flag-modal">
+  <div class="aams-modal">
+    <div class="aams-modal__header">
+      <h3 class="aams-modal__title">Review Flag</h3>
+      <button type="button" class="aams-modal__close" data-modal-close aria-label="Close">&times;</button>
+    </div>
+    <div id="flag-modal-body"></div>
+    <div class="aams-field">
+      <label for="flag-modal-officer">Reviewing Officer (required)</label>
+      <input type="text" id="flag-modal-officer" placeholder="Name and rank">
+    </div>
+    <div class="aams-field">
+      <label for="flag-modal-disposition">Disposition</label>
+      <select id="flag-modal-disposition">
+        <option value="released">Released — no action</option>
+        <option value="card-suspended">Card Suspended</option>
+        <option value="referred">Referred for Investigation</option>
+      </select>
+    </div>
+    <div class="aams-field">
+      <label for="flag-modal-remarks">Remarks (required)</label>
+      <textarea id="flag-modal-remarks" rows="3" placeholder="Basis for this disposition"></textarea>
+    </div>
+    <div class="aams-modal__footer">
+      <button type="button" class="aams-btn aams-btn--ghost" data-modal-close>Cancel</button>
+      <button type="button" class="aams-btn aams-btn--primary" id="flag-modal-submit">Submit Decision</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/seed.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/ui.js"></script>
+<script>
+(function () {
+  'use strict';
+  var CSD = window.CSD;
+  var data = CSD.data;
+  var engine = CSD.engine;
+  var ui = CSD.ui;
+  var esc = ui.escapeHtml;
+  var TODAY = CSD.DEMO_TODAY;
+
+  ui.initPage({ role: 'CS Dte / Command', activePage: 'drishti.html' });
+  document.getElementById('demo-banner').innerHTML = ui.demoBanner('National figures are drawn from a small seeded sample — illustrative, not CS Dte reporting.');
+  document.getElementById('drishti-asof').textContent =
+    'Advisory snapshot as of ' + ui.formatDate(TODAY) + '. Every score, flag and recommendation on this page is explainable and traceable to source data.';
+
+  function daysSince(dateIso) {
+    var a = new Date(String(dateIso).slice(0, 10) + 'T00:00:00Z');
+    var b = new Date(TODAY + 'T00:00:00Z');
+    return Math.round((b - a) / 86400000);
+  }
+
+  // -----------------------------------------------------------------------
+  // 1. STAT ROW
+  // -----------------------------------------------------------------------
+  function renderStats() {
+    var snap;
+    try { snap = engine.commandSnapshot(); } catch (err) {
+      document.getElementById('stat-row').innerHTML = '<p class="aams-text-alert">' + esc(err.message) + '</p>';
+      return;
+    }
+    var tiles = [
+      { label: 'URCs Monitored', value: snap.urcs, delta: snap.urcIssues + ' with service issues', mod: snap.urcIssues > 0 ? 'amber' : 'accent' },
+      { label: 'Held PRAMANIK Flags (High)', value: snap.highFlags, delta: snap.heldFlags + ' total held for review', mod: snap.highFlags > 0 ? 'alert' : 'accent' },
+      { label: 'Open Grievances', value: snap.openGrievances, delta: snap.slaBreached + ' past SLA', mod: snap.slaBreached > 0 ? 'alert' : 'accent' },
+      { label: 'Stock-out Risks', value: snap.stockoutRisks, delta: 'Depot–SKU pairs needing redistribution', mod: snap.stockoutRisks > 0 ? 'amber' : 'accent' },
+      { label: 'Red Vendors', value: snap.vendorsRed, delta: 'Below compliance threshold', mod: snap.vendorsRed > 0 ? 'alert' : 'accent' },
+      { label: 'Price Flags', value: snap.priceFlags, delta: 'vs GeM / previous period', mod: snap.priceFlags > 0 ? 'amber' : 'accent' }
+    ];
+    document.getElementById('stat-row').innerHTML = tiles.map(function (t) {
+      return '<div class="aams-stat-tile aams-stat-tile--' + t.mod + '">' +
+        '<div class="aams-stat-tile__label">' + esc(t.label) + '</div>' +
+        '<div class="aams-stat-tile__value">' + esc(t.value) + '</div>' +
+        '<div class="aams-stat-tile__delta">' + esc(t.delta) + '</div>' +
+      '</div>';
+    }).join('');
+    return snap;
+  }
+  var snapshot = renderStats();
+
+  // -----------------------------------------------------------------------
+  // 2. NATIONAL HEATMAP
+  // -----------------------------------------------------------------------
+  var SERVICE_COLOR = {
+    'open': 'var(--aams-status-vacant)',
+    'stock-critical': 'var(--aams-status-blocked)',
+    'sync-overdue': 'var(--aams-status-reserved)',
+    'closed-today': 'var(--aams-status-maintenance)'
+  };
+  var TIER_R = { 1: 6, 2: 4.5, 3: 3.2 };
+
+  function buildHeatmap() {
+    var W = 720, H = 500, M = 34;
+    var pts = data.depots.concat(data.urcs);
+    var minX = Math.min.apply(null, pts.map(function (p) { return p.x; }));
+    var maxX = Math.max.apply(null, pts.map(function (p) { return p.x; }));
+    var minY = Math.min.apply(null, pts.map(function (p) { return p.y; }));
+    var maxY = Math.max.apply(null, pts.map(function (p) { return p.y; }));
+    var padX = (maxX - minX) * 0.08 || 5, padY = (maxY - minY) * 0.08 || 5;
+    minX -= padX; maxX += padX; minY -= padY; maxY += padY;
+    function sx(x) { return M + (x - minX) / (maxX - minX) * (W - 2 * M); }
+    function sy(y) { return M + (y - minY) / (maxY - minY) * (H - 2 * M); }
+
+    var depotNodes = data.depots.map(function (d) {
+      var cx = sx(d.x), cy = sy(d.y);
+      return '<circle class="drishti-depot-node" cx="' + cx + '" cy="' + cy + '" r="9"><title>' + esc(d.name) + ' (' + esc(d.region) + ')</title></circle>' +
+        '<text class="drishti-depot-label" x="' + cx + '" y="' + (cy - 13) + '" text-anchor="middle">' + esc(d.id) + '</text>';
+    }).join('');
+
+    var urcDots = data.urcs.map(function (u) {
+      var cx = sx(u.x), cy = sy(u.y);
+      var color = SERVICE_COLOR[u.serviceStatus] || SERVICE_COLOR['closed-today'];
+      var r = TIER_R[u.tier] || 4;
+      return '<circle class="drishti-urc-dot" data-urc-id="' + esc(u.id) + '" cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + color + '">' +
+        '<title>' + esc(u.name) + ' (' + esc(u.code) + ') — Tier ' + u.tier + ' — ' + esc(u.serviceStatus) + '</title></circle>';
+    }).join('');
+
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="' + H + '" role="img" aria-label="National schematic heatmap of URC service status" id="heatmap-svg">' +
+      '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="var(--aams-paper)"></rect>' +
+      urcDots + depotNodes +
+      '</svg>';
+  }
+  document.getElementById('heatmap-svg-wrap').innerHTML = buildHeatmap();
+
+  function renderUrcDetail(urcId) {
+    var u = engine.urc(urcId);
+    if (!u) return;
+    var d = engine.depot(u.depotId);
+    var openGrievances = data.grievances.filter(function (g) { return g.urcId === u.id && g.stage !== 'resolved'; });
+    var urcFlags = data.flags.filter(function (f) { return f.urcId === u.id; });
+    document.getElementById('urc-detail').innerHTML =
+      '<div class="drishti-urc-detail__title">' + esc(u.name) + ' <span class="aams-text-muted">(' + esc(u.code) + ')</span></div>' +
+      '<div class="drishti-urc-detail__badges">' + ui.tierBadge(u.tier) + ui.statusBadge(u.serviceStatus) + ui.statusBadge(u.connectivity) + '</div>' +
+      '<div class="drishti-urc-detail__row"><strong>Area Depot:</strong> ' + esc(d.name) + '</div>' +
+      '<div class="drishti-urc-detail__row"><strong>Station:</strong> ' + esc(u.station) + '</div>' +
+      '<div class="drishti-urc-detail__row"><strong>Last Sync:</strong> ' + esc(u.lastSync.replace('T', ' ').slice(0, 16)) + ' hrs (' + daysSince(u.lastSync) + ' day(s) ago)</div>' +
+      '<div class="drishti-urc-detail__row"><strong>Manager:</strong> ' + esc(u.manager.rank + ' ' + u.manager.name) + ' · ' + esc(u.manager.mobile) + '</div>' +
+      '<div class="drishti-urc-detail__row"><strong>Beneficiaries attached:</strong> ' + u.beneficiariesAttached + '</div>' +
+      '<div class="drishti-urc-detail__sub">' +
+        '<div class="drishti-urc-detail__sub-title">Open Grievances (' + openGrievances.length + ')</div>' +
+        (openGrievances.length ? openGrievances.map(function (g) { return '<div class="drishti-urc-detail__row">' + esc(g.id) + ' — ' + ui.statusBadge(g.stage) + '</div>'; }).join('') : '<div class="aams-text-muted">None open</div>') +
+      '</div>' +
+      '<div class="drishti-urc-detail__sub">' +
+        '<div class="drishti-urc-detail__sub-title">Fraud Flags (' + urcFlags.length + ')</div>' +
+        (urcFlags.length ? urcFlags.map(function (f) { return '<div class="drishti-urc-detail__row">' + esc(f.type) + ' — ' + ui.statusBadge(f.severity) + ' — ' + ui.statusBadge(f.status) + '</div>'; }).join('') : '<div class="aams-text-muted">None recorded</div>') +
+      '</div>';
+    document.querySelectorAll('.drishti-urc-dot.is-selected').forEach(function (el) { el.classList.remove('is-selected'); });
+    var sel = document.querySelector('.drishti-urc-dot[data-urc-id="' + urcId + '"]');
+    if (sel) sel.classList.add('is-selected');
+  }
+  document.getElementById('heatmap-svg-wrap').addEventListener('click', function (e) {
+    var dot = e.target.closest('[data-urc-id]');
+    if (!dot) return;
+    renderUrcDetail(dot.getAttribute('data-urc-id'));
+  });
+
+  // -----------------------------------------------------------------------
+  // 3. FRAUD RISK MONITOR
+  // -----------------------------------------------------------------------
+  var SEV_ORDER = { high: 0, medium: 1, low: 2 };
+  var currentFlagId = null;
+
+  function renderFlags() {
+    var sorted = data.flags.slice().sort(function (a, b) { return SEV_ORDER[a.severity] - SEV_ORDER[b.severity]; });
+    document.getElementById('flag-list').innerHTML = sorted.map(function (f) {
+      var b = engine.beneficiary(f.beneficiaryId), u = engine.urc(f.urcId);
+      var reviewed = f.status !== 'held';
+      var body = '<div class="drishti-flag-card__head">' +
+          '<div>' +
+            '<div class="drishti-flag-card__title">' + esc(f.type.replace(/-/g, ' ')) + ' — ' + esc(b ? b.name : f.beneficiaryId) + '</div>' +
+            '<div class="drishti-flag-card__meta">' + esc(u ? u.name : f.urcId) + ' · ' + esc(f.ts.replace('T', ' ')) + ' hrs</div>' +
+          '</div>' +
+          '<div>' + ui.statusBadge(f.severity) + ' ' + ui.statusBadge(f.status) + '</div>' +
+        '</div>' +
+        ui.evidenceList(f.evidence, 'Why flagged');
+      if (reviewed) {
+        body += '<div class="drishti-flag-card__reviewed">Reviewed by ' + esc(f.reviewedBy) + ' — "' + esc(f.remarks) + '"</div>';
+      } else {
+        body += '<div class="aams-btn-row" style="margin-top: var(--aams-space-3);"><button type="button" class="aams-btn aams-btn--primary aams-btn--sm" data-review-flag="' + esc(f.id) + '">Review</button></div>';
+      }
+      return '<div class="aams-card drishti-flag-card drishti-flag-card--' + esc(f.severity) + '">' + body + '</div>';
+    }).join('');
+  }
+  renderFlags();
+
+  document.getElementById('flag-list').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-review-flag]');
+    if (!btn) return;
+    currentFlagId = btn.getAttribute('data-review-flag');
+    var f = data.flags.filter(function (x) { return x.id === currentFlagId; })[0];
+    var b = engine.beneficiary(f.beneficiaryId), u = engine.urc(f.urcId);
+    document.getElementById('flag-modal-body').innerHTML =
+      '<p><strong>' + esc(f.id) + '</strong> — ' + esc(f.type.replace(/-/g, ' ')) + ' · ' + ui.statusBadge(f.severity) + '</p>' +
+      '<p class="aams-text-muted">' + esc(b ? b.name : f.beneficiaryId) + ' at ' + esc(u ? u.name : f.urcId) + '</p>' +
+      ui.evidenceList(f.evidence, 'Evidence');
+    document.getElementById('flag-modal-officer').value = '';
+    document.getElementById('flag-modal-remarks').value = '';
+    document.getElementById('flag-modal-disposition').value = 'released';
+    ui.openModal('flag-modal');
+  });
+
+  document.getElementById('flag-modal-submit').addEventListener('click', function () {
+    var officer = document.getElementById('flag-modal-officer').value;
+    var disposition = document.getElementById('flag-modal-disposition').value;
+    var remarks = document.getElementById('flag-modal-remarks').value;
+    try {
+      var entry = engine.reviewFlag(currentFlagId, officer, disposition, remarks);
+      ui.closeModal('flag-modal');
+      ui.auditToast(entry, 'Flag reviewed');
+      renderFlags();
+      snapshot = renderStats();
+    } catch (err) {
+      ui.toast(err.message, 'error');
+    }
+  });
+
+  // -----------------------------------------------------------------------
+  // 4. ENTITLEMENT UTILISATION
+  // -----------------------------------------------------------------------
+  function renderUtilisation() {
+    var snap = snapshot || engine.commandSnapshot();
+    var rows = [
+      { label: 'Grocery', pct: snap.utilisation.grocery },
+      { label: 'Liquor', pct: snap.utilisation.liquor },
+      { label: 'AFD-II', pct: snap.utilisation.afd2 }
+    ];
+    document.getElementById('util-grid').innerHTML = rows.map(function (r) {
+      var pct = Math.round(r.pct * 100);
+      return '<div>' +
+        '<div class="drishti-util-bar-label"><span>' + esc(r.label) + '</span><strong>' + pct + '%</strong></div>' +
+        '<div class="drishti-util-bar-track"><span class="drishti-util-bar-fill" style="width:' + pct + '%"></span></div>' +
+      '</div>';
+    }).join('');
+  }
+  renderUtilisation();
+
+  // -----------------------------------------------------------------------
+  // 5. GRIEVANCE PULSE
+  // -----------------------------------------------------------------------
+  function renderPulse() {
+    var open = data.grievances.filter(function (g) { return g.stage !== 'resolved'; });
+    var byCat = {};
+    open.forEach(function (g) {
+      var c = engine.classifyGrievance(g.text);
+      byCat[c.label] = (byCat[c.label] || 0) + 1;
+    });
+    var catRows = Object.keys(byCat).sort(function (a, b) { return byCat[b] - byCat[a]; }).map(function (label) {
+      return '<div class="drishti-pulse-cat-row"><span>' + esc(label) + '</span><strong>' + byCat[label] + '</strong></div>';
+    }).join('');
+    document.getElementById('pulse-categories').innerHTML = catRows || '<p class="aams-text-muted">No open grievances.</p>';
+
+    var slaCounts = { within: 0, due: 0, breached: 0, 'no-sla': 0 };
+    open.forEach(function (g) {
+      var s = engine.slaStatus(g);
+      slaCounts[s.state] = (slaCounts[s.state] || 0) + 1;
+    });
+    var slaLabels = { within: 'Within SLA', due: 'SLA Due', breached: 'SLA Breached', 'no-sla': 'No SLA (suggestions)' };
+    document.getElementById('pulse-sla').innerHTML = Object.keys(slaLabels).map(function (k) {
+      return '<div class="drishti-pulse-sla-row"><span>' + ui.statusBadge(k) + '</span><strong>' + (slaCounts[k] || 0) + '</strong></div>';
+    }).join('');
+  }
+  renderPulse();
+
+  // -----------------------------------------------------------------------
+  // 6. AI INSIGHTS FEED — WEEKLY BRIEF
+  // -----------------------------------------------------------------------
+  function renderBrief() {
+    var brief;
+    try { brief = engine.weeklyBrief(); } catch (err) {
+      document.getElementById('brief-list').innerHTML = '<p class="aams-text-alert">' + esc(err.message) + '</p>';
+      return;
+    }
+    document.getElementById('brief-generated').textContent = 'Week of ' + ui.formatDate(brief.weekOf) + ' · ' + brief.generatedBy;
+    document.getElementById('brief-advisory').textContent = brief.advisory;
+    document.getElementById('brief-list').innerHTML = brief.items.map(function (item) {
+      return '<div class="aams-card drishti-brief-item drishti-brief-item--' + esc(item.severity) + '">' +
+        '<div class="drishti-brief-item__head">' +
+          '<div><div class="drishti-brief-item__rank">Rank ' + item.rank + '</div><div class="drishti-brief-item__title">' + esc(item.title) + '</div></div>' +
+          ui.statusBadge(item.severity) +
+        '</div>' +
+        ui.evidenceList(item.evidence, 'Evidence') +
+        '<div class="drishti-brief-item__recommendation"><strong>Recommendation:</strong> ' + esc(item.recommendation) + '</div>' +
+        '<div class="drishti-brief-item__form" data-brief-wrap data-rank="' + item.rank + '">' +
+          '<input type="text" placeholder="Officer name (required)" data-brief-name aria-label="Officer name">' +
+          '<div class="aams-btn-row">' +
+            '<button type="button" class="aams-btn aams-btn--ghost aams-btn--sm" data-brief-action="ACKNOWLEDGED">Acknowledge</button>' +
+            '<button type="button" class="aams-btn aams-btn--primary aams-btn--sm" data-brief-action="ACTIONED">Action</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+  renderBrief();
+
+  document.getElementById('brief-list').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-brief-action]');
+    if (!btn) return;
+    var wrap = btn.closest('[data-brief-wrap]');
+    var rank = wrap.getAttribute('data-rank');
+    var nameInput = wrap.querySelector('[data-brief-name]');
+    var action = btn.getAttribute('data-brief-action');
+    try {
+      var entry = engine.acknowledgeBriefItem(rank, nameInput.value, action);
+      wrap.outerHTML = '<div class="drishti-brief-item__decided">' + (action === 'ACTIONED' ? 'Actioned' : 'Acknowledged') + ' by ' + esc(nameInput.value.trim()) + ' — ' + esc(entry.ts.replace('T', ' ')) + ' hrs</div>';
+      ui.auditToast(entry, 'Brief item ' + action.toLowerCase());
+    } catch (err) {
+      ui.toast(err.message, 'error');
+      nameInput.focus();
+    }
+  });
+
+  // -----------------------------------------------------------------------
+  // 7. DATA FRESHNESS STRIP
+  // -----------------------------------------------------------------------
+  function renderFreshness() {
+    var remote = data.urcs.filter(function (u) { return u.connectivity === 'offline-sync' || u.serviceStatus === 'sync-overdue'; });
+    var maxAge = 0;
+    var rows = remote.map(function (u) {
+      var age = daysSince(u.lastSync);
+      maxAge = Math.max(maxAge, age);
+      var d = engine.depot(u.depotId);
+      return '<tr>' +
+        '<td>' + esc(u.name) + '</td>' +
+        '<td>' + esc(d.name) + '</td>' +
+        '<td>' + ui.statusBadge(u.connectivity) + '</td>' +
+        '<td>' + esc(u.lastSync.replace('T', ' ')) + ' hrs</td>' +
+        '<td>' + age + ' day(s)</td>' +
+      '</tr>';
+    }).join('');
+    document.getElementById('freshness-table-body').innerHTML = rows || '<tr><td colspan="5" class="aams-table__empty">All monitored URCs synced within the day.</td></tr>';
+    document.getElementById('freshness-note').textContent = remote.length
+      ? 'Data from Tier 3 / offline-sync URCs is up to ' + maxAge + ' day(s) old — synchronised in daily batch, not real time.'
+      : 'No remote URCs currently past sync window.';
+  }
+  renderFreshness();
+
+})();
+</script>
+</body>
+</html>

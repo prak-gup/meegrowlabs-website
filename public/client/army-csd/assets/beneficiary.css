@@ -1,0 +1,249 @@
+/*
+  MY CANTEEN (INDL beneficiary app) — page-specific styles for beneficiary.html.
+  Mobile-first: designed at 390px, rendered as a centred phone-width column
+  (max 420px) on desktop, inside the normal AAMS topbar/nav shell.
+  Built on tokens.css + app.css. No external assets.
+*/
+
+/* ---------- Switcher ---------- */
+.csd-switcher-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--aams-space-2);
+  flex-wrap: wrap;
+  margin: 0 0 var(--aams-space-5) 0;
+}
+.csd-switcher-row label {
+  font-size: var(--aams-fs-xs);
+  font-weight: var(--aams-fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--aams-muted);
+}
+.csd-switcher-row select {
+  padding: var(--aams-space-2) var(--aams-space-3);
+  border: 1px solid var(--aams-border-strong);
+  border-radius: var(--aams-radius-sm);
+  background: var(--aams-paper-raised);
+  color: var(--aams-ink);
+  max-width: 320px;
+}
+
+/* ---------- Phone frame ---------- */
+.csd-phone-wrap {
+  display: flex;
+  justify-content: center;
+}
+.csd-phone {
+  width: 100%;
+  max-width: 420px;
+  background: var(--aams-paper-raised);
+  border: 1px solid var(--aams-border);
+  border-radius: var(--aams-radius-lg);
+  box-shadow: var(--aams-shadow-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.csd-phone__header {
+  background: var(--aams-primary);
+  color: var(--aams-paper);
+  padding: var(--aams-space-4) var(--aams-space-4) var(--aams-space-3);
+  text-align: center;
+  flex: 0 0 auto;
+}
+.csd-phone__wordmark {
+  font-size: var(--aams-fs-md);
+  font-weight: var(--aams-fw-bold);
+  letter-spacing: 0.03em;
+}
+.csd-phone__tag {
+  font-size: var(--aams-fs-xs);
+  opacity: 0.8;
+  margin-top: 2px;
+}
+.csd-phone__body {
+  padding: var(--aams-space-4);
+  min-height: 420px;
+  flex: 1 1 auto;
+}
+.csd-phone__body h2.csd-screen-title {
+  font-size: var(--aams-fs-lg);
+  margin: 0 0 var(--aams-space-1) 0;
+}
+.csd-phone__body p.csd-screen-sub {
+  font-size: var(--aams-fs-sm);
+  color: var(--aams-muted);
+  margin: 0 0 var(--aams-space-4) 0;
+}
+
+/* ---------- Bottom tab bar ---------- */
+.csd-tabbar {
+  display: flex;
+  flex: 0 0 auto;
+  border-top: 1px solid var(--aams-border);
+  background: var(--aams-paper-raised);
+}
+.csd-tabbar__btn {
+  flex: 1 1 0;
+  background: transparent;
+  border: none;
+  border-top: 2px solid transparent;
+  padding: var(--aams-space-2) 2px var(--aams-space-1);
+  font-size: 0.6875rem;
+  font-weight: var(--aams-fw-medium);
+  color: var(--aams-muted);
+  cursor: pointer;
+  text-align: center;
+  line-height: var(--aams-lh-tight);
+}
+.csd-tabbar__btn:hover { color: var(--aams-ink); background: var(--aams-primary-tint); }
+.csd-tabbar__btn.is-active {
+  color: var(--aams-primary);
+  font-weight: var(--aams-fw-bold);
+  border-top-color: var(--aams-primary);
+  background: var(--aams-primary-tint);
+}
+
+/* ---------- Login screen ---------- */
+.csd-otp-hint {
+  font-size: var(--aams-fs-xs);
+  color: var(--aams-muted);
+  background: var(--aams-status-reserved-tint);
+  border: 1px dashed var(--aams-amber);
+  border-radius: var(--aams-radius-sm);
+  padding: var(--aams-space-2) var(--aams-space-3);
+  margin: var(--aams-space-2) 0 var(--aams-space-3) 0;
+}
+.csd-login-method-desc {
+  font-size: var(--aams-fs-xs);
+  color: var(--aams-muted);
+  margin-bottom: var(--aams-space-3);
+}
+
+/* ---------- Card panel (My Card) ---------- */
+.csd-card-panel {
+  background: linear-gradient(135deg, var(--aams-primary-tint) 0%, var(--aams-paper-raised) 70%);
+  border: 1px solid var(--aams-border);
+  border-radius: var(--aams-radius-md);
+  padding: var(--aams-space-4);
+  margin-bottom: var(--aams-space-4);
+}
+.csd-kv {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--aams-space-1) var(--aams-space-3);
+  font-size: var(--aams-fs-sm);
+  margin: var(--aams-space-2) 0;
+}
+.csd-kv__item dt {
+  font-size: var(--aams-fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--aams-muted);
+  margin: 0;
+}
+.csd-kv__item dd {
+  margin: 0;
+  font-weight: var(--aams-fw-medium);
+  word-break: break-word;
+}
+.csd-section-label {
+  font-size: var(--aams-fs-xs);
+  font-weight: var(--aams-fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--aams-muted);
+  margin: var(--aams-space-4) 0 var(--aams-space-2) 0;
+}
+.csd-readonly-note {
+  font-size: var(--aams-fs-xs);
+  color: var(--aams-muted);
+  font-style: italic;
+  margin-top: var(--aams-space-3);
+}
+
+/* ---------- Entitlement ---------- */
+.csd-entitlement-block {
+  border: 1px solid var(--aams-border);
+  border-radius: var(--aams-radius-md);
+  padding: var(--aams-space-3);
+  margin-bottom: var(--aams-space-3);
+}
+.csd-entitlement-block__title { font-weight: var(--aams-fw-bold); margin-bottom: var(--aams-space-2); }
+.csd-purchase-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--aams-space-2);
+  padding: var(--aams-space-2) 0;
+  border-bottom: 1px solid var(--aams-border);
+  font-size: var(--aams-fs-sm);
+}
+.csd-purchase-row:last-child { border-bottom: none; }
+.csd-purchase-row__meta { color: var(--aams-muted); font-size: var(--aams-fs-xs); }
+
+/* ---------- More menu ---------- */
+.csd-menu-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--aams-space-2);
+  padding: var(--aams-space-3);
+  border: 1px solid var(--aams-border);
+  border-radius: var(--aams-radius-sm);
+  margin-bottom: var(--aams-space-2);
+  background: var(--aams-paper-raised);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-size: var(--aams-fs-sm);
+  color: var(--aams-ink);
+}
+.csd-menu-row:hover { background: var(--aams-primary-tint); }
+.csd-menu-row__arrow { color: var(--aams-muted); }
+
+details.csd-policy {
+  border: 1px solid var(--aams-border);
+  border-radius: var(--aams-radius-sm);
+  margin-bottom: var(--aams-space-2);
+  padding: var(--aams-space-2) var(--aams-space-3);
+  background: var(--aams-paper-raised);
+}
+details.csd-policy summary {
+  cursor: pointer;
+  font-weight: var(--aams-fw-medium);
+  font-size: var(--aams-fs-sm);
+}
+details.csd-policy p {
+  font-size: var(--aams-fs-sm);
+  color: var(--aams-ink-soft);
+  margin: var(--aams-space-2) 0 0 0;
+}
+
+/* ---------- Complaints ---------- */
+.csd-complaint-result {
+  background: var(--aams-primary-tint);
+  border-left: 3px solid var(--aams-primary);
+  border-radius: var(--aams-radius-sm);
+  padding: var(--aams-space-3);
+  margin: var(--aams-space-3) 0;
+  font-size: var(--aams-fs-sm);
+}
+.csd-complaint-result--distress {
+  background: var(--aams-status-blocked-tint);
+  border-left-color: var(--aams-alert);
+}
+.csd-complaint-row {
+  border: 1px solid var(--aams-border);
+  border-radius: var(--aams-radius-sm);
+  padding: var(--aams-space-2) var(--aams-space-3);
+  margin-bottom: var(--aams-space-2);
+  font-size: var(--aams-fs-sm);
+}
+.csd-complaint-row__head { display: flex; justify-content: space-between; align-items: center; gap: var(--aams-space-2); }
+.csd-complaint-row__text { color: var(--aams-ink-soft); margin-top: 2px; }
+
+@media (max-width: 480px) {
+  .csd-kv { grid-template-columns: 1fr 1fr; }
+}
