@@ -56,8 +56,8 @@ function ApprovalScreen() {
 }
 
 function CompetitorScreen() {
-  return <Screen title="Competitor watch" description="Sample competitor website and blog updates for fictional Smile Studio, including a braces price guide from City Dental Care." ><div className="screen-body"><span className="home-mono">Your market, in view</span><div className="screen-title">Know what changed.</div>
-    {[['City Dental Care', 'Published a new braces price guide', 'Website · Today'], ['Pink City Dental', 'Published a guide to dental implants', 'Blog · Yesterday'], ['Smile Studio', 'Clear aligner guide ready to review', 'Your next move']].map(([name, update, source]) => <div className="competitor-row" key={name}><span className="competitor-icon" aria-hidden="true">{name[0]}</span><div><strong>{name}</strong><p>{update}</p><small>{source}</small></div></div>)}
+  return <Screen title="Competitor watch" description="Sample competitor website and blog updates for fictional Smile Studio, including a braces price guide from Northside Dental." ><div className="screen-body"><span className="home-mono">Your market, in view</span><div className="screen-title">Know what changed.</div>
+    {[['Northside Dental', 'Published a new braces price guide', 'Website · Today'], ['Lakeview Dental', 'Published a guide to dental implants', 'Blog · Yesterday'], ['Smile Studio', 'Clear aligner guide ready to review', 'Your next move']].map(([name, update, source]) => <div className="competitor-row" key={name}><span className="competitor-icon" aria-hidden="true">{name[0]}</span><div><strong>{name}</strong><p>{update}</p><small>{source}</small></div></div>)}
   </div></Screen>
 }
 
