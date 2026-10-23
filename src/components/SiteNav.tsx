@@ -21,7 +21,7 @@ export default function SiteNav() {
           <a href="https://blog.meegrowlabs.com" className="hidden sm:inline text-slate-900 hover:text-green-600">Blog</a>
           <a href={TALLY} target="_blank" rel="noopener noreferrer"
              className="rounded-lg border-[3px] border-slate-900 bg-green-600 px-4 py-2 text-white shadow-[4px_4px_0_#0F0F0F] hover:bg-green-700">
-            Talk to us
+            Talk to us<span className="sr-only"> (opens in new tab)</span>
           </a>
         </div>
       </div>
